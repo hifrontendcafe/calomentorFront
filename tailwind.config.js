@@ -1,3 +1,5 @@
+const colors = require("tailwindcss/colors");
+
 module.exports = {
   purge: [
     "./src/pages/**/*.{js,ts,jsx,tsx}",
@@ -5,10 +7,16 @@ module.exports = {
   ],
   darkMode: false,
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        teal: colors.teal,
+        cyan: colors.cyan,
+        fecGreen: "#00c39d",
+      },
+    },
   },
   variants: {
     extend: {},
   },
-  plugins: [],
+  plugins: [require("@tailwindcss/forms")],
 };
