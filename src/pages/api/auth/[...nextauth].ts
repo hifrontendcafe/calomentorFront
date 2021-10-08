@@ -4,8 +4,10 @@ import {
   CalomentorAdminID,
   CalomentorMentorID,
   FrontendCafeID,
-} from "../../../config/DiscordID";
-import { LOGIN, UNAUTHORIZED } from "../../../config/Routes";
+} from "@/config/DiscordID";
+import { LOGIN, UNAUTHORIZED } from "@/config/Routes";
+import axios from "axios";
+import { createUser, getUserByID } from "@/lib/userAPI";
 
 export default NextAuth({
   providers: [
@@ -36,7 +38,7 @@ export default NextAuth({
       const guilds = await guildResp.json();
       // Check if the user is a member of the discord server.
       if (guilds.find((guild: { id: string }) => guild.id === FrontendCafeID)) {
-        const userInfoResp = await fetch(
+        const { data: userInfo } = await axios.get(
           `https://discord.com/api/guilds/${FrontendCafeID}/members/${user.id}`,
           {
             headers: {
@@ -44,7 +46,6 @@ export default NextAuth({
             },
           }
         );
-        const userInfo = await userInfoResp.json();
         const isAdmin = userInfo.roles.includes(CalomentorAdminID);
         const isMentor = userInfo.roles.includes(CalomentorMentorID);
         // Check if the user has the necesary roles to log in.
@@ -53,12 +54,26 @@ export default NextAuth({
         }
         // Asign role number depending of the roles the user have.
         user.role = getRole(isAdmin, isMentor);
+        // Check if user exists else create it
+        const userAWS = await getUserByID(user.id as string);
+        if (userAWS === 404) {
+          const role =
+            isAdmin && isMentor
+              ? ["admin", "mentor"]
+              : isAdmin
+              ? ["admin"]
+              : ["mentor"];
+          await createUser({
+            id: user.id as string,
+            role,
+          });
+        }
         return true;
       } else {
         return UNAUTHORIZED;
       }
     },
-    jwt: async (token, user, account, profile, isNewUser) => {
+    jwt: async (token, user) => {
       if (user) {
         token.role = user.role;
       }

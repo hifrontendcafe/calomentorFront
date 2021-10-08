@@ -2,7 +2,8 @@ import React, { Dispatch } from "react";
 import { Fragment, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { XIcon } from "@heroicons/react/outline";
-import { primaryRoutes, secondaryNavigation } from "../../config/Routes";
+import { primaryRoutes, secondaryNavigation } from "@/config/Routes";
+import { useRouter } from "next/dist/client/router";
 
 interface IMobileSidebar {
   sidebarOpen: boolean;
@@ -12,6 +13,7 @@ export const MobileSidebar: React.FC<IMobileSidebar> = ({
   sidebarOpen,
   setSidebarOpen,
 }) => {
+  const router = useRouter();
   return (
     <Transition.Root show={sidebarOpen} as={Fragment}>
       <Dialog
@@ -67,7 +69,7 @@ export const MobileSidebar: React.FC<IMobileSidebar> = ({
               </span>
             </div>
             <nav
-              className="flex-shrink-0 h-full mt-5 overflow-y-auto divide-y divide-teal-800"
+              className="flex-shrink-0 h-full mt-5 overflow-y-auto divide-y divide-dividerColor"
               aria-label="Sidebar"
             >
               <div className="px-2 space-y-1">
@@ -76,9 +78,9 @@ export const MobileSidebar: React.FC<IMobileSidebar> = ({
                     key={item.name}
                     href={item.href}
                     className={`group flex items-center px-2 py-2 text-base font-medium rounded-md ${
-                      item.current
-                        ? "bg-teal-800 text-gray-200"
-                        : "text-teal-100 hover:text-gray-200 hover:bg-teal-600"
+                      router.pathname === item.href
+                        ? "bg-activeNavigation text-mainTextColor active:bg-hoverNavigation"
+                        : "text-mainTextColor hover:text-white hover:bg-hoverNavigation active:bg-activeNavigation"
                     }`}
                     aria-current={item.current ? "page" : undefined}
                   >
@@ -96,7 +98,11 @@ export const MobileSidebar: React.FC<IMobileSidebar> = ({
                     <a
                       key={item.name}
                       href={item.href}
-                      className="flex items-center px-2 py-2 text-base font-medium text-teal-100 rounded-md group hover:text-gray-200 hover:bg-teal-600"
+                      className={`group flex items-center px-2 py-2 text-base font-medium rounded-md ${
+                        router.pathname === item.href
+                          ? "bg-activeNavigation text-mainTextColor active:bg-hoverNavigation"
+                          : "text-mainTextColor hover:text-white hover:bg-hoverNavigation active:bg-activeNavigation"
+                      }`}
                     >
                       <item.icon
                         className="w-6 h-6 mr-4 text-teal-200"

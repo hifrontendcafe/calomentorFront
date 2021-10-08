@@ -1,12 +1,45 @@
-import { axiosInstance } from "../config/AxiosConfig";
-import { IUser } from "../interfaces/user.interface";
+import { axiosAWSInstance } from "@/config/AxiosConfig";
+import { IUser } from "@/interfaces/user.interface";
 
+/**
+ * Get all data from a user
+ * @param id Discord id from the user
+ * @returns All the data from the user
+ */
 export const getUserByID = async (id: string) => {
   try {
-    const { data } = await axiosInstance.get<IUser>(`/user/9`);
-    console.log("🚀 ~ file: userAPI.ts ~ line 7 ~ getUserByID ~ data", data);
+    const { data } = await axiosAWSInstance.get<IUser>(`/user/${id}`);
     return data;
   } catch (error) {
-    console.log("🚀 ~ file: userAPI.ts ~ line 9 ~ error", error);
+    return error.response.status;
+  }
+};
+
+/**
+ * Create a new user
+ * @param userData Object with the data to create an user (only the id is required)
+ * @returns an object with the user data and the result of the operation
+ */
+export const createUser = async (userData: IUser) => {
+  try {
+    const { data } = await axiosAWSInstance.post("/user", userData);
+    return data;
+  } catch (error) {
+    return error.response.status;
+  }
+};
+
+/**
+ * Update an user
+ * @param id The id of the user
+ * @param userData The data the user wants to update
+ * @returns an object with the user data and the result of the operation
+ */
+export const updateUserByID = async (id: string, userData: IUser) => {
+  try {
+    const { data } = await axiosAWSInstance.put(`/user/${id}`, userData);
+    return data;
+  } catch (error) {
+    return error.response.status;
   }
 };

@@ -1,4 +1,4 @@
-const Unauthorized = () => {
+const Unauthorized: React.FC = () => {
   return (
     <div className="flex flex-col justify-center min-h-screen py-12 bg-mainContent sm:px-6 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">

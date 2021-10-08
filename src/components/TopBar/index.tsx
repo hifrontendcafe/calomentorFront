@@ -7,6 +7,8 @@ import {
 import Image from "next/image";
 import { Menu, Transition } from "@headlessui/react";
 import { signOut, useSession } from "next-auth/client";
+import Link from "next/link";
+import { PROFILE } from "@/config/Routes";
 
 interface ITopBar {
   setSidebarOpen: Dispatch<boolean>;
@@ -18,7 +20,7 @@ export const TopBar: React.FC<ITopBar> = ({ setSidebarOpen }) => {
   return (
     <div className="relative z-10 flex flex-shrink-0 h-16 border-b border-gray-200 bg-topbar lg:border-none">
       <button
-        className="px-4 text-gray-400 border-r border-gray-200 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-teal-500 lg:hidden"
+        className="px-4 text-gray-400 border-r border-gray-200 focus:outline-none lg:hidden"
         onClick={() => setSidebarOpen(true)}
       >
         <span className="sr-only">Open sidebar</span>
@@ -67,25 +69,27 @@ export const TopBar: React.FC<ITopBar> = ({ setSidebarOpen }) => {
               leaveFrom="transform opacity-100 scale-100"
               leaveTo="transform opacity-0 scale-95"
             >
-              <Menu.Items className="absolute right-0 w-48 py-1 mt-2 origin-top-right bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                <Menu.Item>
-                  {({ active }) => (
-                    <a
-                      className={`${
-                        active ? "bg-gray-100" : ""
-                      } block px-4 py-2 text-sm text-gray-700 cursor-pointer`}
-                    >
-                      Tu perfil
-                    </a>
-                  )}
-                </Menu.Item>
+              <Menu.Items className="absolute right-0 w-48 py-1 mt-2 origin-top-right rounded-md shadow-lg bg-mainContent focus:outline-none">
+                <Link href={PROFILE} passHref>
+                  <Menu.Item>
+                    {({ active }) => (
+                      <a
+                        className={`${
+                          active ? "bg-hoverNavigation" : ""
+                        } block px-4 py-2 text-sm text-mainTextColor cursor-pointer active:bg-activeNavigation`}
+                      >
+                        Tu perfil
+                      </a>
+                    )}
+                  </Menu.Item>
+                </Link>
                 <Menu.Item>
                   {({ active }) => (
                     <a
                       onClick={() => signOut({ callbackUrl: "/" })}
                       className={`${
-                        active ? "bg-gray-100" : ""
-                      } block px-4 py-2 text-sm text-gray-700 cursor-pointer`}
+                        active ? "bg-hoverNavigation" : ""
+                      } block px-4 py-2 text-sm text-mainTextColor cursor-pointer active:bg-activeNavigation`}
                     >
                       Cerrar sesión
                     </a>

@@ -1,9 +1,9 @@
 import Image from "next/image";
-import DiscordLogo from "../assets/img/Discord-Logo-White.svg";
+import DiscordLogo from "@/assets/img/Discord-Logo-White.svg";
 import { signIn, useSession } from "next-auth/client";
 import { useRouter } from "next/dist/client/router";
 import { useEffect } from "react";
-import { HOME } from "../config/Routes";
+import { HOME } from "@/config/Routes";
 
 const Home = () => {
   const [session, loading] = useSession();
@@ -39,7 +39,7 @@ const Home = () => {
                         callbackUrl: `${window.location.origin}${HOME}`,
                       })
                     }
-                    className="relative flex justify-center px-4 py-2 text-sm font-medium text-gray-200 bg-teal-600 border border-transparent rounded-md group hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500"
+                    className="relative flex justify-center px-4 py-2 text-sm font-medium text-white border border-transparent rounded-md bg-activeNavigation group hover:bg-hoverNavigation focus:outline-none"
                   >
                     <Image
                       className=""

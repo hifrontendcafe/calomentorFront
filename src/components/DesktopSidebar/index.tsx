@@ -1,10 +1,12 @@
 import React from "react";
-import { primaryRoutes, secondaryNavigation } from "../../config/Routes";
 import Link from "next/link";
+import { primaryRoutes, secondaryNavigation } from "@/config/Routes";
+import { useRouter } from "next/dist/client/router";
 
 interface IDesktopSidebar {}
 
 export const DesktopSidebar: React.FC<IDesktopSidebar> = () => {
+  const router = useRouter();
   return (
     // Static sidebar for desktop
     <div className="hidden lg:flex lg:flex-shrink-0">
@@ -17,7 +19,7 @@ export const DesktopSidebar: React.FC<IDesktopSidebar> = () => {
             </span>
           </div>
           <nav
-            className="flex flex-col flex-1 mt-5 overflow-y-auto divide-y divide-teal-800"
+            className="flex flex-col flex-1 mt-5 overflow-y-auto divide-y divide-dividerColor"
             aria-label="Sidebar"
           >
             <div className="px-2 space-y-1">
@@ -25,9 +27,9 @@ export const DesktopSidebar: React.FC<IDesktopSidebar> = () => {
                 <Link key={item.name} href={item.href}>
                   <a
                     className={`group flex items-center px-2 py-2 text-sm leading-6 font-medium rounded-md ${
-                      item.current
-                        ? "bg-teal-800 text-white"
-                        : "text-teal-100 hover:text-white hover:bg-teal-600"
+                      router.pathname === item.href
+                        ? "bg-activeNavigation text-mainTextColor active:bg-hoverNavigation"
+                        : "text-mainTextColor hover:text-white hover:bg-hoverNavigation active:bg-activeNavigation"
                     }`}
                     aria-current={item.current ? "page" : undefined}
                   >
@@ -44,7 +46,13 @@ export const DesktopSidebar: React.FC<IDesktopSidebar> = () => {
               <div className="px-2 space-y-1">
                 {secondaryNavigation.map((item) => (
                   <Link key={item.name} href={item.href}>
-                    <a className="flex items-center px-2 py-2 text-sm font-medium leading-6 text-teal-100 rounded-md group hover:text-white hover:bg-teal-600">
+                    <a
+                      className={`group flex items-center px-2 py-2 text-sm leading-6 font-medium rounded-md ${
+                        router.pathname.includes("settings")
+                          ? "bg-activeNavigation text-mainTextColor active:bg-hoverNavigation"
+                          : "text-mainTextColor hover:text-white hover:bg-hoverNavigation active:bg-activeNavigation"
+                      }`}
+                    >
                       <item.icon
                         className="w-6 h-6 mr-4 text-teal-200"
                         aria-hidden="true"
