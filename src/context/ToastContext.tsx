@@ -27,7 +27,7 @@ export const ToastProvider: React.FC = ({ children }) => {
     if (toasts.length > 0) {
       const timer = setTimeout(
         () => setToasts((toast) => toast.slice(1)),
-        500000
+        5000
       );
       return () => {
         clearTimeout(timer);
