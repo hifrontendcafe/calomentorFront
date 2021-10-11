@@ -32,7 +32,7 @@ export const NotificationToast: React.FC<INotificationToast> = ({
       leaveFrom="opacity-100"
       leaveTo="opacity-0"
     >
-      <div className="w-full max-w-sm overflow-hidden bg-white rounded-lg shadow-lg pointer-events-auto ring-1 ring-black ring-opacity-5">
+      <div className="overflow-hidden bg-white rounded-lg shadow-lg pointer-events-auto w-96 ring-1 ring-black ring-opacity-5">
         <div className="p-4">
           <div className="flex items-start">
             <div className="flex-shrink-0">

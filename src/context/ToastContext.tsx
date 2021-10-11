@@ -27,7 +27,7 @@ export const ToastProvider: React.FC = ({ children }) => {
     if (toasts.length > 0) {
       const timer = setTimeout(
         () => setToasts((toast) => toast.slice(1)),
-        5000
+        500000
       );
       return () => {
         clearTimeout(timer);
@@ -40,7 +40,7 @@ export const ToastProvider: React.FC = ({ children }) => {
       {children}
       <div
         aria-live="assertive"
-        className="fixed inset-0 flex flex-col items-end px-4 py-8 pointer-events-none sm:p-6 sm:items-start"
+        className="absolute top-0 right-0 flex flex-col items-end px-4 py-8 pointer-events-none sm:p-6 sm:items-start"
       >
         <div className="flex flex-col items-center w-full py-16 space-y-4 sm:items-end">
           {toasts.map(({ title, subText, type }) => (
