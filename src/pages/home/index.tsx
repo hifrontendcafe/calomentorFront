@@ -5,6 +5,7 @@ import { getUserByID } from "@/lib/userAPI";
 import { Session } from "next-auth";
 import { useRouter } from "next/dist/client/router";
 import { UserContext } from "@/context/UserContext";
+import CustomHead from "@/components/CustomHead";
 
 const Home: React.FC = () => {
   const [session, loading] = useSession();
@@ -25,7 +26,12 @@ const Home: React.FC = () => {
     }
   }, [loading, session, router, dispatch]);
 
-  return <DashboardLayout>chubaca</DashboardLayout>;
+  return (
+    <>
+      <CustomHead title="Inicio" />
+      <DashboardLayout>chubaca</DashboardLayout>
+    </>
+  );
 };
 
 export default Home;

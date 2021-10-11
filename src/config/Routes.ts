@@ -12,6 +12,7 @@ export const HOME = "/home";
 export const UNAUTHORIZED = "/unauthorized";
 export const SETTINGS = "/settings";
 export const PROFILE = "/settings/profile";
+export const SCHEDULE = "/settings/schedule";
 
 // ---------- NAVIGATION ROUTES | Home ----------
 
@@ -29,13 +30,13 @@ export const secondaryNavigation = [
 export const settingsNavigation = [
   {
     name: "Perfil",
-    href: "/settings/profile",
+    href: PROFILE,
     icon: UserCircleIcon,
     current: true,
   },
   {
     name: "Horarios",
-    href: "/settings/schedule",
+    href: SCHEDULE,
     icon: ClockIcon,
     current: false,
   },
