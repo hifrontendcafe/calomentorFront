@@ -19,7 +19,7 @@ const Home: React.FC = () => {
       // Get user data and verify if the profile is configured,
       // if not, go to the profile settings
       getUserData(session).then((res) => {
-        res.data.full_name === ""
+        res.data.full_name === "" && session.user.role !== "0"
           ? router.push("/settings/profile")
           : dispatch({ type: "SET", payload: { ...res.data } });
       });
