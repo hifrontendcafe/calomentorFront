@@ -29,13 +29,13 @@ export const TopBar: React.FC<ITopBar> = ({ setSidebarOpen }) => {
       {/* Search bar */}
       <div className="flex justify-end flex-1 px-4 sm:px-6 lg:max-w-6xl lg:mx-auto lg:px-8">
         <div className="flex items-center ml-4 md:ml-6">
-          <button
+          {/* <button
             type="button"
             className="p-1 text-gray-400 bg-white rounded-full hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-500"
           >
             <span className="sr-only">View notifications</span>
             <BellIcon className="w-6 h-6" aria-hidden="true" />
-          </button>
+          </button> */}
 
           {/* Profile dropdown */}
           <Menu as="div" className="relative ml-3">
