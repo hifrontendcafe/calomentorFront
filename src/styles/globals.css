@@ -18,3 +18,33 @@ a {
 * {
   box-sizing: border-box;
 }
+
+/* react-select styles */
+.filter-selector .react-select__multi-value {
+  @apply bg-gray-700;
+}
+
+.filter-selector .react-select__multi-value__label {
+  @apply text-gray-100;
+}
+
+.filter-selector .react-select__menu {
+  @apply bg-gray-900 border border-gray-500 text-gray-50;
+}
+
+.filter-selector .react-select__control {
+  @apply text-gray-300 bg-gray-900 border-gray-300;
+}
+
+.filter-selector .react-select__option--is-focused {
+  @apply bg-gray-700;
+}
+
+.filter-selector .react-select__control .react-select__indicator {
+  /* @apply text-gray-500; */
+}
+
+.filter-selector .react-select__value-container .react-select__placeholder {
+  /* @apply text-sm text-gray-600; */
+}
+/* end react-select styles */

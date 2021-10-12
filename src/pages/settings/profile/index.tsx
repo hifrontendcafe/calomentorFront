@@ -355,6 +355,8 @@ const SettingsProfilePage: React.FC = () => {
                     inputRef={ref}
                     options={options}
                     isMulti
+                    classNamePrefix="react-select"
+                    className="filter-selector"
                   />
                 )}
                 rules={{ required: true }}
