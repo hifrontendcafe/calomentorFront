@@ -45,15 +45,16 @@ const Home = () => {
                           callbackUrl: `${window.location.origin}${HOME}`,
                         })
                       }
-                      className="relative flex justify-center px-4 py-2 text-sm font-medium text-white border border-transparent rounded-md bg-activeNavigation group hover:bg-hoverNavigation focus:outline-none"
+                      className="relative flex items-center justify-center px-4 py-2 text-xs font-medium text-white border border-transparent rounded-md bg-activeNavigation group hover:bg-hoverNavigation focus:outline-none"
                     >
                       <Image
                         src={DiscordLogo}
                         alt="Discord logo"
-                        width="30"
-                        height="28"
+                        width="15%"
+                        height="15%"
+                 
                       />
-                      <p className="flex pl-2 my-auto text-xl font-semibold">
+                      <p className="flex pl-2 my-auto text-sm font-semibold">
                         Iniciar sesión
                       </p>
                     </button>
