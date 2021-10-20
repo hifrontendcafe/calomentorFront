@@ -17,12 +17,12 @@ export const SCHEDULE = "/settings/schedule";
 // ---------- NAVIGATION ROUTES | Home ----------
 
 export const primaryRoutes = [
-  { name: "Home", href: HOME, icon: HomeIcon, current: true },
-  { name: "History", href: "#", icon: ClockIcon, current: false },
+  { name: "Inicio", href: HOME, icon: HomeIcon, current: true },
+  { name: "Historial", href: "#", icon: ClockIcon, current: false },
 ];
 
 export const secondaryNavigation = [
-  { name: "Settings", href: SETTINGS, icon: CogIcon },
+  { name: "Configuración", href: SETTINGS, icon: CogIcon },
 ];
 
 // ---------- NAVIGATION ROUTES | Settings ----------
@@ -41,3 +41,7 @@ export const settingsNavigation = [
     current: false,
   },
 ];
+
+// ---------- API ROUTES ----------
+export const USER = "/user";
+export const TIMESLOTS = "/timeslots";

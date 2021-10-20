@@ -2,7 +2,7 @@ import { NotificationToast } from "@/components/NotificationToast";
 import React, { createContext, useCallback, useEffect, useState } from "react";
 
 interface IToast {
-  type: string;
+  type: "info" | "error" | "default";
   title: string;
   subText: string;
 }
@@ -27,7 +27,7 @@ export const ToastProvider: React.FC = ({ children }) => {
     if (toasts.length > 0) {
       const timer = setTimeout(
         () => setToasts((toast) => toast.slice(1)),
-        5000
+        3000
       );
       return () => {
         clearTimeout(timer);

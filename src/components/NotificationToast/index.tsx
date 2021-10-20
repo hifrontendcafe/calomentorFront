@@ -11,7 +11,7 @@ import { XIcon } from "@heroicons/react/solid";
 interface INotificationToast {
   title: string;
   subtext: string;
-  type: string;
+  type: "info" | "error" | "default";
 }
 
 export const NotificationToast: React.FC<INotificationToast> = ({

@@ -8,12 +8,14 @@ import CustomHead from "@/components/CustomHead";
 interface ISettingsSchedulePage {
   title: string;
   description: string;
+  component?: React.ReactNode;
 }
 
 const SettingsSchedulePage: React.FC<ISettingsSchedulePage> = ({
   children,
   title,
   description,
+  component,
 }) => {
   const router = useRouter();
   return (
@@ -47,11 +49,14 @@ const SettingsSchedulePage: React.FC<ISettingsSchedulePage> = ({
                 </nav>
               </aside>
               <div className="px-4 py-6 sm:p-6 lg:pb-8 lg:col-span-9">
-                <div>
-                  <h2 className="text-lg font-medium leading-6 text-mainTextColor">
-                    {title}
-                  </h2>
-                  <p className="mt-1 text-sm text-gray-500">{description}</p>
+                <div className="flex flex-row items-center justify-between">
+                  <div>
+                    <h2 className="text-lg font-medium leading-6 text-mainTextColor">
+                      {title}
+                    </h2>
+                    <p className="mt-1 text-sm text-gray-300">{description}</p>
+                  </div>
+                  {component}
                 </div>
                 {children}
               </div>

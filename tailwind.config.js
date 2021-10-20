@@ -11,26 +11,35 @@ module.exports = {
       colors: {
         teal: colors.teal,
         cyan: colors.cyan,
-        sidebar: "#161B22",
-        topbar: "#161B22",
-        mainContent: "#0D1117",
-        cardHeader: "#161B22",
-        cardContent: "#161B22",
-        fecGreen: "#00c39d",
+        // Dashboard
+        sidebar: "#171D24",
+        topbar: "#171D24",
+        mainContent: "#010409",
+        // Text Colors
         mainTextColor: colors.teal[200],
         logoTextColor: colors.white,
+        // Cards
+        cardHeader: "#161B22",
+        cardContent: "#161B22",
+        cardContentLight: "#0D1117",
+        // Others
+        fecGreen: "#00c39d",
         dividerColor: colors.teal[600],
+        addTimeslot: "#215188",
         // Navigation colors
-        hoverNavigation: colors.teal[600],
+        hoverNavigation: colors.teal[800],
         hoverNavigationText: colors.white,
-        activeNavigation: colors.teal[800],
+        activeNavigation: colors.teal[600],
         activeNavigationText: colors.white,
-        // Button colors
-        mainBtnColor: colors.teal[800],
-        mainBtnHoverColor: colors.teal[600],
-        mainBtnActiveColor: colors.teal[800],
+        // Primary Button colors
+        mainBtnTxt: colors.teal[200],
+        mainBtnColor: colors.teal[600],
+        mainBtnHoverColor: colors.teal[800],
+        mainBtnActiveColor: colors.teal[600],
+        // Secondary Button colors
+        secondarynBtnTxt: "#010409",
         secondaryBtnColor: colors.white,
-        secondaryBtnHoverColor: colors.teal[600],
+        secondaryBtnHoverColor: colors.teal[800],
         secondaryBtnActiveColor: colors.white,
       },
     },

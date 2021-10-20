@@ -31,13 +31,27 @@ export const createUser = async (userData: IUser) => {
 
 /**
  * Update an user
- * @param id The id of the user
+ * @param userId The id of the user
  * @param userData The data the user wants to update
  * @returns an object with the user data and the result of the operation
  */
-export const updateUserByID = async (id: string, userData: IUser) => {
+export const updateUserByID = async (userId: string, userData: IUser) => {
   try {
-    const { data } = await axiosAWSInstance.put(`/user/${id}`, userData);
+    const { data } = await axiosAWSInstance.put(`/user/${userId}`, userData);
+    return data;
+  } catch (error) {
+    return error.response.status;
+  }
+};
+
+/**
+ * Get user schedule
+ * @param userId The id of the user
+ * @returns an object with the user schedule data
+ */
+export const getUserSchedule = async (userId: string) => {
+  try {
+    const { data } = await axiosAWSInstance.get(`/time-slot/user/${userId}`);
     return data;
   } catch (error) {
     return error.response.status;

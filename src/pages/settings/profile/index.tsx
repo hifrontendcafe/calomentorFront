@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import SettingsPage from "..";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
@@ -6,11 +6,13 @@ import { useSession } from "next-auth/client";
 import { Switch } from "@headlessui/react";
 import Select from "react-select";
 import { fileUpload } from "@/helpers/ImageUpload";
-import { getUserByID, updateUserByID } from "@/lib/userAPI";
 import { Session } from "next-auth";
 import useUserContext from "@/hooks/useUserContext";
 import useToastContext from "@/hooks/useToastContext";
 import { IUser } from "@/interfaces/user.interface";
+import { axiosGet, axiosPut } from "@/lib/api";
+import { USER } from "@/config/Routes";
+import CustomButton from "@/components/Button";
 
 const SettingsProfilePage: React.FC = () => {
   const [session, loading] = useSession();
@@ -45,7 +47,7 @@ const SettingsProfilePage: React.FC = () => {
 
   useEffect(() => {
     const getUserData = async (session: Session) =>
-      await getUserByID(session.user.id.toString());
+      await axiosGet(`${USER}?id=${session.user.id.toString()}`);
     if (!id && !loading && session) {
       getUserData(session).then((res) => {
         if (res.code !== 404 && res.code !== 400) {
@@ -117,7 +119,7 @@ const SettingsProfilePage: React.FC = () => {
   ];
 
   const onSubmit: SubmitHandler<IUser> = async (data) => {
-    const res = await updateUserByID(id, data);
+    const res = await axiosPut(USER, { data });
     if (res === 400 || res === 404) {
       addToast({
         title: "Hubo un problema",
@@ -154,12 +156,21 @@ const SettingsProfilePage: React.FC = () => {
         className="divide-y divide-dividerColor lg:col-span-9"
       >
         <div className="px-4 py-6 sm:p-6 lg:pb-8">
+          <div style={{ display: "none" }}>
+            <input
+              type="text"
+              id="id"
+              autoComplete="off"
+              value={session?.user?.id?.toString()}
+              {...register("id", { required: true })}
+            />
+          </div>
           <div className="flex flex-col mt-6 lg:flex-row">
             <div className="flex-grow space-y-6">
               <div>
                 <label
                   htmlFor="full_name"
-                  className="block text-sm font-medium text-gray-700"
+                  className="block text-sm font-medium label"
                 >
                   Nombre Completo
                 </label>
@@ -168,7 +179,7 @@ const SettingsProfilePage: React.FC = () => {
                     type="text"
                     id="full_name"
                     autoComplete="off"
-                    className="flex-grow block w-full min-w-0 border-gray-300 rounded-md focus:ring-sky-500 focus:border-sky-500 sm:text-sm"
+                    className="custom_input"
                     {...register("full_name", { required: true })}
                   />
                 </div>
@@ -182,7 +193,7 @@ const SettingsProfilePage: React.FC = () => {
               <div>
                 <label
                   htmlFor="about"
-                  className="block text-sm font-medium text-gray-700"
+                  className="block text-sm font-medium label"
                 >
                   Sobre mí
                 </label>
@@ -191,7 +202,7 @@ const SettingsProfilePage: React.FC = () => {
                     id="about"
                     rows={3}
                     autoComplete="off"
-                    className="block w-full mt-1 border border-gray-300 rounded-md shadow-sm focus:ring-sky-500 focus:border-sky-500 sm:text-sm"
+                    className="custom_input"
                     {...register("about_me", { required: true })}
                   />
                 </div>
@@ -200,17 +211,11 @@ const SettingsProfilePage: React.FC = () => {
                     El campo &quot;Sobre mí&quot; es requerido
                   </p>
                 )}
-                <p className="mt-2 text-sm text-gray-500">
-                  Esto se va a visualizar en la web de FrontendCafé
-                </p>
               </div>
             </div>
 
             <div className="flex-grow mt-6 lg:mt-0 lg:ml-6 lg:flex-grow-0 lg:flex-shrink-0">
-              <p
-                className="text-sm font-medium text-gray-700"
-                aria-hidden="true"
-              >
+              <p className="text-sm font-medium label" aria-hidden="true">
                 Foto
               </p>
 
@@ -249,7 +254,7 @@ const SettingsProfilePage: React.FC = () => {
             <div className="col-span-12">
               <label
                 htmlFor="email"
-                className="block text-sm font-medium text-gray-700"
+                className="block text-sm font-medium label"
               >
                 Mail
               </label>
@@ -257,7 +262,7 @@ const SettingsProfilePage: React.FC = () => {
                 type="email"
                 id="email"
                 autoComplete="off"
-                className="block w-full px-3 py-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm"
+                className="custom_input"
                 {...register("email", { required: true })}
               />
               {errors.email && (
@@ -266,88 +271,17 @@ const SettingsProfilePage: React.FC = () => {
                 </p>
               )}
             </div>
-            {/* Social networks */}
-            <div className="col-span-12 sm:col-span-6">
-              <label
-                htmlFor="linkedin"
-                className="block text-sm font-medium text-gray-700"
-              >
-                LinkedIn
-              </label>
-              <input
-                type="url"
-                id="linkedin"
-                autoComplete="off"
-                placeholder="https://www.linkedin.com/in/usuario/"
-                className="block w-full px-3 py-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm"
-                {...register("links.linkedin", { required: true })}
-              />
-              {errors.links?.linkedin && (
-                <p className="pl-1 text-xs text-red-600">
-                  El campo es requerido
-                </p>
-              )}
-            </div>
-            <div className="col-span-12 sm:col-span-6">
-              <label
-                htmlFor="github"
-                className="block text-sm font-medium text-gray-700"
-              >
-                Github
-              </label>
-              <input
-                type="url"
-                id="github"
-                autoComplete="off"
-                placeholder="https://github.com/usuario"
-                className="block w-full px-3 py-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm"
-                {...register("links.github", { required: false })}
-              />
-            </div>
-            <div className="col-span-12 sm:col-span-6">
-              <label
-                htmlFor="portfolio"
-                className="block text-sm font-medium text-gray-700"
-              >
-                Portafolio
-              </label>
-              <input
-                type="url"
-                id="portfolio"
-                autoComplete="off"
-                placeholder="https://portfolio.com"
-                className="block w-full px-3 py-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm"
-                {...register("links.portfolio", { required: false })}
-              />
-            </div>
-            <div className="col-span-12 sm:col-span-6">
-              <label
-                htmlFor="twitter"
-                className="block text-sm font-medium text-gray-700"
-              >
-                Twitter
-              </label>
-              <input
-                type="url"
-                id="twitter"
-                autoComplete="off"
-                placeholder="https://twitter.com/usuario"
-                className="block w-full px-3 py-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm"
-                {...register("links.twitter", { required: false })}
-              />
-            </div>
             {/* Skills */}
             <div className="col-span-12">
               <label
                 htmlFor="skills"
-                className="block text-sm font-medium text-gray-700"
+                className="block text-sm font-medium label"
               >
                 Skills
               </label>
               <Controller
                 control={control}
                 name="skills"
-                // defaultValue={options.map((c) => c.value)}
                 render={({ field: { onChange, ref, value } }) => (
                   <Select
                     value={options.filter((c) => value?.includes(c.value))}
@@ -367,6 +301,76 @@ const SettingsProfilePage: React.FC = () => {
                 </p>
               )}
             </div>
+            {/* Social networks */}
+            <div className="col-span-12 sm:col-span-6">
+              <label
+                htmlFor="linkedin"
+                className="block text-sm font-medium label"
+              >
+                LinkedIn
+              </label>
+              <input
+                type="url"
+                id="linkedin"
+                autoComplete="off"
+                className="custom_input"
+                placeholder="https://www.linkedin.com/in/usuario/"
+                {...register("links.linkedin", { required: true })}
+              />
+              {errors.links?.linkedin && (
+                <p className="pl-1 text-xs text-red-600">
+                  El campo es requerido
+                </p>
+              )}
+            </div>
+            <div className="col-span-12 sm:col-span-6">
+              <label
+                htmlFor="github"
+                className="block text-sm font-medium label"
+              >
+                Github
+              </label>
+              <input
+                type="url"
+                id="github"
+                autoComplete="off"
+                className="custom_input"
+                placeholder="https://github.com/usuario"
+                {...register("links.github", { required: false })}
+              />
+            </div>
+            <div className="col-span-12 sm:col-span-6">
+              <label
+                htmlFor="portfolio"
+                className="block text-sm font-medium label"
+              >
+                Portafolio
+              </label>
+              <input
+                type="url"
+                id="portfolio"
+                autoComplete="off"
+                className="custom_input"
+                placeholder="https://portfolio.com"
+                {...register("links.portfolio", { required: false })}
+              />
+            </div>
+            <div className="col-span-12 sm:col-span-6">
+              <label
+                htmlFor="twitter"
+                className="block text-sm font-medium label"
+              >
+                Twitter
+              </label>
+              <input
+                type="url"
+                id="twitter"
+                autoComplete="off"
+                className="custom_input"
+                placeholder="https://twitter.com/usuario"
+                {...register("links.twitter", { required: false })}
+              />
+            </div>
           </div>
         </div>
         {/* Others */}
@@ -380,12 +384,12 @@ const SettingsProfilePage: React.FC = () => {
                 <div className="flex flex-col">
                   <Switch.Label
                     as="p"
-                    className="text-sm font-medium text-gray-900"
+                    className="text-sm font-medium label"
                     passive
                   >
                     Activo
                   </Switch.Label>
-                  <Switch.Description className="text-sm text-gray-500">
+                  <Switch.Description className="text-sm text-gray-300">
                     Aparecer en la web de FrontendCafé como disponible o no para
                     dar mentorías.
                   </Switch.Description>
@@ -417,19 +421,13 @@ const SettingsProfilePage: React.FC = () => {
 
         <div className="pt-6 divide-y divide-dividerColor">
           <div className="flex justify-end px-4 py-4 mt-4 sm:px-6">
-            <button
-              type="button"
-              onClick={() => reset()}
-              className="inline-flex justify-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none"
-            >
-              Cancelar
-            </button>
-            <button
-              type="submit"
-              className="inline-flex justify-center px-4 py-2 ml-5 text-sm font-medium text-white border border-transparent rounded-md shadow-sm bg-fecGreen hover:bg-sky-800 focus:outline-none"
-            >
-              Guardar
-            </button>
+            <CustomButton
+              bntLabel="Cancelar"
+              primary={false}
+              clickAction={() => reset()}
+              className="mr-2"
+            />
+            <CustomButton type="submit" bntLabel="Guardar" primary />
           </div>
         </div>
       </form>
