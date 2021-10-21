@@ -161,7 +161,7 @@ const SettingsProfilePage: React.FC = () => {
               type="text"
               id="id"
               autoComplete="off"
-              value={session?.user?.id?.toString()}
+              defaultValue={session?.user?.id?.toString()}
               {...register("id", { required: true })}
             />
           </div>
@@ -284,6 +284,7 @@ const SettingsProfilePage: React.FC = () => {
                 name="skills"
                 render={({ field: { onChange, ref, value } }) => (
                   <Select
+                    instanceId="superUniqueID"
                     value={options.filter((c) => value?.includes(c.value))}
                     onChange={(val) => onChange(val.map((c) => c.value))}
                     inputRef={ref}
