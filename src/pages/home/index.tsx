@@ -19,11 +19,13 @@ const Home: React.FC = () => {
         await axiosGet(`${USER}?id=${session.user.id.toString()}`);
       // Get user data and verify if the profile is configured,
       // if not, go to the profile settings
-      getUserData(session).then((res) => {
-        res.data.full_name === "" && session.user.role !== "0"
-          ? router.push(PROFILE)
-          : dispatch({ type: "SET", payload: { ...res.data } });
-      });
+      getUserData(session)
+        .then((res) => {
+          !res.data.full_name && session.user.role !== "0"
+            ? router.push(PROFILE)
+            : dispatch({ type: "SET", payload: { ...res.data } });
+        })
+        .catch((err) => console.log(err));
     }
   }, [loading, session, router, dispatch]);
 

@@ -13,10 +13,13 @@ import { IUser } from "@/interfaces/user.interface";
 import { axiosGet, axiosPut } from "@/lib/api";
 import { USER } from "@/config/Routes";
 import CustomButton from "@/components/Button";
+import TimezoneList from "@/lib/timezones.json";
 
 const SettingsProfilePage: React.FC = () => {
   const [session, loading] = useSession();
-  const [urlPhoto, setUrlPhoto] = useState("");
+  const [urlPhoto, setUrlPhoto] = useState(
+    "https://res.cloudinary.com/frontendcafe/image/upload/v1631388475/defaultUserImage_advu4k.svg"
+  );
   const {
     state: {
       id,
@@ -27,6 +30,7 @@ const SettingsProfilePage: React.FC = () => {
       url_photo,
       isActive,
       links,
+      timezone,
     },
     dispatch,
   } = useUserContext();
@@ -49,20 +53,19 @@ const SettingsProfilePage: React.FC = () => {
     const getUserData = async (session: Session) =>
       await axiosGet(`${USER}?id=${session.user.id.toString()}`);
     if (!id && !loading && session) {
-      getUserData(session).then((res) => {
-        if (res.code !== 404 && res.code !== 400) {
+      getUserData(session).then(({ data }) => {
+        if (data.full_name) {
           const {
-            data: {
-              full_name,
-              about_me,
-              email,
-              skills,
-              url_photo,
-              isActive,
-              links,
-            },
-          } = res;
-
+            full_name,
+            about_me,
+            email,
+            skills,
+            url_photo,
+            isActive,
+            links,
+            timezone,
+          } = data;
+          const timezoneString = timezone.toString();
           reset({
             full_name,
             about_me,
@@ -71,8 +74,10 @@ const SettingsProfilePage: React.FC = () => {
             url_photo,
             isActive,
             links,
+            timezone: timezoneString,
           });
-          dispatch({ type: "SET", payload: { ...res.data } });
+          setUrlPhoto(url_photo);
+          dispatch({ type: "SET", payload: { ...data } });
         } else {
           addToast({
             title: "Error",
@@ -83,6 +88,7 @@ const SettingsProfilePage: React.FC = () => {
       });
     }
     if (id && !loading) {
+      const timezoneString = timezone ? timezone.toString() : "";
       reset({
         full_name,
         about_me,
@@ -91,9 +97,12 @@ const SettingsProfilePage: React.FC = () => {
         url_photo,
         isActive,
         links,
+        timezone: timezoneString,
       });
+      if (url_photo && url_photo !== "") {
+        setUrlPhoto(url_photo);
+      }
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loading]);
 
   const options = [
@@ -222,13 +231,7 @@ const SettingsProfilePage: React.FC = () => {
               <div className="relative overflow-hidden rounded-full">
                 <Image
                   className="relative w-40 h-40 rounded-full"
-                  src={
-                    urlPhoto
-                      ? urlPhoto
-                      : getValues("url_photo") !== ""
-                      ? (getValues("url_photo") as string)
-                      : "https://res.cloudinary.com/frontendcafe/image/upload/v1631388475/defaultUserImage_advu4k.svg"
-                  }
+                  src={urlPhoto}
                   alt="User profile image"
                   width="180px"
                   height="180px"
@@ -290,6 +293,41 @@ const SettingsProfilePage: React.FC = () => {
                     inputRef={ref}
                     options={options}
                     isMulti
+                    classNamePrefix="react-select"
+                    className="filter-selector"
+                  />
+                )}
+                rules={{ required: true }}
+              />
+              {errors.skills && (
+                <p className="pl-1 text-xs text-red-600">
+                  El campo es requerido
+                </p>
+              )}
+            </div>
+            {/* Timezone */}
+            <div className="col-span-12">
+              <label
+                htmlFor="skills"
+                className="block text-sm font-medium label"
+              >
+                Zona Horaria
+              </label>
+              <Controller
+                control={control}
+                name="timezone"
+                render={({ field: { onChange, ref, value } }) => (
+                  <Select
+                    placeholder="Seleccionar"
+                    instanceId="superUniqueID2"
+                    value={TimezoneList.filter(
+                      (c) => value?.toString() === c?.id?.toString()
+                    )}
+                    onChange={(c) => onChange(c?.id?.toString())}
+                    inputRef={ref}
+                    options={TimezoneList}
+                    getOptionLabel={(opt) => opt.text}
+                    getOptionValue={(opt) => opt.id.toString()}
                     classNamePrefix="react-select"
                     className="filter-selector"
                   />

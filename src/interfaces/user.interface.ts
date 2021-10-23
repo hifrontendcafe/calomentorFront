@@ -14,6 +14,7 @@ export interface IUser {
   };
   isActive?: boolean;
   skills?: string[];
+  timezone?: string;
 }
 
 export interface ICreateUser {
