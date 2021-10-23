@@ -63,10 +63,14 @@ export default NextAuth({
               : isAdmin
               ? ["admin"]
               : ["mentor"];
-          await createUser({
-            id: user.id as string,
-            role,
-          });
+          try {
+            await createUser({
+              id: user.id as string,
+              role,
+            });
+          } catch (error) {
+            return false;
+          }
         }
         return true;
       } else {
