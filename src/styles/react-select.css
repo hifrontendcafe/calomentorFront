@@ -1,0 +1,28 @@
+/* React-Select */
+.filter-selector .react-select__multi-value {
+  @apply bg-cardHeader;
+}
+
+.filter-selector .react-select__multi-value__label {
+  @apply text-gray-300;
+}
+
+.filter-selector .react-select__menu {
+  @apply text-gray-300 border-gray-600 bg-mainContent;
+}
+
+.filter-selector .react-select__control {
+  @apply text-gray-300 border-gray-600 bg-mainContent;
+}
+
+.react-select__control:hover {
+  @apply border-gray-600;
+}
+
+.filter-selector .react-select__option--is-focused {
+  @apply bg-mainContent;
+}
+.react-select__single-value {
+  @apply text-gray-300 !important;
+}
+/* End React-Select */
