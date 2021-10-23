@@ -1,5 +1,19 @@
 import { axiosAWSInstance } from "@/config/AxiosConfig";
+import { AWS_TIMESLOT, USER } from "@/config/Routes";
 import { IUser } from "@/interfaces/user.interface";
+
+/**
+ * Get all users
+ * @returns An array of users
+ */
+export const getUsers = async () => {
+  try {
+    const { data } = await axiosAWSInstance.get<IUser>(USER);
+    return data;
+  } catch (error) {
+    return error.response.status;
+  }
+};
 
 /**
  * Get all data from a user
@@ -8,7 +22,7 @@ import { IUser } from "@/interfaces/user.interface";
  */
 export const getUserByID = async (id: string) => {
   try {
-    const { data } = await axiosAWSInstance.get<IUser>(`/user/${id}`);
+    const { data } = await axiosAWSInstance.get<IUser>(`${USER}/${id}`);
     return data;
   } catch (error) {
     return error.response.status;
@@ -22,7 +36,7 @@ export const getUserByID = async (id: string) => {
  */
 export const createUser = async (userData: IUser) => {
   try {
-    const { data } = await axiosAWSInstance.post("/user", userData);
+    const { data } = await axiosAWSInstance.post(USER, userData);
     return data;
   } catch (error) {
     return error.response.status;
@@ -37,7 +51,7 @@ export const createUser = async (userData: IUser) => {
  */
 export const updateUserByID = async (userId: string, userData: IUser) => {
   try {
-    const { data } = await axiosAWSInstance.put(`/user/${userId}`, userData);
+    const { data } = await axiosAWSInstance.put(`${USER}/${userId}`, userData);
     return data;
   } catch (error) {
     return error.response.status;
@@ -51,7 +65,9 @@ export const updateUserByID = async (userId: string, userData: IUser) => {
  */
 export const getUserSchedule = async (userId: string) => {
   try {
-    const { data } = await axiosAWSInstance.get(`/time-slot/user/${userId}`);
+    const { data } = await axiosAWSInstance.get(
+      `${AWS_TIMESLOT}${USER}/${userId}`
+    );
     return data;
   } catch (error) {
     return error.response.status;

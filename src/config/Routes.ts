@@ -3,6 +3,7 @@ import {
   CogIcon,
   HomeIcon,
   UserCircleIcon,
+  UserGroupIcon,
 } from "@heroicons/react/outline";
 
 // ---------- ROUTE CONSTANTS ----------
@@ -10,11 +11,18 @@ import {
 export const LOGIN = "/";
 export const HOME = "/home";
 export const UNAUTHORIZED = "/unauthorized";
+export const MENTORS = "/mentors";
 export const SETTINGS = "/settings";
 export const PROFILE = "/settings/profile";
 export const SCHEDULE = "/settings/schedule";
 
-// ---------- NAVIGATION ROUTES | Home ----------
+// ---------- API ROUTE CONSTANTS ----------
+
+export const USER = "/user";
+export const TIMESLOTS = "/timeslots";
+export const AWS_TIMESLOT = "/time-slot";
+
+// ---------- NAVIGATION ROUTES ----------
 
 export const primaryRoutes = [
   { name: "Inicio", href: HOME, icon: HomeIcon, current: true },
@@ -22,7 +30,16 @@ export const primaryRoutes = [
 ];
 
 export const secondaryNavigation = [
-  { name: "Configuración", href: SETTINGS, icon: CogIcon },
+  { name: "Configuración", href: SETTINGS, icon: CogIcon, current: true },
+];
+
+export const adminNavigation = [
+  {
+    name: "Mentores",
+    href: MENTORS,
+    icon: UserGroupIcon,
+    current: true,
+  },
 ];
 
 // ---------- NAVIGATION ROUTES | Settings ----------
@@ -41,7 +58,3 @@ export const settingsNavigation = [
     current: false,
   },
 ];
-
-// ---------- API ROUTES ----------
-export const USER = "/user";
-export const TIMESLOTS = "/timeslots";

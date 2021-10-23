@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { getUserByID, updateUserByID } from "@/lib/userAPI";
+import { getUserByID, getUsers, updateUserByID } from "@/lib/userAPI";
 
 export default async function handler(
   req: NextApiRequest,
@@ -8,7 +8,12 @@ export default async function handler(
   if (req.method === "GET") {
     const { query } = req;
     if (!query.id) {
-      return res.status(400).json({ message: "ID is required" });
+      try {
+        const data = await getUsers();
+        return res.status(200).json(data);
+      } catch (error) {
+        return res.status(500).json({ message: "An error has occurred" });
+      }
     }
     try {
       const data = await getUserByID(query.id as string);
