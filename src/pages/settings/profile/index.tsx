@@ -103,6 +103,7 @@ const SettingsProfilePage: React.FC = () => {
         setUrlPhoto(url_photo);
       }
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loading]);
 
   const options = [
