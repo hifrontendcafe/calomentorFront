@@ -21,7 +21,9 @@ const SettingsSchedulePage: React.FC = () => {
       const response = await axiosGet(
         `${TIMESLOTS}?id=${session.user.id.toString()}`
       );
-      setTimeslots(response.data);
+      if (response !== 400) {
+        setTimeslots(response.data);
+      }
       setIsLoading(false);
     }
     return { data: [] };
@@ -81,8 +83,7 @@ const SettingsSchedulePage: React.FC = () => {
             <Timeslot
               key={timeslot.id}
               id={timeslot.id}
-              date={timeslot.slot_date}
-              time={timeslot.slot_time}
+              date={timeslot.date}
               is_occupied={timeslot.is_occupied}
               updateTimeslots={setTimeslots}
             />

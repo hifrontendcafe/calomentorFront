@@ -1,30 +1,16 @@
 import useToastContext from "@/hooks/useToastContext";
-import React, { ReactNode, useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import CustomButton from "../Button";
 import { axiosPost } from "@/lib/api";
 import { useSession } from "next-auth/client";
 import { TIMESLOTS } from "@/config/Routes";
-import { set, addMonths } from "date-fns";
-import DatePicker, {
-  CalendarContainer,
-  registerLocale,
-} from "react-datepicker";
+import { format, set, addMonths } from "date-fns";
+import DatePicker, { registerLocale } from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import es from "date-fns/locale/es";
-import { ITimeslot } from "@/interfaces/timeslot.interface";
 registerLocale("es", es);
-
-const DatePickerContainer: React.FC<{
-  children: ReactNode[];
-  className: string;
-}> = ({ className, children }) => {
-  return (
-    <CalendarContainer className={className}>
-      <div style={{ position: "relative" }}>{children}</div>
-    </CalendarContainer>
-  );
-};
+import { ITimeslot } from "@/interfaces/timeslot.interface";
 
 interface IAddTimeslot {
   getSchedule: () => void;
@@ -59,8 +45,8 @@ const AddTimeslot: React.FC<IAddTimeslot> = ({
     if (!loading && session) {
       axiosPost(TIMESLOTS, {
         id: session.user.id.toString(),
-        date: data.date?.toLocaleDateString(),
-        time: data.time?.toLocaleTimeString(),
+        date: data.date,
+        time: data.time,
       }).then((res) => {
         if (res.message === "Time Slot added") {
           addToast({
@@ -87,10 +73,12 @@ const AddTimeslot: React.FC<IAddTimeslot> = ({
     let excludedTimes: Date[] = [];
     timeslots
       .filter(
-        ({ slot_date }) => slot_date === getValues("date").toLocaleDateString()
+        ({ date }) =>
+          format(new Date(date), "dd/MM/yyyy") ===
+          format(new Date(getValues("date")), "dd/MM/yyyy")
       )
-      .forEach(({ slot_time }) => {
-        const [hours, minutes, segundos] = slot_time.split(":");
+      .forEach(({ date: time }) => {
+        const [hours, minutes] = format(new Date(time), "HH:mm").split(":");
         excludedTimes.push(
           set(new Date(), {
             hours: parseInt(hours, 10),
@@ -126,7 +114,6 @@ const AddTimeslot: React.FC<IAddTimeslot> = ({
                       render={({ field: { onChange, ref, value } }) => (
                         <DatePicker
                           ref={ref}
-                          calendarContainer={DatePickerContainer}
                           className="custom_input"
                           selected={value}
                           onChange={(date) => {
@@ -165,7 +152,6 @@ const AddTimeslot: React.FC<IAddTimeslot> = ({
                       render={({ field: { onChange, ref, value } }) => (
                         <DatePicker
                           ref={ref}
-                          calendarContainer={DatePickerContainer}
                           className="custom_input"
                           selected={value}
                           onChange={(date) => onChange(date as Date)}
@@ -173,7 +159,7 @@ const AddTimeslot: React.FC<IAddTimeslot> = ({
                           showTimeSelectOnly
                           timeIntervals={15}
                           timeCaption="Horario"
-                          dateFormat="H:mm"
+                          dateFormat="HH:mm"
                           excludeTimes={excludedTimes}
                         />
                       )}

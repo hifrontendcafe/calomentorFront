@@ -1,9 +1,14 @@
 import React, { Dispatch } from "react";
-import { Fragment, useState } from "react";
+import { Fragment } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { XIcon } from "@heroicons/react/outline";
-import { primaryRoutes, secondaryNavigation } from "@/config/Routes";
-import { useRouter } from "next/dist/client/router";
+import {
+  adminNavigation,
+  primaryRoutes,
+  secondaryNavigation,
+} from "@/config/Routes";
+import NavigationRoute from "../NavigationRoute";
+import { useSession } from "next-auth/client";
 
 interface IMobileSidebar {
   sidebarOpen: boolean;
@@ -13,7 +18,7 @@ export const MobileSidebar: React.FC<IMobileSidebar> = ({
   sidebarOpen,
   setSidebarOpen,
 }) => {
-  const router = useRouter();
+  const [session, loading] = useSession();
   return (
     <Transition.Root show={sidebarOpen} as={Fragment}>
       <Dialog
@@ -72,46 +77,15 @@ export const MobileSidebar: React.FC<IMobileSidebar> = ({
               className="flex-shrink-0 h-full mt-5 overflow-y-auto divide-y divide-dividerColor"
               aria-label="Sidebar"
             >
-              <div className="px-2 space-y-1">
-                {primaryRoutes.map((item) => (
-                  <a
-                    key={item.name}
-                    href={item.href}
-                    className={`group flex items-center px-2 py-2 text-base font-medium rounded-md ${
-                      router.pathname === item.href
-                        ? "bg-activeNavigation text-mainTextColor active:bg-hoverNavigation"
-                        : "text-mainTextColor hover:text-white hover:bg-hoverNavigation active:bg-activeNavigation"
-                    }`}
-                    aria-current={item.current ? "page" : undefined}
-                  >
-                    <item.icon
-                      className="flex-shrink-0 w-6 h-6 mr-4 text-teal-200"
-                      aria-hidden="true"
-                    />
-                    {item.name}
-                  </a>
-                ))}
-              </div>
+              <NavigationRoute routes={primaryRoutes} />
+              {!loading &&
+                (session?.user.role === "0" || session?.user.role === "2") && (
+                  <div className="pt-6 mt-6">
+                    <NavigationRoute routes={adminNavigation} />
+                  </div>
+                )}
               <div className="pt-6 mt-6">
-                <div className="px-2 space-y-1">
-                  {secondaryNavigation.map((item) => (
-                    <a
-                      key={item.name}
-                      href={item.href}
-                      className={`group flex items-center px-2 py-2 text-base font-medium rounded-md ${
-                        router.pathname === item.href
-                          ? "bg-activeNavigation text-mainTextColor active:bg-hoverNavigation"
-                          : "text-mainTextColor hover:text-white hover:bg-hoverNavigation active:bg-activeNavigation"
-                      }`}
-                    >
-                      <item.icon
-                        className="w-6 h-6 mr-4 text-teal-200"
-                        aria-hidden="true"
-                      />
-                      {item.name}
-                    </a>
-                  ))}
-                </div>
+                <NavigationRoute routes={secondaryNavigation} />
               </div>
             </nav>
           </div>

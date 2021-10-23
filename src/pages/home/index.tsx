@@ -32,7 +32,7 @@ const Home: React.FC = () => {
   return (
     <>
       <CustomHead title="Inicio" />
-      <DashboardLayout>chubaca</DashboardLayout>
+      <DashboardLayout title="Inicio">asd</DashboardLayout>
     </>
   );
 };

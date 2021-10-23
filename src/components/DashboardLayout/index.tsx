@@ -1,10 +1,15 @@
-import { useState } from "react";
+import { ReactNode, useState } from "react";
 import { DesktopSidebar } from "../DesktopSidebar";
 import { MobileSidebar } from "../MobileSidebar";
 import { TopBar } from "../TopBar";
 import styles from "./styles.module.css";
 
-const DashboardLayout: React.FC = ({ children }) => {
+interface IDashboardLayout {
+  title: string;
+  children: ReactNode;
+}
+
+const DashboardLayout: React.FC<IDashboardLayout> = ({ title, children }) => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
@@ -14,10 +19,15 @@ const DashboardLayout: React.FC = ({ children }) => {
         setSidebarOpen={setSidebarOpen}
       />
       <DesktopSidebar />
-      <div className="flex-1 ">
+      <div className="flex-1">
         <TopBar setSidebarOpen={setSidebarOpen} />
+        <header className="px-5 pt-5">
+          <h2 className="text-2xl font-bold leading-7 text-mainTextColor sm:text-3xl sm:truncate">
+            {title}
+          </h2>
+        </header>
         <main
-          className={`relative z-0 flex-1 py-5 overflow-y-auto bg-mainContent ${styles.mainHeight}`}
+          className={`relative z-0 flex-1 p-5 overflow-y-auto bg-mainContent ${styles.mainHeight}`}
         >
           {children}
         </main>

@@ -6,11 +6,11 @@ import { CalendarIcon, TrashIcon, XIcon } from "@heroicons/react/outline";
 import React, { Dispatch, SetStateAction } from "react";
 import { useState } from "react";
 import Modal from "../Modal";
+import { format } from "date-fns";
 
 interface ISlot {
   id: string;
-  date: string;
-  time: string;
+  date: number;
   is_occupied: boolean;
   updateTimeslots: Dispatch<SetStateAction<ITimeslot[]>>;
 }
@@ -18,7 +18,6 @@ interface ISlot {
 const Timeslot: React.FC<ISlot> = ({
   id,
   date,
-  time,
   is_occupied,
   updateTimeslots,
 }) => {
@@ -47,6 +46,11 @@ const Timeslot: React.FC<ISlot> = ({
       }
     });
   };
+
+  const formatDatetime = (millis: number) => {
+    return format(new Date(millis), "dd/MM/yyyy - HH:mm");
+  };
+
   return (
     <li className="flex col-span-1 my-2 rounded-md shadow-sm">
       <div
@@ -62,7 +66,7 @@ const Timeslot: React.FC<ISlot> = ({
       >
         <div className="flex-1 px-4 py-2 text-sm truncate">
           <p className="font-semibold text-mainTextColor">
-            {date} - {time}
+            {formatDatetime(date)}
           </p>
           <p className="text-mainTextColor">
             Estado: {is_occupied ? "agendada" : "disponible"}
