@@ -20,8 +20,7 @@ const SettingsSchedulePage: React.FC<ISettingsSchedulePage> = ({
   const router = useRouter();
   return (
     <>
-      <CustomHead title="Configuración" />
-      <DashboardLayout>
+      <DashboardLayout title="Configuración">
         <div className="max-w-screen-xl px-4 pb-6 mx-auto sm:px-6 lg:pb-16 lg:px-8">
           <div className="overflow-hidden rounded-lg shadow bg-cardContent">
             <div className="divide-y divide-dividerColor lg:grid lg:grid-cols-12 lg:divide-y-0 lg:divide-x">
