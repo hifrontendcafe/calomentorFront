@@ -7,7 +7,7 @@ interface CustomHeadProps {
 }
 
 const CustomHead: React.FC<CustomHeadProps> = ({
-  title = "Calomentor",
+  title = "FrontendCafé",
   description = "Gestión de mentorías de FrontendCafé",
 }) => {
   return (

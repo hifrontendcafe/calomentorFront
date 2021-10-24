@@ -15,6 +15,9 @@ export default async function handler(
       const data = await getUserSchedule(query.id as string);
       return res.status(200).json(data);
     } catch (error) {
+      if (error.message === "400") {
+        return res.status(200).json({ data: [] });
+      }
       return res.status(500).json({ message: "An error has occurred" });
     }
   } else if (req.method === "POST") {

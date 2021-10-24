@@ -12,14 +12,14 @@ export default async function handler(
         const data = await getUsers();
         return res.status(200).json(data);
       } catch (error) {
-        return res.status(500).json({ message: "An error has occurred" });
+        return res.status(400).json(error);
       }
     }
     try {
       const data = await getUserByID(query.id as string);
       return res.status(200).json(data);
     } catch (error) {
-      return res.status(500).json({ message: "An error has occurred" });
+      return res.status(400).json(error);
     }
   } else if (req.method === "PUT") {
     const { body } = req;
@@ -32,7 +32,7 @@ export default async function handler(
       const data = await updateUserByID(id, body.data);
       return res.status(200).json(data);
     } catch (error) {
-      return res.status(500).json({ message: "An error has occurred" });
+      return res.status(400).json(error);
     }
   }
   return res.status(500).json({ message: "Invalid method" });

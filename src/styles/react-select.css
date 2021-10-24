@@ -1,6 +1,6 @@
 /* React-Select */
 .filter-selector .react-select__multi-value {
-  @apply bg-cardHeader;
+  @apply bg-cardContent;
 }
 
 .filter-selector .react-select__multi-value__label {

@@ -22,7 +22,7 @@ a {
 }
 
 .custom_input {
-  @apply block w-full px-3 py-2 mt-1 text-gray-300 border border-gray-700 rounded-md shadow-sm bg-mainContent focus:outline-none focus:border-fecGreen sm:text-sm;
+  @apply block w-full px-3 py-2 mt-1 text-gray-300 border border-gray-700 rounded-md shadow-sm bg-mainContent focus:outline-none focus:ring-0 focus:border-fecGreen sm:text-sm;
 }
 
 .label {

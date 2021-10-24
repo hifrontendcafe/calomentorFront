@@ -17,7 +17,7 @@ export const addNewTimeslot = async (
     });
     return data;
   } catch (error) {
-    return error.response.status;
+    throw new Error(error.response.status);
   }
 };
 
@@ -26,6 +26,6 @@ export const deleteTimeslot = async (timeslotId: string) => {
     const { data } = await axiosAWSInstance.delete(`/time-slot/${timeslotId}`);
     return data;
   } catch (error) {
-    return error.response.status;
+    throw new Error(error.response.status);
   }
 };

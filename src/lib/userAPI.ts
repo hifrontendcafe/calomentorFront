@@ -11,7 +11,7 @@ export const getUsers = async () => {
     const { data } = await axiosAWSInstance.get<IUser>(USER);
     return data;
   } catch (error) {
-    return error.response.status;
+    throw new Error(error.response.status);
   }
 };
 
@@ -25,7 +25,7 @@ export const getUserByID = async (id: string) => {
     const { data } = await axiosAWSInstance.get<IUser>(`${USER}/${id}`);
     return data;
   } catch (error) {
-    return error.response.status;
+    throw new Error(error.response.status);
   }
 };
 
@@ -39,7 +39,7 @@ export const createUser = async (userData: IUser) => {
     const { data } = await axiosAWSInstance.post(USER, userData);
     return data;
   } catch (error) {
-    return error.response.status;
+    throw new Error(error.response.status);
   }
 };
 
@@ -54,7 +54,7 @@ export const updateUserByID = async (userId: string, userData: IUser) => {
     const { data } = await axiosAWSInstance.put(`${USER}/${userId}`, userData);
     return data;
   } catch (error) {
-    return error.response.status;
+    throw new Error(error.response.status);
   }
 };
 
@@ -70,6 +70,6 @@ export const getUserSchedule = async (userId: string) => {
     );
     return data;
   } catch (error) {
-    return error.response.status;
+    throw new Error(error.response.status);
   }
 };

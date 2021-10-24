@@ -12,7 +12,7 @@ import useToastContext from "@/hooks/useToastContext";
 import { IUser } from "@/interfaces/user.interface";
 import { axiosGet, axiosPut } from "@/lib/api";
 import { USER } from "@/config/Routes";
-import CustomButton from "@/components/Button";
+import CustomButton from "@/components/CustomButton";
 import TimezoneList from "@/lib/timezones.json";
 
 const SettingsProfilePage: React.FC = () => {
@@ -78,12 +78,6 @@ const SettingsProfilePage: React.FC = () => {
           });
           setUrlPhoto(url_photo);
           dispatch({ type: "SET", payload: { ...data } });
-        } else {
-          addToast({
-            title: "Error",
-            subText: "Hubo un problema al cargar los datos",
-            type: "error",
-          });
         }
       });
     }
@@ -103,7 +97,7 @@ const SettingsProfilePage: React.FC = () => {
         setUrlPhoto(url_photo);
       }
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loading]);
 
   const options = [
@@ -129,20 +123,23 @@ const SettingsProfilePage: React.FC = () => {
   ];
 
   const onSubmit: SubmitHandler<IUser> = async (data) => {
-    const res = await axiosPut(USER, { data });
-    if (res === 400 || res === 404) {
-      addToast({
-        title: "Hubo un problema",
-        subText: "El usuario no ha sido actualizado",
-        type: "error",
+    axiosPut(USER, { data })
+      .then(({ data }) => {
+        console.log(data);
+        addToast({
+          title: "Actualizado",
+          subText: "El usuario se ha actualizado correctamente",
+          type: "default",
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+        addToast({
+          title: "Hubo un problema",
+          subText: "El usuario no ha sido actualizado",
+          type: "error",
+        });
       });
-    } else {
-      addToast({
-        title: "Actualizado",
-        subText: "El usuario se ha actualizado correctamente",
-        type: "default",
-      });
-    }
   };
 
   const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {

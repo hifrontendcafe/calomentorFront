@@ -59,7 +59,7 @@ export const NotificationToast: React.FC<INotificationToast> = ({
             </div>
             <div className="flex flex-shrink-0 ml-4">
               <button
-                className="inline-flex text-gray-400 bg-white rounded-md hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                className="inline-flex text-gray-400 bg-white rounded-md hover:text-gray-500 focus:outline-none"
                 onClick={() => setShow(false)}
               >
                 <span className="sr-only">Cerrar</span>

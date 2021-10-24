@@ -21,6 +21,7 @@ export const SCHEDULE = "/settings/schedule";
 export const USER = "/user";
 export const TIMESLOTS = "/timeslots";
 export const AWS_TIMESLOT = "/time-slot";
+export const MENTORSHIP = "/mentorship";
 
 // ---------- NAVIGATION ROUTES ----------
 

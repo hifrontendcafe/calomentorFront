@@ -52,7 +52,7 @@ const Timeslot: React.FC<ISlot> = ({
   };
 
   return (
-    <li className="flex col-span-1 my-2 rounded-md shadow-sm">
+    <div className="flex col-span-1 my-2 rounded-md shadow-sm">
       <div
         className={`${is_occupied ? "bg-red-500" : "bg-green-500"}
             flex-shrink-0 flex items-center justify-center w-14 text-cardContentLight text-sm font-medium rounded-l-md`}
@@ -101,7 +101,7 @@ const Timeslot: React.FC<ISlot> = ({
         title="¿Seguro/a que quieres eliminar el horario?"
         description="Esta acción es irreversible"
       />
-    </li>
+    </div>
   );
 };
 

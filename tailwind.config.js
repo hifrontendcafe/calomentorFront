@@ -19,7 +19,7 @@ module.exports = {
         mainTextColor: colors.teal[200],
         logoTextColor: colors.white,
         // Cards
-        cardHeader: "#161B22",
+        cardHeader: "#0F1218",
         cardContent: "#161B22",
         cardContentLight: "#0D1117",
         // Others

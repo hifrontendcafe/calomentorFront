@@ -1,7 +1,7 @@
 import useToastContext from "@/hooks/useToastContext";
 import React, { useState } from "react";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
-import CustomButton from "../Button";
+import CustomButton from "../CustomButton";
 import { axiosPost } from "@/lib/api";
 import { useSession } from "next-auth/client";
 import { TIMESLOTS } from "@/config/Routes";
@@ -47,8 +47,8 @@ const AddTimeslot: React.FC<IAddTimeslot> = ({
         id: session.user.id.toString(),
         date: data.date,
         time: data.time,
-      }).then((res) => {
-        if (res.message === "Time Slot added") {
+      })
+        .then((res) => {
           addToast({
             title: "Guardado",
             subText: "El nuevo horario ha sido agregado",
@@ -56,16 +56,18 @@ const AddTimeslot: React.FC<IAddTimeslot> = ({
           });
           reset();
           getSchedule();
-        } else {
+          close();
+        })
+        .catch((err) => {
+          console.log(err);
           reset();
           addToast({
             title: "Error",
             subText: "Hubo un problema al agregar el horario",
             type: "error",
           });
-        }
-        close();
-      });
+          close();
+        });
     }
   };
 

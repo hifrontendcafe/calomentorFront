@@ -55,21 +55,24 @@ export default NextAuth({
         // Asign role number depending of the roles the user have.
         user.role = getRole(isAdmin, isMentor);
         // Check if user exists else create it
-        const userAWS = await getUserByID(user.id as string);
-        if (userAWS === 404) {
-          const role =
-            isAdmin && isMentor
-              ? ["admin", "mentor"]
-              : isAdmin
-              ? ["admin"]
-              : ["mentor"];
-          try {
-            await createUser({
-              id: user.id as string,
-              role,
-            });
-          } catch (error) {
-            return false;
+        try {
+          await getUserByID(user.id as string);
+        } catch (error) {
+          if (error.message === "404") {
+            const role =
+              isAdmin && isMentor
+                ? ["admin", "mentor"]
+                : isAdmin
+                ? ["admin"]
+                : ["mentor"];
+            try {
+              await createUser({
+                id: user.id as string,
+                role,
+              });
+            } catch (error) {
+              return false;
+            }
           }
         }
         return true;

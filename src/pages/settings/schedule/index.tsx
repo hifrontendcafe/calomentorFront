@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { useSession } from "next-auth/client";
-import CustomButton from "@/components/Button";
+import CustomButton from "@/components/CustomButton";
 import Timeslot from "@/components/Timeslot";
 import { PlusIcon, XIcon } from "@heroicons/react/outline";
 import SettingsPage from "..";
@@ -15,18 +15,14 @@ const SettingsSchedulePage: React.FC = () => {
   const [timeslots, setTimeslots] = useState<ITimeslot[]>([]);
   const [addNew, setAddNew] = useState(false);
 
-  const getSchedule = useCallback(async (): Promise<{ data: [] }> => {
+  const getSchedule = useCallback(() => {
     if (!loading && session) {
       setIsLoading(true);
-      const response = await axiosGet(
-        `${TIMESLOTS}?id=${session.user.id.toString()}`
-      );
-      if (response !== 400) {
-        setTimeslots(response.data);
-      }
+      axiosGet(`${TIMESLOTS}?id=${session.user.id.toString()}`)
+        .then(({ data }) => setTimeslots(data))
+        .catch((err) => console.log(err));
       setIsLoading(false);
     }
-    return { data: [] };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loading]);
 
@@ -66,7 +62,7 @@ const SettingsSchedulePage: React.FC = () => {
         {!isLoading && timeslots?.length === 0 && (
           <div
             className={
-              "border-green-500 flex items-center justify-between flex-1 truncate border bg-cardContentLight rounded-md"
+              "border-green-500 flex items-center justify-between flex-1 my-5 border bg-cardContentLight rounded-md"
             }
           >
             <div className="flex-1 px-4 py-2 text-sm truncate">
