@@ -72,6 +72,9 @@ export const MobileSidebar: React.FC<IMobileSidebar> = ({
               <span className="text-3xl font-semibold text-gray-200">
                 🔥 Calomentor
               </span>
+              <span className="text-sm font-bold text-center text-red-500">
+                Alpha v0.000000001
+              </span>
             </div>
             <nav
               className="flex-shrink-0 h-full mt-5 overflow-y-auto divide-y divide-dividerColor"

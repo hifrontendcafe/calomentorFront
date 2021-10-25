@@ -22,6 +22,9 @@ export const DesktopSidebar: React.FC<IDesktopSidebar> = () => {
               🔥 Calomentor
             </span>
           </div>
+          <span className="text-sm font-bold text-center text-red-500">
+            Alpha v0.000000001
+          </span>
           <nav
             className="flex flex-col flex-1 mt-5 overflow-y-auto divide-y divide-dividerColor"
             aria-label="Sidebar"
