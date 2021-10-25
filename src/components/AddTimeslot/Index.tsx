@@ -44,8 +44,6 @@ const AddTimeslot: React.FC<IAddTimeslot> = ({
   const unifyDates = (date1: Date, date2: Date) => {
     date1.setHours(date2.getHours());
     date1.setMinutes(date2.getMinutes());
-    date1.setSeconds(date2.getSeconds());
-    date1.setMilliseconds(date2.getMilliseconds());
     return date1;
   };
 
