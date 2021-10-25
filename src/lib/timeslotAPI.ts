@@ -5,15 +5,11 @@ import { axiosAWSInstance } from "@/config/AxiosConfig";
  * @param datetime The datetime to add
  * @returns a confirmation if the timeslot was added or an error
  */
-export const addNewTimeslot = async (
-  id: string,
-  datetime: { date: string; time: string }
-) => {
+export const addNewTimeslot = async (id: string, datetime: string) => {
   try {
     const { data } = await axiosAWSInstance.post("/time-slot", {
       user_id: id,
-      slot_date: datetime.date,
-      slot_time: datetime.time,
+      slot_date: datetime,
     });
     return data;
   } catch (error) {
