@@ -23,7 +23,7 @@ export const DesktopSidebar: React.FC<IDesktopSidebar> = () => {
             </span>
           </div>
           <span className="text-sm font-bold text-center text-red-500">
-            Alpha v0.000000001
+            Alpha v0.000000002
           </span>
           <nav
             className="flex flex-col flex-1 mt-5 overflow-y-auto divide-y divide-dividerColor"
