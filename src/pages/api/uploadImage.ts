@@ -15,7 +15,7 @@ export default async function post(req: NextApiRequest, res: NextApiResponse) {
         url: result.secure_url,
       });
     } else {
-      return res.status(500).json({ message: "error", error });
+      return res.status(400).json({ message: "error", error });
     }
   });
 }

@@ -2,7 +2,7 @@ export interface IMentorhip {
   mentee_email: string;
   mentee_username_discord: string;
   time_slot_id: string;
-  status: string;
+  mentorship_status: string;
   mentor_id: string;
   mentor_name: string;
   info: string;

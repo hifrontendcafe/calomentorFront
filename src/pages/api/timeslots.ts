@@ -18,7 +18,7 @@ export default async function handler(
       if (error.message === "400") {
         return res.status(200).json({ data: [] });
       }
-      return res.status(500).json({ message: "An error has occurred" });
+      return res.status(400).json({ message: "An error has occurred" });
     }
   } else if (req.method === "POST") {
     const { body } = req;
@@ -29,7 +29,7 @@ export default async function handler(
       const data = await addNewTimeslot(body.id, body.datetime);
       return res.status(200).json(data);
     } catch (error) {
-      return res.status(500).json({ message: "An error has occurred" });
+      return res.status(400).json({ message: "An error has occurred" });
     }
   } else if (req.method === "DELETE") {
     const { query } = req;
@@ -40,8 +40,8 @@ export default async function handler(
       const data = await deleteTimeslot(query.timeslotId as string);
       return res.status(200).json(data);
     } catch (error) {
-      return res.status(500).json({ message: "An error has occurred" });
+      return res.status(400).json({ message: "An error has occurred" });
     }
   }
-  return res.status(500).json({ message: "Invalid method" });
+  return res.status(400).json({ message: "Invalid method" });
 }
