@@ -13,6 +13,7 @@ interface ISlot {
   date: number;
   is_occupied: boolean;
   updateTimeslots: Dispatch<SetStateAction<ITimeslot[]>>;
+  handleCancelTimeslot: () => void;
 }
 
 const Timeslot: React.FC<ISlot> = ({
@@ -20,6 +21,7 @@ const Timeslot: React.FC<ISlot> = ({
   date,
   is_occupied,
   updateTimeslots,
+  handleCancelTimeslot,
 }) => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const { addToast } = useToastContext();
@@ -74,6 +76,7 @@ const Timeslot: React.FC<ISlot> = ({
               <button
                 type="button"
                 className="relative inline-flex items-center px-2 py-2 -ml-px text-sm font-medium bg-transparent text-mainTextColor"
+                onClick={handleCancelTimeslot}
               >
                 <XIcon className="w-4 h-4" aria-hidden="true" />
               </button>

@@ -28,6 +28,14 @@ const Home: React.FC = () => {
     );
   };
 
+  const handleModalConfirmBtn = (token: string, name: string) => {
+    setModalData({
+      mentorshipToken: token,
+      menteeName: name,
+    });
+    setIsOpen(true);
+  };
+
   useEffect(() => {
     if (!loading && session) {
       const userID = session.user.id.toString();
@@ -71,8 +79,12 @@ const Home: React.FC = () => {
             <MentorshipCard
               key={m.id}
               mentorship={m}
-              setModal={setIsOpen}
-              setModalData={setModalData}
+              handleCancelMentorship={() =>
+                handleModalConfirmBtn(
+                  m.tokenForCancel,
+                  m.mentee_username_discord
+                )
+              }
             />
           ))}
         </div>
@@ -81,7 +93,7 @@ const Home: React.FC = () => {
           mentorshipToken={modalData.mentorshipToken}
           menteeName={modalData.menteeName}
           setModal={setIsOpen}
-          onCancelSubmit={removeMentorship}
+          callback={removeMentorship}
         />
       </DashboardLayout>
     </>

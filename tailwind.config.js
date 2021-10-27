@@ -32,7 +32,7 @@ module.exports = {
         activeNavigation: colors.teal[600],
         activeNavigationText: colors.white,
         // Primary Button colors
-        mainBtnTxt: colors.teal[200],
+        mainBtnTxt: colors.white,
         mainBtnColor: colors.teal[600],
         mainBtnHoverColor: colors.teal[800],
         mainBtnActiveColor: colors.teal[600],

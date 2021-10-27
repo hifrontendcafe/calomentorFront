@@ -5,27 +5,13 @@ import React, { Dispatch, SetStateAction } from "react";
 
 interface IMentorshipCard {
   mentorship: IMentorhip;
-  setModal: Dispatch<SetStateAction<boolean>>;
-  setModalData: Dispatch<
-    SetStateAction<{
-      mentorshipToken: string;
-      menteeName: string;
-    }>
-  >;
+  handleCancelMentorship: () => void;
 }
 
 const MentorshipCard: React.FC<IMentorshipCard> = ({
   mentorship,
-  setModal,
-  setModalData,
+  handleCancelMentorship,
 }) => {
-  const handlePressBtn = () => {
-    setModalData({
-      mentorshipToken: mentorship.tokenForCancel,
-      menteeName: mentorship.mentee_username_discord,
-    });
-    setModal(true);
-  };
   return (
     <div key={mentorship.id} className="px-4 pb-5 sm:px-6">
       <div className="flex border-t border-b border-r border-green-500 rounded-lg">
@@ -64,7 +50,7 @@ const MentorshipCard: React.FC<IMentorshipCard> = ({
             <button
               type="button"
               className="relative inline-flex items-center px-2 py-2 -ml-px text-5xl text-red-500 bg-transparent outline-none hover:text-red-800"
-              onClick={handlePressBtn}
+              onClick={handleCancelMentorship}
             >
               <UserRemoveIcon className="w-6 h-6" aria-hidden="true" />
             </button>

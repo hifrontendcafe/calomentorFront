@@ -22,7 +22,7 @@ const CustomButton: React.FC<ICustomButton> = ({
       type={type}
       className={`${className} inline-flex items-center px-3 py-2 text-sm font-medium leading-4 border border-transparent rounded-md shadow-sm ${
         primary
-          ? "text-mainTextColor bg-mainBtnColor hover:bg-mainBtnHoverColor"
+          ? "text-mainBtnTxt bg-mainBtnColor hover:bg-mainBtnHoverColor"
           : "text-black bg-secondaryBtnColor hover:bg-secondaryBtnHoverColor"
       } focus:outline-none`}
       onClick={clickAction ? clickAction : () => {}}

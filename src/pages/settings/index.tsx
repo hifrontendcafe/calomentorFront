@@ -31,7 +31,7 @@ const SettingsSchedulePage: React.FC<ISettingsSchedulePage> = ({
                     <a
                       className={`group border-l-4 px-3 py-2 flex items-center text-sm font-medium ${
                         router.pathname === item.href
-                          ? "bg-activeNavigation border-teal-500 text-mainTextColor hover:text-hoverNavigationText"
+                          ? "bg-activeNavigation border-teal-500 text-white"
                           : "border-transparent text-mainTextColor hover:bg-hoverNavigation hover:text-hoverNavigationText"
                       }
                       `}

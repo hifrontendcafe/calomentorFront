@@ -12,7 +12,7 @@ interface IModal {
   mentorshipToken: string;
   open: boolean;
   setModal: Dispatch<SetStateAction<boolean>>;
-  onCancelSubmit?: () => void;
+  callback?: () => void;
 }
 
 interface ICancelForm {
@@ -24,7 +24,7 @@ const CancelModal: React.FC<IModal> = ({
   mentorshipToken,
   open,
   setModal,
-  onCancelSubmit,
+  callback,
 }) => {
   const { addToast } = useToastContext();
   const {
@@ -42,7 +42,7 @@ const CancelModal: React.FC<IModal> = ({
           subText: "La mentoría ha sido cancelada satisfactoriamente.",
           type: "default",
         });
-        onCancelSubmit ? onCancelSubmit() : console.log("tuvieja");
+        callback ? callback() : null;
       })
       .catch(() => {
         addToast({

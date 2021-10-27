@@ -11,6 +11,18 @@
   @apply text-gray-300 border-gray-600 bg-mainContent;
 }
 
+.filter-selector .react-select__menu .react-select__option:active {
+  @apply bg-hoverNavigation;
+}
+
+.filter-selector .react-select__control--is-focused {
+  @apply border-fecGreen !important;
+}
+
+.filter-selector .react-select__control--is-focused:hover {
+  @apply border-fecGreen !important;
+}
+
 .filter-selector .react-select__control {
   @apply text-gray-300 border-gray-600 bg-mainContent;
 }
@@ -20,9 +32,15 @@
 }
 
 .filter-selector .react-select__option--is-focused {
-  @apply bg-mainContent;
+  @apply bg-hoverNavigation;
 }
+
+.filter-selector .react-select__option--is-selected {
+  @apply bg-hoverNavigation;
+}
+
 .react-select__single-value {
   @apply text-gray-300 !important;
 }
+
 /* End React-Select */

@@ -8,12 +8,32 @@ import { ITimeslot } from "@/interfaces/timeslot.interface";
 import { axiosGet } from "@/lib/api";
 import { TIMESLOTS } from "@/config/Routes";
 import AddTimeslot from "@/components/AddTimeslot/Index";
+import CancelModal from "@/components/CancelModal";
 
 const SettingsSchedulePage: React.FC = () => {
   const [session, loading] = useSession();
+  const [isOpen, setIsOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [timeslots, setTimeslots] = useState<ITimeslot[]>([]);
   const [addNew, setAddNew] = useState(false);
+  const [modalData, setModalData] = useState<{
+    mentorshipToken: string;
+    menteeName: string;
+  }>({ mentorshipToken: "", menteeName: "" });
+
+  const removeTimeslot = () => {
+    setTimeslots((prev) =>
+      prev.filter((m) => m.tokenForCancel !== modalData.mentorshipToken)
+    );
+  };
+
+  const handleModalConfirmBtn = (token: string, name: string) => {
+    setModalData({
+      mentorshipToken: token,
+      menteeName: name,
+    });
+    setIsOpen(true);
+  };
 
   const getSchedule = useCallback(() => {
     if (!loading && session) {
@@ -82,9 +102,22 @@ const SettingsSchedulePage: React.FC = () => {
               date={timeslot.date}
               is_occupied={timeslot.is_occupied}
               updateTimeslots={setTimeslots}
+              handleCancelTimeslot={() =>
+                handleModalConfirmBtn(
+                  timeslot.tokenForCancel,
+                  timeslot.mentee_username
+                )
+              }
             />
           ))}
       </div>
+      <CancelModal
+        open={isOpen}
+        mentorshipToken={modalData.mentorshipToken}
+        menteeName={modalData.menteeName}
+        setModal={setIsOpen}
+        callback={removeTimeslot}
+      />
     </SettingsPage>
   );
 };

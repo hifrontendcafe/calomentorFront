@@ -22,8 +22,8 @@ const NavigationRoute: React.FC<INavigationRoute> = ({ routes }) => {
           <a
             className={`group flex items-center px-2 py-2 text-sm leading-6 font-medium rounded-md ${
               router.pathname.includes(item.href)
-                ? "bg-activeNavigation text-mainTextColor active:bg-hoverNavigation"
-                : "text-mainTextColor hover:text-white hover:bg-hoverNavigation active:bg-activeNavigation"
+                ? "bg-activeNavigation active:bg-hoverNavigation text-white"
+                : "text-mainTextColor  hover:bg-hoverNavigation active:bg-activeNavigation "
             }`}
             aria-current={item.current ? "page" : undefined}
           >

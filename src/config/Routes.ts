@@ -27,7 +27,7 @@ export const MENTORSHIP = "/mentorship";
 
 export const primaryRoutes = [
   { name: "Inicio", href: HOME, icon: HomeIcon, current: true },
-  { name: "Historial", href: "#", icon: ClockIcon, current: false },
+  // { name: "Historial", href: "#", icon: ClockIcon, current: false },
 ];
 
 export const secondaryNavigation = [
