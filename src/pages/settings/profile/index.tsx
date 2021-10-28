@@ -179,7 +179,7 @@ const SettingsProfilePage: React.FC = () => {
                   htmlFor="full_name"
                   className="block text-sm font-medium label"
                 >
-                  Nombre Completo
+                  Nombre Completo*
                 </label>
                 <div className="flex mt-1 rounded-md shadow-sm">
                   <input
@@ -202,7 +202,7 @@ const SettingsProfilePage: React.FC = () => {
                   htmlFor="about"
                   className="block text-sm font-medium label"
                 >
-                  Sobre mí
+                  Sobre mí*
                 </label>
                 <div className="mt-1">
                   <textarea
@@ -242,6 +242,7 @@ const SettingsProfilePage: React.FC = () => {
                   <span className="sr-only"> foto del usuario</span>
                   <input
                     type="file"
+                    accept="image/*"
                     id="url_photo"
                     className="absolute inset-0 w-full h-full border-gray-300 rounded-md opacity-0 cursor-pointer"
                     onChange={handleImageChange}
@@ -257,7 +258,7 @@ const SettingsProfilePage: React.FC = () => {
                 htmlFor="email"
                 className="block text-sm font-medium label"
               >
-                Mail
+                Mail*
               </label>
               <input
                 type="email"
@@ -278,7 +279,7 @@ const SettingsProfilePage: React.FC = () => {
                 htmlFor="skills"
                 className="block text-sm font-medium label"
               >
-                Skills
+                Skills*
               </label>
               <Controller
                 control={control}
@@ -309,7 +310,7 @@ const SettingsProfilePage: React.FC = () => {
                 htmlFor="skills"
                 className="block text-sm font-medium label"
               >
-                Zona Horaria
+                Zona Horaria*
               </label>
               <Controller
                 control={control}
@@ -344,7 +345,7 @@ const SettingsProfilePage: React.FC = () => {
                 htmlFor="linkedin"
                 className="block text-sm font-medium label"
               >
-                LinkedIn
+                LinkedIn*
               </label>
               <input
                 type="url"
