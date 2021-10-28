@@ -1,4 +1,5 @@
 export interface IMentorhip {
+  id: string;
   mentee_email: string;
   mentee_username_discord: string;
   time_slot_id: string;
@@ -10,7 +11,8 @@ export interface IMentorhip {
   mentee_name: string;
   tokenForCancel: string;
   mentee_id: string;
-  id: string;
+  who_cancel: string;
+  cancel_cause: string;
   time_slot_info: {
     is_occupied: boolean;
     date: number;
@@ -21,4 +23,8 @@ export interface IMentorhip {
     mentee_username: string;
     id: string;
   };
+}
+
+export interface ICancelForm {
+  cancelCause: string;
 }

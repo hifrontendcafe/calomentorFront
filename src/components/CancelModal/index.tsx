@@ -6,6 +6,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { axiosPost } from "@/lib/api";
 import { MENTORSHIP } from "@/config/Routes";
 import useToastContext from "@/hooks/useToastContext";
+import { ICancelForm } from "@/interfaces/mentorship.interface";
 
 interface IModal {
   menteeName: string;
@@ -13,10 +14,6 @@ interface IModal {
   open: boolean;
   setModal: Dispatch<SetStateAction<boolean>>;
   callback?: () => void;
-}
-
-interface ICancelForm {
-  cancelCause: string;
 }
 
 const CancelModal: React.FC<IModal> = ({
@@ -35,7 +32,11 @@ const CancelModal: React.FC<IModal> = ({
   } = useForm<ICancelForm>();
 
   const onSubmit: SubmitHandler<ICancelForm> = async ({ cancelCause }) => {
-    axiosPost(MENTORSHIP, { token: mentorshipToken, cancelCause })
+    axiosPost(MENTORSHIP, {
+      token: mentorshipToken,
+      cancelCause,
+      whoCancel: "MENTOR",
+    })
       .then(() => {
         addToast({
           title: "Cancelada",

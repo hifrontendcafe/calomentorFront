@@ -23,11 +23,15 @@ export const getUserMentorships = async (id: string, filter: string) => {
  * @param cancelCause Cause for cancellation of mentorship
  * @returns if the mentorship was cancelled or an error occurred
  */
-export const cancelMentorship = async (token: string, cancelCause: string) => {
+export const cancelMentorship = async (
+  token: string,
+  cancelCause: string,
+  whoCancel: string
+) => {
   try {
     const { data } = await axiosAWSInstance.post(
       `${MENTORSHIP}/cancel?token=${token}`,
-      { cancelCause }
+      { cancelCause, whoCancel }
     );
     return data;
   } catch (error) {
