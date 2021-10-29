@@ -5,12 +5,15 @@ import { useRouter } from "next/dist/client/router";
 import { UserContext } from "@/context/UserContext";
 import CustomHead from "@/components/CustomHead";
 import { axiosGet } from "@/lib/api";
-import { MENTORSHIP, PROFILE, USER } from "@/config/Routes";
+import { MENTORSHIP, PROFILE, SCHEDULE, USER } from "@/config/Routes";
 import CancelModal from "@/components/CancelModal";
 import { IMentorhip } from "@/interfaces/mentorship.interface";
 import MentorshipCard from "@/components/MentorshipCard";
+import Link from "next/link";
+import Spinner from "@/components/Spinner";
 
 const Home: React.FC = () => {
+  const [isLoading, setIsLoading] = useState(true);
   const [mentorships, setMentorships] = useState<IMentorhip[]>([]);
   const [isOpen, setIsOpen] = useState(false);
   const [modalData, setModalData] = useState<{
@@ -57,6 +60,7 @@ const Home: React.FC = () => {
       // Get user mentorships data
       getMentorshipsData(userID)
         .then(({ data }) => {
+          setIsLoading(false);
           setMentorships(data);
         })
         .catch((err) => {
@@ -74,19 +78,38 @@ const Home: React.FC = () => {
             Próximas Mentorías
           </h3>
         </div>
-        <div className="pt-5 bg-cardContent">
-          {mentorships.map((m) => (
-            <MentorshipCard
-              key={m.id}
-              mentorship={m}
-              handleCancelMentorship={() =>
-                handleModalConfirmBtn(
-                  m.tokenForCancel,
-                  m.mentee_username_discord
-                )
+        <div className="p-5 rounded-b-lg bg-cardContent">
+          {isLoading && <Spinner />}
+          {!isLoading && mentorships.length === 0 && (
+            <div
+              className={
+                "border-green-500 mx-6 flex items-center justify-between my-5 border bg-cardContentLight rounded-md"
               }
-            />
-          ))}
+            >
+              <div className="flex-1 px-4 py-2 text-sm truncate">
+                <p className="py-2 text-center text-mainTextColor">
+                  Actualmente no posees mentorías agendadas, recuerda configurar
+                  tus{" "}
+                  <Link href={SCHEDULE}>
+                    <a className="underline">horarios disponibles.</a>
+                  </Link>
+                </p>
+              </div>
+            </div>
+          )}
+          {!isLoading &&
+            mentorships.map((m) => (
+              <MentorshipCard
+                key={m.id}
+                mentorship={m}
+                handleCancelMentorship={() =>
+                  handleModalConfirmBtn(
+                    m.tokenForCancel,
+                    m.mentee_username_discord
+                  )
+                }
+              />
+            ))}
         </div>
         <CancelModal
           open={isOpen}

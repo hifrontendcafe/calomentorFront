@@ -9,6 +9,7 @@ import { axiosGet } from "@/lib/api";
 import { TIMESLOTS } from "@/config/Routes";
 import AddTimeslot from "@/components/AddTimeslot/Index";
 import CancelModal from "@/components/CancelModal";
+import Spinner from "@/components/Spinner";
 
 const SettingsSchedulePage: React.FC = () => {
   const [session, loading] = useSession();
@@ -79,37 +80,39 @@ const SettingsSchedulePage: React.FC = () => {
           close={() => setAddNew(false)}
           timeslots={timeslots}
         />
-        {!isLoading && timeslots?.length === 0 && (
-          <div
-            className={
-              "border-green-500 flex items-center justify-between flex-1 my-5 border bg-cardContentLight rounded-md"
-            }
-          >
-            <div className="flex-1 px-4 py-2 text-sm truncate">
-              <p className="py-2 text-center text-mainTextColor">
-                No tienes ningún horario registrado, presiona en el botón
-                &quot;Agregar&quot; para añadir uno.
-              </p>
-            </div>
-            <div className="flex-shrink-0 pr-2"></div>
-          </div>
-        )}
-        {!isLoading &&
-          timeslots?.map((timeslot: ITimeslot) => (
-            <Timeslot
-              key={timeslot.id}
-              id={timeslot.id}
-              date={timeslot.date}
-              is_occupied={timeslot.is_occupied}
-              updateTimeslots={setTimeslots}
-              handleCancelTimeslot={() =>
-                handleModalConfirmBtn(
-                  timeslot.tokenForCancel,
-                  timeslot.mentee_username
-                )
+        <div className="py-5">
+          {isLoading && <Spinner />}
+          {!isLoading && timeslots?.length === 0 && (
+            <div
+              className={
+                "border-green-500 flex items-center justify-between my-5 border bg-cardContentLight rounded-md"
               }
-            />
-          ))}
+            >
+              <div className="flex-1 px-4 py-2 text-sm truncate">
+                <p className="py-2 text-center text-mainTextColor">
+                  No tienes ningún horario registrado, presiona en el botón
+                  &quot;Agregar&quot; para añadir uno.
+                </p>
+              </div>
+            </div>
+          )}
+          {!isLoading &&
+            timeslots?.map((timeslot: ITimeslot) => (
+              <Timeslot
+                key={timeslot.id}
+                id={timeslot.id}
+                date={timeslot.date}
+                is_occupied={timeslot.is_occupied}
+                updateTimeslots={setTimeslots}
+                handleCancelTimeslot={() =>
+                  handleModalConfirmBtn(
+                    timeslot.tokenForCancel,
+                    timeslot.mentee_username
+                  )
+                }
+              />
+            ))}
+        </div>
       </div>
       <CancelModal
         open={isOpen}
