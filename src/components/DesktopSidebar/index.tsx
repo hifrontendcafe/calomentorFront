@@ -23,7 +23,7 @@ export const DesktopSidebar: React.FC<IDesktopSidebar> = () => {
             </span>
           </div>
           <span className="text-sm font-bold text-center text-red-500">
-            Alpha v0.000000002
+            {process.env.NEXT_PUBLIC_CALOMENTOR_VERSION}
           </span>
           <nav
             className="flex flex-col flex-1 mt-5 overflow-y-auto divide-y divide-dividerColor"

@@ -73,7 +73,7 @@ export const MobileSidebar: React.FC<IMobileSidebar> = ({
                 🔥 Calomentor
               </span>
               <span className="text-sm font-bold text-center text-red-500">
-                Alpha v0.000000002
+                {process.env.NEXT_PUBLIC_CALOMENTOR_VERSION}
               </span>
             </div>
             <nav
