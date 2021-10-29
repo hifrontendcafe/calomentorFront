@@ -181,7 +181,7 @@ const SettingsProfilePage: React.FC = () => {
                 >
                   Nombre Completo*
                 </label>
-                <div className="flex mt-1 rounded-md shadow-sm">
+                <div className="flex mt-1 rounded-md">
                   <input
                     type="text"
                     id="full_name"
@@ -228,7 +228,7 @@ const SettingsProfilePage: React.FC = () => {
 
               <div className="relative overflow-hidden rounded-full">
                 <Image
-                  className="relative w-40 h-40 rounded-full"
+                  className="relative rounded-full"
                   src={urlPhoto}
                   alt="User profile image"
                   width="180px"
@@ -236,7 +236,7 @@ const SettingsProfilePage: React.FC = () => {
                 />
                 <label
                   htmlFor="url_photo"
-                  className="absolute inset-0 flex items-center justify-center w-full h-full text-sm font-medium text-white bg-black bg-opacity-75 opacity-0 hover:opacity-100 focus-within:opacity-100"
+                  className="absolute inset-0 flex items-center justify-center w-full h-full text-sm font-medium text-white bg-opacity-75 opacity-0 bg-cardContent hover:opacity-100 focus-within:opacity-100"
                 >
                   <span>Cambiar</span>
                   <span className="sr-only"> foto del usuario</span>
