@@ -38,11 +38,12 @@ const SettingsSchedulePage: React.FC = () => {
 
   const getSchedule = useCallback(() => {
     if (!loading && session) {
-      setIsLoading(true);
       axiosGet(`${TIMESLOTS}?id=${session.user.id.toString()}`)
-        .then(({ data }) => setTimeslots(data))
+        .then(({ data }) => {
+          setTimeslots(data);
+          setIsLoading(false);
+        })
         .catch((err) => console.log(err));
-      setIsLoading(false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loading]);
@@ -97,7 +98,8 @@ const SettingsSchedulePage: React.FC = () => {
             </div>
           )}
           {!isLoading &&
-            timeslots?.map((timeslot: ITimeslot) => (
+            timeslots.length > 0 &&
+            timeslots.map((timeslot: ITimeslot) => (
               <Timeslot
                 key={timeslot.id}
                 id={timeslot.id}
