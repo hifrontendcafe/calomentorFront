@@ -412,7 +412,7 @@ const SettingsProfilePage: React.FC = () => {
           </div>
         </div>
         {/* Others */}
-        <div className="divide-y divide-gray-200">
+        {/* <div className="divide-y divide-gray-200">
           <div className="px-4 sm:px-6">
             <ul role="list" className="mt-2 divide-y divide-dividerColor">
               <Switch.Group
@@ -455,7 +455,7 @@ const SettingsProfilePage: React.FC = () => {
               </Switch.Group>
             </ul>
           </div>
-        </div>
+        </div> */}
 
         <div className="pt-6 divide-y divide-dividerColor">
           <div className="flex justify-end px-4 py-4 mt-4 sm:px-6">
