@@ -27,6 +27,15 @@ export const axiosPut = async (endpoint: string, body: {}) => {
   }
 };
 
+export const axiosPatch = async (endpoint: string, body: {}) => {
+  try {
+    const { data } = await axiosInstance.patch(`/api${endpoint}`, body);
+    return data;
+  } catch (error) {
+    throw new Error(error.response.status);
+  }
+};
+
 export const axiosDelete = async (endpoint: string) => {
   try {
     const { data } = await axiosInstance.delete(`/api${endpoint}`);

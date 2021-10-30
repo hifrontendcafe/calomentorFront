@@ -1,5 +1,10 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { getUserByID, getUsers, updateUserByID } from "@/lib/userAPI";
+import {
+  getUserByID,
+  getUsers,
+  updateUserByID,
+  updateUserStatus,
+} from "@/lib/userAPI";
 
 export default async function handler(
   req: NextApiRequest,
@@ -32,6 +37,24 @@ export default async function handler(
       const data = await updateUserByID(id, body.data);
       return res.status(200).json(data);
     } catch (error) {
+      return res.status(400).json(error);
+    }
+  } else if (req.method === "PATCH") {
+    const { body } = req;
+    if (!body.userID || !body.authorID || typeof body.isActive !== "boolean") {
+      return res
+        .status(400)
+        .json({ message: "ID, authorID and isActive is required" });
+    }
+    try {
+      const data = await updateUserStatus(
+        body.userID,
+        body.authorID,
+        body.isActive
+      );
+      return res.status(200).json(data);
+    } catch (error) {
+      console.log("🚀 ~ file: user.ts ~ line 57 ~ error", error);
       return res.status(400).json(error);
     }
   }

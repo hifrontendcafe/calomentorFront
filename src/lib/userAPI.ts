@@ -1,5 +1,5 @@
 import { axiosAWSInstance } from "@/config/AxiosConfig";
-import { AWS_TIMESLOT, USER } from "@/config/Routes";
+import { ACTIVATE, AWS_TIMESLOT, USER } from "@/config/Routes";
 import { IUser } from "@/interfaces/user.interface";
 
 /**
@@ -67,6 +67,28 @@ export const getUserSchedule = async (userId: string) => {
   try {
     const { data } = await axiosAWSInstance.get(
       `${AWS_TIMESLOT}${USER}/${userId}`
+    );
+    return data;
+  } catch (error) {
+    throw new Error(error.response.status);
+  }
+};
+
+/**
+ *
+ * @param userId The id of the user to activate/deactivate
+ * @param actionAuthor The id of the one who activate/deactivate a user
+ * @returns If the user was activated/deactivated
+ */
+export const updateUserStatus = async (
+  userId: string,
+  actionAuthor: string,
+  isActive: boolean
+) => {
+  try {
+    const { data } = await axiosAWSInstance.patch(
+      `${USER}${ACTIVATE}/${userId}`,
+      { isActive: isActive, lastActivateBy: actionAuthor }
     );
     return data;
   } catch (error) {
