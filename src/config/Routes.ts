@@ -12,7 +12,7 @@ export const LOGIN = '/';
 export const HOME = '/home';
 export const UNAUTHORIZED = '/unauthorized';
 export const MENTORS = '/mentors';
-export const SETTINGS = '/settings';
+export const SETTINGS = '/settings/profile';
 export const PROFILE = '/settings/profile';
 export const SCHEDULE = '/settings/schedule';
 
