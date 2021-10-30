@@ -1,11 +1,11 @@
-import Image from "next/image";
-import DiscordLogo from "@/assets/img/Discord-Logo-White.svg";
-import PwdByVercel from "@/assets/img/powered-by-vercel.svg";
-import { signIn, useSession } from "next-auth/client";
-import { useRouter } from "next/dist/client/router";
-import { useEffect } from "react";
-import { HOME } from "@/config/Routes";
-import CustomHead from "@/components/CustomHead";
+import Image from 'next/image';
+import DiscordLogo from '@/assets/img/Discord-Logo-White.svg';
+import PwdByVercel from '@/assets/img/powered-by-vercel.svg';
+import { signIn, useSession } from 'next-auth/client';
+import { useRouter } from 'next/dist/client/router';
+import { useEffect } from 'react';
+import { HOME } from '@/config/Routes';
+import CustomHead from '@/components/CustomHead';
 
 const Home = () => {
   const [session, loading] = useSession();
@@ -41,7 +41,7 @@ const Home = () => {
                   <div className="flex justify-center">
                     <button
                       onClick={() =>
-                        signIn("discord", {
+                        signIn('discord', {
                           callbackUrl: `${window.location.origin}${HOME}`,
                         })
                       }
@@ -52,7 +52,6 @@ const Home = () => {
                         alt="Discord logo"
                         width="15%"
                         height="15%"
-                 
                       />
                       <p className="flex pl-2 my-auto text-sm font-semibold">
                         Iniciar sesión

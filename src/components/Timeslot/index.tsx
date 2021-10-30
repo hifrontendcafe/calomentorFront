@@ -1,12 +1,12 @@
-import { TIMESLOTS } from "@/config/Routes";
-import useToastContext from "@/hooks/useToastContext";
-import { ITimeslot } from "@/interfaces/timeslot.interface";
-import { axiosDelete } from "@/lib/api";
-import { CalendarIcon, TrashIcon, XIcon } from "@heroicons/react/outline";
-import React, { Dispatch, SetStateAction } from "react";
-import { useState } from "react";
-import Modal from "../Modal";
-import { formatMentorshipDate } from "@/helpers/formatDate";
+import { TIMESLOTS } from '@/config/Routes';
+import useToastContext from '@/hooks/useToastContext';
+import { ITimeslot } from '@/interfaces/timeslot.interface';
+import { axiosDelete } from '@/lib/api';
+import { CalendarIcon, TrashIcon, XIcon } from '@heroicons/react/outline';
+import React, { Dispatch, SetStateAction } from 'react';
+import { useState } from 'react';
+import Modal from '../Modal';
+import { formatMentorshipDate } from '@/helpers/formatDate';
 
 interface ISlot {
   id: string;
@@ -27,23 +27,23 @@ const Timeslot: React.FC<ISlot> = ({
   const { addToast } = useToastContext();
 
   const handleDelete = (timeslotId: string) => {
-    axiosDelete(`${TIMESLOTS}?timeslotId=${timeslotId}`).then((res) => {
-      if (res.message === "The slot was succesfully deleted") {
+    axiosDelete(`${TIMESLOTS}?timeslotId=${timeslotId}`).then(res => {
+      if (res.message === 'The slot was succesfully deleted') {
         setModalIsOpen(false);
-        updateTimeslots((prevTimeslots) =>
-          prevTimeslots.filter((slot) => slot.id !== id)
+        updateTimeslots(prevTimeslots =>
+          prevTimeslots.filter(slot => slot.id !== id),
         );
         addToast({
-          title: "Horario eliminado",
-          subText: "El horario ha sido eliminado correctamente",
-          type: "default",
+          title: 'Horario eliminado',
+          subText: 'El horario ha sido eliminado correctamente',
+          type: 'default',
         });
       } else {
         setModalIsOpen(false);
         addToast({
-          title: "Horario no eliminado",
-          subText: "Hubo un error al intentar eliminar el horario.",
-          type: "error",
+          title: 'Horario no eliminado',
+          subText: 'Hubo un error al intentar eliminar el horario.',
+          type: 'error',
         });
       }
     });
@@ -52,14 +52,14 @@ const Timeslot: React.FC<ISlot> = ({
   return (
     <div className="flex col-span-1 my-2 rounded-md shadow-sm">
       <div
-        className={`${is_occupied ? "bg-red-500" : "bg-green-500"}
+        className={`${is_occupied ? 'bg-red-500' : 'bg-green-500'}
             flex-shrink-0 flex items-center justify-center w-14 text-cardContentLight text-sm font-medium rounded-l-md`}
       >
         <CalendarIcon style={{ padding: 12 }} />
       </div>
       <div
         className={`${
-          is_occupied ? "border-red-500" : "border-green-500"
+          is_occupied ? 'border-red-500' : 'border-green-500'
         } flex items-center justify-between flex-1 truncate border-t border-b border-r  bg-cardContentLight rounded-r-md`}
       >
         <div className="flex-1 px-4 py-2 text-sm truncate">
@@ -67,7 +67,7 @@ const Timeslot: React.FC<ISlot> = ({
             {formatMentorshipDate(date)}
           </p>
           <p className="text-mainTextColor">
-            Estado: {is_occupied ? "agendada" : "disponible"}
+            Estado: {is_occupied ? 'agendada' : 'disponible'}
           </p>
         </div>
         <div className="flex-shrink-0 pr-2">

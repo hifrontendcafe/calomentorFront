@@ -1,20 +1,20 @@
-import NextAuth from "next-auth";
-import Providers from "next-auth/providers";
+import NextAuth from 'next-auth';
+import Providers from 'next-auth/providers';
 import {
   CalomentorAdminID,
   CalomentorMentorID,
   FrontendCafeID,
-} from "@/config/DiscordID";
-import { LOGIN, UNAUTHORIZED } from "@/config/Routes";
-import axios from "axios";
-import { createUser, getUserByID } from "@/lib/userAPI";
+} from '@/config/DiscordID';
+import { LOGIN, UNAUTHORIZED } from '@/config/Routes';
+import axios from 'axios';
+import { createUser, getUserByID } from '@/lib/userAPI';
 
 export default NextAuth({
   providers: [
     Providers.Discord({
       clientId: process.env.DISCORD_CLIENT_ID,
       clientSecret: process.env.DISCORD_CLIENT_SECRET,
-      scope: "identify email guilds",
+      scope: 'identify email guilds',
     }),
   ],
   secret: process.env.SECRET,
@@ -28,12 +28,12 @@ export default NextAuth({
   callbacks: {
     async signIn(user, account, profile) {
       const guildResp = await fetch(
-        "https://discord.com/api/users/@me/guilds",
+        'https://discord.com/api/users/@me/guilds',
         {
           headers: {
             Authorization: `Bearer ${account.accessToken}`,
           },
-        }
+        },
       );
       const guilds = await guildResp.json();
       // Check if the user is a member of the discord server.
@@ -44,7 +44,7 @@ export default NextAuth({
             headers: {
               Authorization: `Bot ${process.env.CALOMENTOR_BOT_TOKEN}`,
             },
-          }
+          },
         );
         const isAdmin = userInfo.roles.includes(CalomentorAdminID);
         const isMentor = userInfo.roles.includes(CalomentorMentorID);
@@ -58,13 +58,13 @@ export default NextAuth({
         try {
           await getUserByID(user.id as string);
         } catch (error) {
-          if (error.message === "404") {
+          if (error.message === '404') {
             const role =
               isAdmin && isMentor
-                ? ["admin", "mentor"]
+                ? ['admin', 'mentor']
                 : isAdmin
-                ? ["admin"]
-                : ["mentor"];
+                ? ['admin']
+                : ['mentor'];
             try {
               await createUser({
                 id: user.id as string,
@@ -99,12 +99,12 @@ export default NextAuth({
 
 const getRole = (isAdmin: boolean, isMentor: boolean) => {
   if (isAdmin && !isMentor) {
-    return "0";
+    return '0';
   }
   if (!isAdmin && isMentor) {
-    return "1";
+    return '1';
   }
   if (isAdmin && isMentor) {
-    return "2";
+    return '2';
   }
 };

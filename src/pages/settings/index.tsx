@@ -1,9 +1,9 @@
-import React from "react";
-import DashboardLayout from "@/components/DashboardLayout";
-import Link from "next/link";
-import { useRouter } from "next/dist/client/router";
-import { settingsNavigation } from "@/config/Routes";
-import CustomHead from "@/components/CustomHead";
+import React from 'react';
+import DashboardLayout from '@/components/DashboardLayout';
+import Link from 'next/link';
+import { useRouter } from 'next/dist/client/router';
+import { settingsNavigation } from '@/config/Routes';
+import CustomHead from '@/components/CustomHead';
 
 interface ISettingsSchedulePage {
   title: string;
@@ -26,16 +26,16 @@ const SettingsSchedulePage: React.FC<ISettingsSchedulePage> = ({
           <div className="divide-y divide-dividerColor lg:grid lg:grid-cols-12 lg:divide-y-0 lg:divide-x">
             <aside className="py-6 lg:col-span-3">
               <nav className="space-y-1">
-                {settingsNavigation.map((item) => (
+                {settingsNavigation.map(item => (
                   <Link href={item.href} key={item.name}>
                     <a
                       className={`group border-l-4 px-3 py-2 flex items-center text-sm font-medium ${
                         router.pathname === item.href
-                          ? "bg-activeNavigation border-teal-500 text-white"
-                          : "border-transparent text-mainTextColor hover:bg-hoverNavigation hover:text-hoverNavigationText"
+                          ? 'bg-activeNavigation border-teal-500 text-white'
+                          : 'border-transparent text-mainTextColor hover:bg-hoverNavigation hover:text-hoverNavigationText'
                       }
                       `}
-                      aria-current={item.current ? "page" : undefined}
+                      aria-current={item.current ? 'page' : undefined}
                     >
                       <item.icon
                         className={`flex-shrink-0 -ml-1 mr-3 h-6 w-6 text-mainTextColor`}

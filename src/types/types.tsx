@@ -1,10 +1,10 @@
-import { IUser } from "@/interfaces/user.interface";
+import { IUser } from '@/interfaces/user.interface';
 
 export type ActionUserType =
   | {
-      type: "SET";
+      type: 'SET';
       payload: IUser;
     }
   | {
-      type: "RESET";
+      type: 'RESET';
     };

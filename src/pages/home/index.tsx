@@ -1,16 +1,16 @@
-import { useContext, useEffect, useState } from "react";
-import { signOut, useSession } from "next-auth/client";
-import DashboardLayout from "@/components/DashboardLayout";
-import { useRouter } from "next/dist/client/router";
-import { UserContext } from "@/context/UserContext";
-import CustomHead from "@/components/CustomHead";
-import { axiosGet } from "@/lib/api";
-import { MENTORSHIP, PROFILE, SCHEDULE, USER } from "@/config/Routes";
-import CancelModal from "@/components/CancelModal";
-import { IMentorhip } from "@/interfaces/mentorship.interface";
-import MentorshipCard from "@/components/MentorshipCard";
-import Link from "next/link";
-import Spinner from "@/components/Spinner";
+import { useContext, useEffect, useState } from 'react';
+import { signOut, useSession } from 'next-auth/client';
+import DashboardLayout from '@/components/DashboardLayout';
+import { useRouter } from 'next/dist/client/router';
+import { UserContext } from '@/context/UserContext';
+import CustomHead from '@/components/CustomHead';
+import { axiosGet } from '@/lib/api';
+import { MENTORSHIP, PROFILE, SCHEDULE, USER } from '@/config/Routes';
+import CancelModal from '@/components/CancelModal';
+import { IMentorhip } from '@/interfaces/mentorship.interface';
+import MentorshipCard from '@/components/MentorshipCard';
+import Link from 'next/link';
+import Spinner from '@/components/Spinner';
 
 const Home: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -19,15 +19,15 @@ const Home: React.FC = () => {
   const [modalData, setModalData] = useState<{
     mentorshipToken: string;
     menteeName: string;
-  }>({ mentorshipToken: "", menteeName: "" });
+  }>({ mentorshipToken: '', menteeName: '' });
 
   const [session, loading] = useSession();
   const { dispatch } = useContext(UserContext);
   const router = useRouter();
 
   const removeMentorship = () => {
-    setMentorships((prev) =>
-      prev.filter((m) => m.tokenForCancel !== modalData.mentorshipToken)
+    setMentorships(prev =>
+      prev.filter(m => m.tokenForCancel !== modalData.mentorshipToken),
     );
   };
 
@@ -49,13 +49,13 @@ const Home: React.FC = () => {
       // Get user data and verify if the profile is configured,
       // if not, go to the profile settings
       getUserData(userID)
-        .then((res) => {
-          !res.data.full_name && session.user.role !== "0"
+        .then(res => {
+          !res.data.full_name && session.user.role !== '0'
             ? router.push(PROFILE)
-            : dispatch({ type: "SET", payload: { ...res.data } });
+            : dispatch({ type: 'SET', payload: { ...res.data } });
         })
-        .catch((err) => {
-          signOut({ callbackUrl: "/" });
+        .catch(err => {
+          signOut({ callbackUrl: '/' });
         });
       // Get user mentorships data
       getMentorshipsData(userID)
@@ -63,8 +63,8 @@ const Home: React.FC = () => {
           setIsLoading(false);
           setMentorships(data);
         })
-        .catch((err) => {
-          signOut({ callbackUrl: "/" });
+        .catch(err => {
+          signOut({ callbackUrl: '/' });
         });
     }
   }, [loading, session, router, dispatch]);
@@ -83,13 +83,13 @@ const Home: React.FC = () => {
           {!isLoading && mentorships.length === 0 && (
             <div
               className={
-                "border-green-500 mx-6 flex items-center justify-between my-5 border bg-cardContentLight rounded-md"
+                'border-green-500 mx-6 flex items-center justify-between my-5 border bg-cardContentLight rounded-md'
               }
             >
               <div className="flex-1 px-4 py-2 text-sm truncate">
                 <p className="py-2 text-center text-mainTextColor">
                   Actualmente no posees mentorías agendadas, recuerda configurar
-                  tus{" "}
+                  tus{' '}
                   <Link href={SCHEDULE}>
                     <a className="underline">horarios disponibles.</a>
                   </Link>
@@ -98,14 +98,14 @@ const Home: React.FC = () => {
             </div>
           )}
           {!isLoading &&
-            mentorships.map((m) => (
+            mentorships.map(m => (
               <MentorshipCard
                 key={m.id}
                 mentorship={m}
                 handleCancelMentorship={() =>
                   handleModalConfirmBtn(
                     m.tokenForCancel,
-                    m.mentee_username_discord
+                    m.mentee_username_discord,
                   )
                 }
               />

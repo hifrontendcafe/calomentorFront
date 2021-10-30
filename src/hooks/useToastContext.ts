@@ -1,5 +1,5 @@
-import { ToastContext } from "@/context/ToastContext";
-import { useContext } from "react";
+import { ToastContext } from '@/context/ToastContext';
+import { useContext } from 'react';
 
 const useToastContext = () => {
   return useContext(ToastContext);

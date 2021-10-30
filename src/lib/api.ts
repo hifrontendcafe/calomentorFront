@@ -1,4 +1,4 @@
-import { axiosInstance } from "@/config/AxiosConfig";
+import { axiosInstance } from '@/config/AxiosConfig';
 
 export const axiosGet = async (endpoint: string) => {
   try {

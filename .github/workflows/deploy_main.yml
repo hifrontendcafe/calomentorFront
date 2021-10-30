@@ -8,8 +8,8 @@ jobs:
   deployment:
     runs-on: ubuntu-latest
     steps:
-    - name: Deploy Main
-      uses: fjogeleit/http-request-action@master
-      with:
-        url: ${{ secrets.VERCEL_MAIN_DEPLOY }}
-        method: 'POST'
+      - name: Deploy Main
+        uses: fjogeleit/http-request-action@master
+        with:
+          url: ${{ secrets.VERCEL_MAIN_DEPLOY }}
+          method: 'POST'

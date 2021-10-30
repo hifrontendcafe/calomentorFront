@@ -1,4 +1,4 @@
-import { axiosAWSInstance } from "@/config/AxiosConfig";
+import { axiosAWSInstance } from '@/config/AxiosConfig';
 
 /**
  * Add new timeslot
@@ -7,7 +7,7 @@ import { axiosAWSInstance } from "@/config/AxiosConfig";
  */
 export const addNewTimeslot = async (id: string, datetime: string) => {
   try {
-    const { data } = await axiosAWSInstance.post("/time-slot", {
+    const { data } = await axiosAWSInstance.post('/time-slot', {
       user_id: id,
       slot_date: datetime,
     });

@@ -1,14 +1,14 @@
-import React, { useState } from "react";
-import CustomButton from "@/components/CustomButton";
-import Image from "next/image";
-import FECGif from "@/assets/gif/Fec.gif";
-import { SubmitHandler, useForm } from "react-hook-form";
-import { ICancelForm } from "@/interfaces/mentorship.interface";
-import { axiosPost, axiosPut } from "@/lib/api";
-import useToastContext from "@/hooks/useToastContext";
-import { MENTORSHIP, USER } from "@/config/Routes";
-import { useRouter } from "next/dist/client/router";
-import CustomHead from "@/components/CustomHead";
+import React, { useState } from 'react';
+import CustomButton from '@/components/CustomButton';
+import Image from 'next/image';
+import FECGif from '@/assets/gif/Fec.gif';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import { ICancelForm } from '@/interfaces/mentorship.interface';
+import { axiosPost, axiosPut } from '@/lib/api';
+import useToastContext from '@/hooks/useToastContext';
+import { MENTORSHIP, USER } from '@/config/Routes';
+import { useRouter } from 'next/dist/client/router';
+import CustomHead from '@/components/CustomHead';
 
 const CancelMentorship: React.FC = () => {
   const { addToast } = useToastContext();
@@ -29,7 +29,7 @@ const CancelMentorship: React.FC = () => {
       axiosPost(MENTORSHIP, {
         token,
         cancelCause,
-        whoCancel: "MENTEE",
+        whoCancel: 'MENTEE',
       })
         .then(() => {
           setIsCanceled(true);
@@ -38,17 +38,17 @@ const CancelMentorship: React.FC = () => {
         .catch(() => {
           setIsLoading(false);
           addToast({
-            title: "Hubo un problema",
-            subText: "La mentoría no se ha podido cancelar",
-            type: "error",
+            title: 'Hubo un problema',
+            subText: 'La mentoría no se ha podido cancelar',
+            type: 'error',
           });
         });
     } else {
       setIsLoading(false);
       addToast({
-        title: "Hubo un problema",
-        subText: "La url es incorrecta",
-        type: "error",
+        title: 'Hubo un problema',
+        subText: 'La url es incorrecta',
+        type: 'error',
       });
     }
   };
@@ -97,7 +97,7 @@ const CancelMentorship: React.FC = () => {
                         className="custom_input"
                         placeholder="Mensaje..."
                         rows={6}
-                        {...register("cancelCause", { required: true })}
+                        {...register('cancelCause', { required: true })}
                       />
                       {errors.cancelCause && (
                         <p className="pl-1 text-xs text-left text-red-600">

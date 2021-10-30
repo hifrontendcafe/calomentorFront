@@ -1,8 +1,8 @@
-import { ReactNode, useState } from "react";
-import { DesktopSidebar } from "../DesktopSidebar";
-import { MobileSidebar } from "../MobileSidebar";
-import { TopBar } from "../TopBar";
-import styles from "./styles.module.css";
+import { ReactNode, useState } from 'react';
+import { DesktopSidebar } from '../DesktopSidebar';
+import { MobileSidebar } from '../MobileSidebar';
+import { TopBar } from '../TopBar';
+import styles from './styles.module.css';
 
 interface IDashboardLayout {
   title: string;

@@ -1,8 +1,8 @@
-import { NotificationToast } from "@/components/NotificationToast";
-import React, { createContext, useCallback, useEffect, useState } from "react";
+import { NotificationToast } from '@/components/NotificationToast';
+import React, { createContext, useCallback, useEffect, useState } from 'react';
 
 interface IToast {
-  type: "info" | "error" | "default";
+  type: 'info' | 'error' | 'default';
   title: string;
   subText: string;
 }
@@ -20,15 +20,12 @@ export const ToastProvider: React.FC = ({ children }) => {
     (toast: IToast) => {
       setToasts(() => [...toasts, toast]);
     },
-    [toasts]
+    [toasts],
   );
 
   useEffect(() => {
     if (toasts.length > 0) {
-      const timer = setTimeout(
-        () => setToasts((toast) => toast.slice(1)),
-        5000
-      );
+      const timer = setTimeout(() => setToasts(toast => toast.slice(1)), 5000);
       return () => {
         clearTimeout(timer);
       };

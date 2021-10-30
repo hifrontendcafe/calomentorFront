@@ -1,7 +1,7 @@
-import { formatMentorshipDate } from "@/helpers/formatDate";
-import { IMentorhip } from "@/interfaces/mentorship.interface";
-import { CalendarIcon, UserRemoveIcon } from "@heroicons/react/outline";
-import React, { Dispatch, SetStateAction } from "react";
+import { formatMentorshipDate } from '@/helpers/formatDate';
+import { IMentorhip } from '@/interfaces/mentorship.interface';
+import { CalendarIcon, UserRemoveIcon } from '@heroicons/react/outline';
+import React, { Dispatch, SetStateAction } from 'react';
 
 interface IMentorshipCard {
   mentorship: IMentorhip;
@@ -26,15 +26,15 @@ const MentorshipCard: React.FC<IMentorshipCard> = ({
               {formatMentorshipDate(mentorship.time_slot_info.date)}
             </p>
             <p className="text-sm text-gray-300">
-              <span className="font-medium text-mainTextColor">Mentee:</span>{" "}
+              <span className="font-medium text-mainTextColor">Mentee:</span>{' '}
               {mentorship.mentee_username_discord}
             </p>
             <p className="text-sm text-gray-300">
-              <span className="font-medium text-mainTextColor">ID:</span>{" "}
+              <span className="font-medium text-mainTextColor">ID:</span>{' '}
               {mentorship.mentee_id}
             </p>
             <p className="text-sm text-gray-300">
-              <span className="font-medium text-mainTextColor">Email:</span>{" "}
+              <span className="font-medium text-mainTextColor">Email:</span>{' '}
               {mentorship.mentee_email}
             </p>
           </div>
@@ -42,7 +42,7 @@ const MentorshipCard: React.FC<IMentorshipCard> = ({
             <p className="text-sm text-left text-gray-300">
               <span className="font-medium text-mainTextColor">
                 Información:
-              </span>{" "}
+              </span>{' '}
               {mentorship.info}
             </p>
           </div>

@@ -1,7 +1,7 @@
-import { Dispatch, Fragment, SetStateAction } from "react";
-import { Dialog, Transition } from "@headlessui/react";
-import { CheckIcon } from "@heroicons/react/outline";
-import CustomButton from "../CustomButton";
+import { Dispatch, Fragment, SetStateAction } from 'react';
+import { Dialog, Transition } from '@headlessui/react';
+import { CheckIcon } from '@heroicons/react/outline';
+import CustomButton from '../CustomButton';
 
 interface IModal {
   title: string;

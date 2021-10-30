@@ -1,6 +1,6 @@
-import { axiosAWSInstance } from "@/config/AxiosConfig";
-import { MENTORSHIP } from "@/config/Routes";
-import { IMentorhip } from "@/interfaces/mentorship.interface";
+import { axiosAWSInstance } from '@/config/AxiosConfig';
+import { MENTORSHIP } from '@/config/Routes';
+import { IMentorhip } from '@/interfaces/mentorship.interface';
 
 /**
  * Get all mentorships from a user
@@ -9,7 +9,7 @@ import { IMentorhip } from "@/interfaces/mentorship.interface";
 export const getUserMentorships = async (id: string, filter: string) => {
   try {
     const { data } = await axiosAWSInstance.get<IMentorhip>(
-      `${MENTORSHIP}/${id}?filter=${filter} `
+      `${MENTORSHIP}/${id}?filter=${filter} `,
     );
     return data;
   } catch (error) {
@@ -26,12 +26,12 @@ export const getUserMentorships = async (id: string, filter: string) => {
 export const cancelMentorship = async (
   token: string,
   cancelCause: string,
-  whoCancel: string
+  whoCancel: string,
 ) => {
   try {
     const { data } = await axiosAWSInstance.post(
       `${MENTORSHIP}/cancel?token=${token}`,
-      { cancelCause, whoCancel }
+      { cancelCause, whoCancel },
     );
     return data;
   } catch (error) {

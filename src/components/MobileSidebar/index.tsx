@@ -1,16 +1,16 @@
-import React, { Dispatch } from "react";
-import { Fragment } from "react";
-import { Dialog, Transition } from "@headlessui/react";
-import { XIcon } from "@heroicons/react/outline";
+import React, { Dispatch } from 'react';
+import { Fragment } from 'react';
+import { Dialog, Transition } from '@headlessui/react';
+import { XIcon } from '@heroicons/react/outline';
 import {
   adminNavigation,
   primaryRoutes,
   secondaryNavigation,
-} from "@/config/Routes";
-import NavigationRoute from "../NavigationRoute";
-import { useSession } from "next-auth/client";
-import PepeJedi from "@/assets/gif/pepe-jedi.gif";
-import Image from "next/image";
+} from '@/config/Routes';
+import NavigationRoute from '../NavigationRoute';
+import { useSession } from 'next-auth/client';
+import PepeJedi from '@/assets/gif/pepe-jedi.gif';
+import Image from 'next/image';
 
 interface IMobileSidebar {
   sidebarOpen: boolean;
@@ -85,7 +85,7 @@ export const MobileSidebar: React.FC<IMobileSidebar> = ({
             >
               <NavigationRoute routes={primaryRoutes} />
               {!loading &&
-                (session?.user.role === "0" || session?.user.role === "2") && (
+                (session?.user.role === '0' || session?.user.role === '2') && (
                   <div className="pt-6 mt-6">
                     <NavigationRoute routes={adminNavigation} />
                   </div>

@@ -1,8 +1,8 @@
-import "@/styles/globals.css";
-import type { AppProps } from "next/app";
-import { Provider } from "next-auth/client";
-import { UserProvider } from "@/context/UserContext";
-import { ToastProvider } from "@/context/ToastContext";
+import '@/styles/globals.css';
+import type { AppProps } from 'next/app';
+import { Provider } from 'next-auth/client';
+import { UserProvider } from '@/context/UserContext';
+import { ToastProvider } from '@/context/ToastContext';
 
 const CalomentorApp = ({ Component, pageProps }: AppProps) => {
   return (

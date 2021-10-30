@@ -1,24 +1,24 @@
-import React, { useEffect, useState } from "react";
-import Image from "next/image";
-import SettingsPage from "..";
-import { Controller, SubmitHandler, useForm } from "react-hook-form";
-import { useSession } from "next-auth/client";
-import { Switch } from "@headlessui/react";
-import Select from "react-select";
-import { fileUpload } from "@/helpers/ImageUpload";
-import { Session } from "next-auth";
-import useUserContext from "@/hooks/useUserContext";
-import useToastContext from "@/hooks/useToastContext";
-import { IUser } from "@/interfaces/user.interface";
-import { axiosGet, axiosPut } from "@/lib/api";
-import { USER } from "@/config/Routes";
-import CustomButton from "@/components/CustomButton";
-import TimezoneList from "@/lib/timezones.json";
+import React, { useEffect, useState } from 'react';
+import Image from 'next/image';
+import SettingsPage from '..';
+import { Controller, SubmitHandler, useForm } from 'react-hook-form';
+import { useSession } from 'next-auth/client';
+import { Switch } from '@headlessui/react';
+import Select from 'react-select';
+import { fileUpload } from '@/helpers/ImageUpload';
+import { Session } from 'next-auth';
+import useUserContext from '@/hooks/useUserContext';
+import useToastContext from '@/hooks/useToastContext';
+import { IUser } from '@/interfaces/user.interface';
+import { axiosGet, axiosPut } from '@/lib/api';
+import { USER } from '@/config/Routes';
+import CustomButton from '@/components/CustomButton';
+import TimezoneList from '@/lib/timezones.json';
 
 const SettingsProfilePage: React.FC = () => {
   const [session, loading] = useSession();
   const [urlPhoto, setUrlPhoto] = useState(
-    "https://res.cloudinary.com/frontendcafe/image/upload/v1631388475/defaultUserImage_advu4k.svg"
+    'https://res.cloudinary.com/frontendcafe/image/upload/v1631388475/defaultUserImage_advu4k.svg',
   );
   const {
     state: {
@@ -45,7 +45,7 @@ const SettingsProfilePage: React.FC = () => {
     getValues,
   } = useForm<IUser>({
     defaultValues: {
-      url_photo: "",
+      url_photo: '',
     },
   });
 
@@ -77,12 +77,12 @@ const SettingsProfilePage: React.FC = () => {
             timezone: timezoneString,
           });
           setUrlPhoto(url_photo);
-          dispatch({ type: "SET", payload: { ...data } });
+          dispatch({ type: 'SET', payload: { ...data } });
         }
       });
     }
     if (id && !loading) {
-      const timezoneString = timezone ? timezone.toString() : "";
+      const timezoneString = timezone ? timezone.toString() : '';
       reset({
         full_name,
         about_me,
@@ -93,7 +93,7 @@ const SettingsProfilePage: React.FC = () => {
         links,
         timezone: timezoneString,
       });
-      if (url_photo && url_photo !== "") {
+      if (url_photo && url_photo !== '') {
         setUrlPhoto(url_photo);
       }
     }
@@ -101,43 +101,43 @@ const SettingsProfilePage: React.FC = () => {
   }, [loading]);
 
   const options = [
-    { value: "Diseño UX-UI", label: "Diseño UX-UI" },
-    { value: "Backend", label: "Backend" },
-    { value: "Product management", label: "Product management" },
-    { value: "Inglés", label: "Inglés" },
-    { value: "Entrepreneurship", label: "Entrepreneurship" },
-    { value: "Analítica web / App", label: "Analítica web / App" },
-    { value: "Frontend", label: "Frontend" },
-    { value: "Git", label: "Git" },
+    { value: 'Diseño UX-UI', label: 'Diseño UX-UI' },
+    { value: 'Backend', label: 'Backend' },
+    { value: 'Product management', label: 'Product management' },
+    { value: 'Inglés', label: 'Inglés' },
+    { value: 'Entrepreneurship', label: 'Entrepreneurship' },
+    { value: 'Analítica web / App', label: 'Analítica web / App' },
+    { value: 'Frontend', label: 'Frontend' },
+    { value: 'Git', label: 'Git' },
     {
-      value: "Data science / Data engineer",
-      label: "Data science / Data engineer",
+      value: 'Data science / Data engineer',
+      label: 'Data science / Data engineer',
     },
     {
-      value: "Diseño y arquitectura de software",
-      label: "Diseño y arquitectura de software",
+      value: 'Diseño y arquitectura de software',
+      label: 'Diseño y arquitectura de software',
     },
-    { value: "Soft skills", label: "Soft skills" },
-    { value: "Orientación / CV", label: "Orientación / CV" },
-    { value: "Intro a la programación", label: "Intro a la programación" },
+    { value: 'Soft skills', label: 'Soft skills' },
+    { value: 'Orientación / CV', label: 'Orientación / CV' },
+    { value: 'Intro a la programación', label: 'Intro a la programación' },
   ];
 
-  const onSubmit: SubmitHandler<IUser> = async (data) => {
+  const onSubmit: SubmitHandler<IUser> = async data => {
     axiosPut(USER, { data })
       .then(({ data }) => {
         console.log(data);
         addToast({
-          title: "Actualizado",
-          subText: "El usuario se ha actualizado correctamente",
-          type: "default",
+          title: 'Actualizado',
+          subText: 'El usuario se ha actualizado correctamente',
+          type: 'default',
         });
       })
-      .catch((err) => {
+      .catch(err => {
         console.log(err);
         addToast({
-          title: "Hubo un problema",
-          subText: "El usuario no ha sido actualizado",
-          type: "error",
+          title: 'Hubo un problema',
+          subText: 'El usuario no ha sido actualizado',
+          type: 'error',
         });
       });
   };
@@ -148,7 +148,7 @@ const SettingsProfilePage: React.FC = () => {
       const imageUrl = await fileUpload(file);
       if (imageUrl) {
         setUrlPhoto(imageUrl);
-        setValue("url_photo", imageUrl);
+        setValue('url_photo', imageUrl);
       }
     }
   };
@@ -163,13 +163,13 @@ const SettingsProfilePage: React.FC = () => {
         className="divide-y divide-dividerColor lg:col-span-9"
       >
         <div className="px-4 py-6 sm:p-6 lg:pb-8">
-          <div style={{ display: "none" }}>
+          <div style={{ display: 'none' }}>
             <input
               type="text"
               id="id"
               autoComplete="off"
               defaultValue={session?.user?.id?.toString()}
-              {...register("id", { required: true })}
+              {...register('id', { required: true })}
             />
           </div>
           <div className="flex flex-col mt-6 lg:flex-row">
@@ -187,7 +187,7 @@ const SettingsProfilePage: React.FC = () => {
                     id="full_name"
                     autoComplete="off"
                     className="custom_input"
-                    {...register("full_name", { required: true })}
+                    {...register('full_name', { required: true })}
                   />
                 </div>
                 {errors.full_name && (
@@ -210,7 +210,7 @@ const SettingsProfilePage: React.FC = () => {
                     rows={3}
                     autoComplete="off"
                     className="custom_input"
-                    {...register("about_me", { required: true })}
+                    {...register('about_me', { required: true })}
                   />
                 </div>
                 {errors.about_me && (
@@ -265,7 +265,7 @@ const SettingsProfilePage: React.FC = () => {
                 id="email"
                 autoComplete="off"
                 className="custom_input"
-                {...register("email", { required: true })}
+                {...register('email', { required: true })}
               />
               {errors.email && (
                 <p className="pl-1 text-xs text-red-600">
@@ -287,8 +287,8 @@ const SettingsProfilePage: React.FC = () => {
                 render={({ field: { onChange, ref, value } }) => (
                   <Select
                     instanceId="superUniqueID"
-                    value={options.filter((c) => value?.includes(c.value))}
-                    onChange={(val) => onChange(val.map((c) => c.value))}
+                    value={options.filter(c => value?.includes(c.value))}
+                    onChange={val => onChange(val.map(c => c.value))}
                     inputRef={ref}
                     options={options}
                     isMulti
@@ -320,13 +320,13 @@ const SettingsProfilePage: React.FC = () => {
                     placeholder="Seleccionar"
                     instanceId="superUniqueID2"
                     value={TimezoneList.filter(
-                      (c) => value?.toString() === c?.id?.toString()
+                      c => value?.toString() === c?.id?.toString(),
                     )}
-                    onChange={(c) => onChange(c?.id?.toString())}
+                    onChange={c => onChange(c?.id?.toString())}
                     inputRef={ref}
                     options={TimezoneList}
-                    getOptionLabel={(opt) => opt.text}
-                    getOptionValue={(opt) => opt.id.toString()}
+                    getOptionLabel={opt => opt.text}
+                    getOptionValue={opt => opt.id.toString()}
                     classNamePrefix="react-select"
                     className="filter-selector"
                   />
@@ -353,7 +353,7 @@ const SettingsProfilePage: React.FC = () => {
                 autoComplete="off"
                 className="custom_input"
                 placeholder="https://www.linkedin.com/in/usuario/"
-                {...register("links.linkedin", { required: true })}
+                {...register('links.linkedin', { required: true })}
               />
               {errors.links?.linkedin && (
                 <p className="pl-1 text-xs text-red-600">
@@ -374,7 +374,7 @@ const SettingsProfilePage: React.FC = () => {
                 autoComplete="off"
                 className="custom_input"
                 placeholder="https://github.com/usuario"
-                {...register("links.github", { required: false })}
+                {...register('links.github', { required: false })}
               />
             </div>
             <div className="col-span-12 sm:col-span-6">
@@ -390,7 +390,7 @@ const SettingsProfilePage: React.FC = () => {
                 autoComplete="off"
                 className="custom_input"
                 placeholder="https://portfolio.com"
-                {...register("links.portfolio", { required: false })}
+                {...register('links.portfolio', { required: false })}
               />
             </div>
             <div className="col-span-12 sm:col-span-6">
@@ -406,7 +406,7 @@ const SettingsProfilePage: React.FC = () => {
                 autoComplete="off"
                 className="custom_input"
                 placeholder="https://twitter.com/usuario"
-                {...register("links.twitter", { required: false })}
+                {...register('links.twitter', { required: false })}
               />
             </div>
           </div>
@@ -440,13 +440,13 @@ const SettingsProfilePage: React.FC = () => {
                       checked={value as boolean}
                       onChange={onChange}
                       className={`${
-                        value ? "bg-teal-500" : "bg-gray-200"
+                        value ? 'bg-teal-500' : 'bg-gray-200'
                       } ml-4 relative inline-flex flex-shrink-0 h-6 w-11 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none`}
                     >
                       <span
                         aria-hidden="true"
                         className={`${
-                          value ? "translate-x-5" : "translate-x-0"
+                          value ? 'translate-x-5' : 'translate-x-0'
                         } inline-block h-5 w-5 rounded-full bg-white shadow transform ring-0 transition ease-in-out duration-200`}
                       />
                     </Switch>

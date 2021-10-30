@@ -1,17 +1,17 @@
 /* This example requires Tailwind CSS v2.0+ */
-import { Fragment, useState } from "react";
-import { Transition } from "@headlessui/react";
+import { Fragment, useState } from 'react';
+import { Transition } from '@headlessui/react';
 import {
   CheckCircleIcon,
   InformationCircleIcon,
   ExclamationCircleIcon,
-} from "@heroicons/react/outline";
-import { XIcon } from "@heroicons/react/solid";
+} from '@heroicons/react/outline';
+import { XIcon } from '@heroicons/react/solid';
 
 interface INotificationToast {
   title: string;
   subtext: string;
-  type: "info" | "error" | "default";
+  type: 'info' | 'error' | 'default';
 }
 
 export const NotificationToast: React.FC<INotificationToast> = ({
@@ -36,12 +36,12 @@ export const NotificationToast: React.FC<INotificationToast> = ({
         <div className="p-4">
           <div className="flex items-start">
             <div className="flex-shrink-0">
-              {type === "info" ? (
+              {type === 'info' ? (
                 <InformationCircleIcon
                   className="w-6 h-6 text-yellow-400"
                   aria-hidden="true"
                 />
-              ) : type === "error" ? (
+              ) : type === 'error' ? (
                 <ExclamationCircleIcon
                   className="w-6 h-6 text-red-400"
                   aria-hidden="true"

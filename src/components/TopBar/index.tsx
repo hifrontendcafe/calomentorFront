@@ -1,14 +1,14 @@
-import React, { Dispatch, Fragment } from "react";
+import React, { Dispatch, Fragment } from 'react';
 import {
   BellIcon,
   ChevronDownIcon,
   MenuAlt1Icon,
-} from "@heroicons/react/outline";
-import Image from "next/image";
-import { Menu, Transition } from "@headlessui/react";
-import { signOut, useSession } from "next-auth/client";
-import Link from "next/link";
-import { PROFILE } from "@/config/Routes";
+} from '@heroicons/react/outline';
+import Image from 'next/image';
+import { Menu, Transition } from '@headlessui/react';
+import { signOut, useSession } from 'next-auth/client';
+import Link from 'next/link';
+import { PROFILE } from '@/config/Routes';
 
 interface ITopBar {
   setSidebarOpen: Dispatch<boolean>;
@@ -75,7 +75,7 @@ export const TopBar: React.FC<ITopBar> = ({ setSidebarOpen }) => {
                     {({ active }) => (
                       <a
                         className={`${
-                          active ? "bg-hoverNavigation" : ""
+                          active ? 'bg-hoverNavigation' : ''
                         } block px-4 py-2 text-sm text-mainTextColor cursor-pointer active:bg-activeNavigation`}
                       >
                         Tu perfil
@@ -86,9 +86,9 @@ export const TopBar: React.FC<ITopBar> = ({ setSidebarOpen }) => {
                 <Menu.Item>
                   {({ active }) => (
                     <a
-                      onClick={() => signOut({ callbackUrl: "/" })}
+                      onClick={() => signOut({ callbackUrl: '/' })}
                       className={`${
-                        active ? "bg-hoverNavigation" : ""
+                        active ? 'bg-hoverNavigation' : ''
                       } block px-4 py-2 text-sm text-mainTextColor cursor-pointer active:bg-activeNavigation`}
                     >
                       Cerrar sesión

@@ -1,10 +1,10 @@
-import React, { useState } from "react";
-import { IUser } from "@/interfaces/user.interface";
-import Image from "next/image";
-import { axiosPatch } from "@/lib/api";
-import { USER } from "@/config/Routes";
-import useUserContext from "@/hooks/useUserContext";
-import useToastContext from "@/hooks/useToastContext";
+import React, { useState } from 'react';
+import { IUser } from '@/interfaces/user.interface';
+import Image from 'next/image';
+import { axiosPatch } from '@/lib/api';
+import { USER } from '@/config/Routes';
+import useUserContext from '@/hooks/useUserContext';
+import useToastContext from '@/hooks/useToastContext';
 
 interface IMentorCard {
   mentor: IUser;
@@ -21,19 +21,19 @@ const MentorCard: React.FC<IMentorCard> = ({
     axiosPatch(USER, { userID: id, authorID: state.id, isActive: !isActivated })
       .then(() => {
         addToast({
-          title: "El usuario se ha actualizado",
+          title: 'El usuario se ha actualizado',
           subText: `${full_name} ha sido ${
-            !isActivated ? "habilitado/a" : "deshabilitado/a"
+            !isActivated ? 'habilitado/a' : 'deshabilitado/a'
           }.`,
-          type: "default",
+          type: 'default',
         });
         setIsActivated(!isActivated);
       })
       .catch(() => {
         addToast({
-          title: "El usuario no se ha actualizado",
+          title: 'El usuario no se ha actualizado',
           subText: `Ocurrió un problema al intentar actualizar a ${full_name}`,
-          type: "error",
+          type: 'error',
         });
       });
   };
@@ -47,7 +47,7 @@ const MentorCard: React.FC<IMentorCard> = ({
             src={
               url_photo
                 ? url_photo
-                : "https://res.cloudinary.com/frontendcafe/image/upload/v1631388475/defaultUserImage_advu4k.svg"
+                : 'https://res.cloudinary.com/frontendcafe/image/upload/v1631388475/defaultUserImage_advu4k.svg'
             }
             alt="Mentor profile image"
             width="180px"
@@ -66,12 +66,12 @@ const MentorCard: React.FC<IMentorCard> = ({
               onClick={handleButton}
               className={`relative tracking-wider inline-flex items-center justify-center flex-1 w-0 py-4 -mr-px text-sm font-medium text-gray-300 border rounded-bl-lg border-cardContentLight hover:text-gray-500 ${
                 isActivated
-                  ? "text-red-300 hover:text-red-500"
-                  : "text-green-300 hover:text-green-500"
+                  ? 'text-red-300 hover:text-red-500'
+                  : 'text-green-300 hover:text-green-500'
               }`}
             >
               <span className="ml-3">
-                {isActivated ? "Deshabilitar" : "Habilitar"}
+                {isActivated ? 'Deshabilitar' : 'Habilitar'}
               </span>
             </button>
           </div>

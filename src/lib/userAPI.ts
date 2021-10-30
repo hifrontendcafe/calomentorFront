@@ -1,6 +1,6 @@
-import { axiosAWSInstance } from "@/config/AxiosConfig";
-import { ACTIVATE, AWS_TIMESLOT, USER } from "@/config/Routes";
-import { IUser } from "@/interfaces/user.interface";
+import { axiosAWSInstance } from '@/config/AxiosConfig';
+import { ACTIVATE, AWS_TIMESLOT, USER } from '@/config/Routes';
+import { IUser } from '@/interfaces/user.interface';
 
 /**
  * Get all users
@@ -66,7 +66,7 @@ export const updateUserByID = async (userId: string, userData: IUser) => {
 export const getUserSchedule = async (userId: string) => {
   try {
     const { data } = await axiosAWSInstance.get(
-      `${AWS_TIMESLOT}${USER}/${userId}`
+      `${AWS_TIMESLOT}${USER}/${userId}`,
     );
     return data;
   } catch (error) {
@@ -83,12 +83,12 @@ export const getUserSchedule = async (userId: string) => {
 export const updateUserStatus = async (
   userId: string,
   actionAuthor: string,
-  isActive: boolean
+  isActive: boolean,
 ) => {
   try {
     const { data } = await axiosAWSInstance.patch(
       `${USER}${ACTIVATE}/${userId}`,
-      { isActive: isActive, lastActivateBy: actionAuthor }
+      { isActive: isActive, lastActivateBy: actionAuthor },
     );
     return data;
   } catch (error) {

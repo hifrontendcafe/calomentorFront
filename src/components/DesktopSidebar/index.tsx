@@ -1,13 +1,13 @@
-import React from "react";
+import React from 'react';
 import {
   adminNavigation,
   primaryRoutes,
   secondaryNavigation,
-} from "@/config/Routes";
-import { useSession } from "next-auth/client";
-import NavigationRoute from "../NavigationRoute";
-import Image from "next/image";
-import PepeJedi from "@/assets/gif/pepe-jedi.gif";
+} from '@/config/Routes';
+import { useSession } from 'next-auth/client';
+import NavigationRoute from '../NavigationRoute';
+import Image from 'next/image';
+import PepeJedi from '@/assets/gif/pepe-jedi.gif';
 
 export const DesktopSidebar: React.FC = () => {
   const [session, loading] = useSession();
@@ -32,7 +32,7 @@ export const DesktopSidebar: React.FC = () => {
           >
             <NavigationRoute routes={primaryRoutes} />
             {!loading &&
-              (session?.user.role === "0" || session?.user.role === "2") && (
+              (session?.user.role === '0' || session?.user.role === '2') && (
                 <div className="pt-6 mt-6">
                   <NavigationRoute routes={adminNavigation} />
                 </div>

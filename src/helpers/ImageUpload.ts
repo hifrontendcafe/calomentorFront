@@ -5,12 +5,12 @@ export const fileUpload = async (file: Blob) => {
     const resp = await fetch(
       `${process.env.NEXT_PUBLIC_BASE_URL}/api/uploadImage`,
       {
-        method: "POST",
+        method: 'POST',
         body: image64 as BodyInit,
-      }
+      },
     );
     const parsedResp = await resp.json();
-    if (parsedResp.message === "ok") {
+    if (parsedResp.message === 'ok') {
       return parsedResp.url;
     } else {
       return null;
@@ -25,6 +25,6 @@ const getBase64 = (file: Blob) => {
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onload = () => resolve(reader.result);
-    reader.onerror = (error) => reject(error);
+    reader.onerror = error => reject(error);
   });
 };

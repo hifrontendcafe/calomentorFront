@@ -1,12 +1,12 @@
-import { Dispatch, Fragment, SetStateAction } from "react";
-import { Dialog, Transition } from "@headlessui/react";
-import { ExclamationIcon } from "@heroicons/react/outline";
-import CustomButton from "../CustomButton";
-import { SubmitHandler, useForm } from "react-hook-form";
-import { axiosPost } from "@/lib/api";
-import { MENTORSHIP } from "@/config/Routes";
-import useToastContext from "@/hooks/useToastContext";
-import { ICancelForm } from "@/interfaces/mentorship.interface";
+import { Dispatch, Fragment, SetStateAction } from 'react';
+import { Dialog, Transition } from '@headlessui/react';
+import { ExclamationIcon } from '@heroicons/react/outline';
+import CustomButton from '../CustomButton';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import { axiosPost } from '@/lib/api';
+import { MENTORSHIP } from '@/config/Routes';
+import useToastContext from '@/hooks/useToastContext';
+import { ICancelForm } from '@/interfaces/mentorship.interface';
 
 interface IModal {
   menteeName: string;
@@ -35,21 +35,21 @@ const CancelModal: React.FC<IModal> = ({
     axiosPost(MENTORSHIP, {
       token: mentorshipToken,
       cancelCause,
-      whoCancel: "MENTOR",
+      whoCancel: 'MENTOR',
     })
       .then(() => {
         addToast({
-          title: "Cancelada",
-          subText: "La mentoría ha sido cancelada satisfactoriamente.",
-          type: "default",
+          title: 'Cancelada',
+          subText: 'La mentoría ha sido cancelada satisfactoriamente.',
+          type: 'default',
         });
         callback ? callback() : null;
       })
       .catch(() => {
         addToast({
-          title: "Hubo un problema",
-          subText: "La mentoría no se ha podido cancelar",
-          type: "error",
+          title: 'Hubo un problema',
+          subText: 'La mentoría no se ha podido cancelar',
+          type: 'error',
         });
       });
     reset();
@@ -126,7 +126,7 @@ const CancelModal: React.FC<IModal> = ({
                           className="custom_input"
                           placeholder="Mensaje..."
                           rows={6}
-                          {...register("cancelCause", { required: true })}
+                          {...register('cancelCause', { required: true })}
                         />
                         {errors.cancelCause && (
                           <p className="pl-1 text-xs text-left text-red-600">

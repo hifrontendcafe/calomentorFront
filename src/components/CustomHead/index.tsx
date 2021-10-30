@@ -1,4 +1,4 @@
-import Head from "next/head";
+import Head from 'next/head';
 
 interface CustomHeadProps {
   title: string;
@@ -7,8 +7,8 @@ interface CustomHeadProps {
 }
 
 const CustomHead: React.FC<CustomHeadProps> = ({
-  title = "FrontendCafé",
-  description = "Gestión de mentorías de FrontendCafé",
+  title = 'FrontendCafé',
+  description = 'Gestión de mentorías de FrontendCafé',
 }) => {
   return (
     <Head>
