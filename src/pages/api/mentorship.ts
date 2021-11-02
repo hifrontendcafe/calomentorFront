@@ -1,5 +1,9 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import { cancelMentorship, getUserMentorships } from '@/lib/mentorshipAPI';
+import {
+  cancelMentorship,
+  confirmMentorship,
+  getUserMentorships,
+} from '@/lib/mentorshipAPI';
 
 export default async function handler(
   req: NextApiRequest,
@@ -29,6 +33,14 @@ export default async function handler(
     const { token, cancelCause, whoCancel } = req.body;
     try {
       const data = await cancelMentorship(token, cancelCause, whoCancel);
+      return res.status(200).json(data);
+    } catch (error) {
+      return res.status(400).json({ message: 'An error has occurred' });
+    }
+  } else if (req.method === 'PATCH') {
+    const { token } = req.body;
+    try {
+      const data = await confirmMentorship(token);
       return res.status(200).json(data);
     } catch (error) {
       return res.status(400).json({ message: 'An error has occurred' });

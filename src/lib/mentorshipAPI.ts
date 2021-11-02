@@ -1,5 +1,5 @@
 import { axiosAWSInstance } from '@/config/AxiosConfig';
-import { MENTORSHIP } from '@/config/Routes';
+import { CONFIRMATION, MENTORSHIP } from '@/config/Routes';
 import { IMentorhip } from '@/interfaces/mentorship.interface';
 
 /**
@@ -36,5 +36,25 @@ export const cancelMentorship = async (
     return data;
   } catch (error) {
     throw new Error(error.response.status);
+  }
+};
+
+/**
+ * Confirm a mentorship
+ * @param token Mentorship token
+ * @returns
+ */
+export const confirmMentorship = async (token: string) => {
+  try {
+    const { data } = await axiosAWSInstance.patch(
+      `${MENTORSHIP}${CONFIRMATION}`,
+      { token },
+    );
+    return data;
+  } catch ({ response }) {
+    if (response.data.data.responseCode === '-109') {
+      return { message: 'Already cancelled' };
+    }
+    throw new Error(response.status);
   }
 };
