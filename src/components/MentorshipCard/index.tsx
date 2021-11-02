@@ -5,7 +5,7 @@ import React, { Dispatch, SetStateAction } from 'react';
 
 interface IMentorshipCard {
   mentorship: IMentorhip;
-  handleCancelMentorship: () => void;
+  handleCancelMentorship?: () => void;
 }
 
 const MentorshipCard: React.FC<IMentorshipCard> = ({
@@ -46,15 +46,17 @@ const MentorshipCard: React.FC<IMentorshipCard> = ({
               {mentorship.info}
             </p>
           </div>
-          <div className="flex p-3 ">
-            <button
-              type="button"
-              className="relative inline-flex items-center px-2 py-2 -ml-px text-5xl text-red-500 bg-transparent outline-none hover:text-red-800"
-              onClick={handleCancelMentorship}
-            >
-              <UserRemoveIcon className="w-6 h-6" aria-hidden="true" />
-            </button>
-          </div>
+          {handleCancelMentorship && (
+            <div className="flex p-3 ">
+              <button
+                type="button"
+                className="relative inline-flex items-center px-2 py-2 -ml-px text-5xl text-red-500 bg-transparent outline-none hover:text-red-800"
+                onClick={handleCancelMentorship}
+              >
+                <UserRemoveIcon className="w-6 h-6" aria-hidden="true" />
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </div>
