@@ -149,7 +149,7 @@ const SettingsProfilePage: React.FC = () => {
       if (!file.type.startsWith('image')) {
         addToast({
           title: 'Debe subir una imagen',
-          subText: "",
+          subText: '',
           type: 'error',
         });
         return;
@@ -220,7 +220,10 @@ const SettingsProfilePage: React.FC = () => {
                     rows={3}
                     autoComplete="off"
                     className="custom_input"
-                    {...register('about_me', { required: true })}
+                    {...register('about_me', {
+                      required: true,
+                      maxLength: 450,
+                    })}
                   />
                 </div>
                 {errors.about_me && (
