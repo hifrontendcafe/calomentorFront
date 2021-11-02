@@ -145,6 +145,16 @@ const SettingsProfilePage: React.FC = () => {
   const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
       const file = e.target.files[0];
+
+      if (!file.type.startsWith('image')) {
+        addToast({
+          title: 'Debe subir una imagen',
+          subText: "",
+          type: 'error',
+        });
+        return;
+      }
+
       const imageUrl = await fileUpload(file);
       if (imageUrl) {
         setUrlPhoto(imageUrl);
