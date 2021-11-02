@@ -1,11 +1,19 @@
 import { axiosInstance } from '@/config/AxiosConfig';
+import { ServerResponse } from '@/interfaces/server.interface';
+import { AxiosError } from 'axios';
 
-export const axiosGet = async (endpoint: string) => {
+export const axiosGet = async <T extends unknown>(endpoint: string) => {
   try {
-    const { data } = await axiosInstance.get(`/api${endpoint}`);
+    const { data } = await axiosInstance.get<ServerResponse<T>>(`/api${endpoint}`);
     return data;
   } catch (error) {
-    throw new Error(error.response.status);
+    const axiosError = error as AxiosError;
+
+    if (!axiosError.response) {
+      throw new Error(`axios error: ${JSON.stringify(axiosError)}`);
+    }
+
+    throw new Error(axiosError.response.status.toString());
   }
 };
 
