@@ -4,6 +4,7 @@ import { IMentorhip } from '@/interfaces/mentorship.interface';
 import { IUser } from '@/interfaces/user.interface';
 
 async function getAllMentorshipHistory(id: string) {
+  // TODO: Add filter to only get history data
   return axiosGet<IMentorhip[]>(`${MENTORSHIP}?id=${id}`);
 }
 

@@ -15,6 +15,7 @@ export const MENTORS = '/mentors';
 export const SETTINGS = '/settings/profile';
 export const PROFILE = '/settings/profile';
 export const SCHEDULE = '/settings/schedule';
+export const HISTORY = '/history';
 
 // ---------- API ROUTE CONSTANTS ----------
 
@@ -29,7 +30,7 @@ export const CONFIRMATION = '/confirmation';
 
 export const primaryRoutes = [
   { name: 'Inicio', href: HOME, icon: HomeIcon, current: true },
-  // { name: "Historial", href: "#", icon: ClockIcon, current: false },
+  { name: "Historial", href: HISTORY, icon: ClockIcon, current: false },
 ];
 
 export const secondaryNavigation = [
