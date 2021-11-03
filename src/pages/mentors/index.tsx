@@ -1,15 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import CustomHead from '@/components/CustomHead';
 import DashboardLayout from '@/components/DashboardLayout';
-import { axiosGet } from '@/lib/api';
-import { HOME, USER } from '@/config/Routes';
+import { HOME } from '@/config/Routes';
 import { IUser } from '@/interfaces/user.interface';
 import { useSession } from 'next-auth/client';
 import { isAdmin } from '@/helpers/IsAdmin';
 import { useRouter } from 'next/dist/client/router';
 import MentorCard from '@/components/MentorCard/MentorCard';
-
-interface Props {}
+import { getAllUsersData } from '@/services';
 
 const AdminMentors = () => {
   const [mentors, setMentors] = useState<IUser[]>([]);
@@ -18,9 +16,8 @@ const AdminMentors = () => {
 
   useEffect(() => {
     if (session && !loading) {
-      const getUserData = async () => await axiosGet(USER);
       isAdmin(session.user.role)
-        ? getUserData()
+        ? getAllUsersData()
             .then(({ data }) => {
               setMentors(data);
             })
