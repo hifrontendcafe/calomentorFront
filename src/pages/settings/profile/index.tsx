@@ -3,17 +3,16 @@ import Image from 'next/image';
 import SettingsPage from '..';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { useSession } from 'next-auth/client';
-import { Switch } from '@headlessui/react';
 import Select from 'react-select';
 import { fileUpload } from '@/helpers/ImageUpload';
-import { Session } from 'next-auth';
 import useUserContext from '@/hooks/useUserContext';
 import useToastContext from '@/hooks/useToastContext';
 import { IUser } from '@/interfaces/user.interface';
-import { axiosGet, axiosPut } from '@/lib/api';
+import { axiosPut } from '@/lib/api';
 import { USER } from '@/config/Routes';
 import CustomButton from '@/components/CustomButton';
 import TimezoneList from '@/lib/timezones.json';
+import { getUserData } from '@/services';
 
 const SettingsProfilePage: React.FC = () => {
   const [session, loading] = useSession();
@@ -41,8 +40,7 @@ const SettingsProfilePage: React.FC = () => {
     handleSubmit,
     reset,
     control,
-    setValue,
-    getValues,
+    setValue
   } = useForm<IUser>({
     defaultValues: {
       url_photo: '',
@@ -50,10 +48,8 @@ const SettingsProfilePage: React.FC = () => {
   });
 
   useEffect(() => {
-    const getUserData = async (session: Session) =>
-      await axiosGet(`${USER}?id=${session.user.id.toString()}`);
     if (!id && !loading && session) {
-      getUserData(session).then(({ data }) => {
+      getUserData(session.user.id.toString()).then(({ data }) => {
         if (data.full_name) {
           const {
             full_name,
@@ -65,7 +61,6 @@ const SettingsProfilePage: React.FC = () => {
             links,
             timezone,
           } = data;
-          const timezoneString = timezone.toString();
           reset({
             full_name,
             about_me,
@@ -74,9 +69,9 @@ const SettingsProfilePage: React.FC = () => {
             url_photo,
             isActive,
             links,
-            timezone: timezoneString,
+            timezone: timezone?.toString(),
           });
-          setUrlPhoto(url_photo);
+          setUrlPhoto(url_photo ?? "");
           dispatch({ type: 'SET', payload: { ...data } });
         }
       });

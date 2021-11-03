@@ -5,11 +5,10 @@ import Timeslot from '@/components/Timeslot';
 import { PlusIcon, XIcon } from '@heroicons/react/outline';
 import SettingsPage from '..';
 import { ITimeslot } from '@/interfaces/timeslot.interface';
-import { axiosGet } from '@/lib/api';
-import { TIMESLOTS } from '@/config/Routes';
 import AddTimeslot from '@/components/AddTimeslot/Index';
 import CancelModal from '@/components/CancelModal';
 import Spinner from '@/components/Spinner';
+import { getTimeslots } from '@/services';
 
 const SettingsSchedulePage: React.FC = () => {
   const [session, loading] = useSession();
@@ -38,7 +37,7 @@ const SettingsSchedulePage: React.FC = () => {
 
   const getSchedule = useCallback(() => {
     if (!loading && session) {
-      axiosGet(`${TIMESLOTS}?id=${session.user.id.toString()}`)
+      getTimeslots(session.user.id.toString())
         .then(({ data }) => {
           setTimeslots(data);
           setIsLoading(false);

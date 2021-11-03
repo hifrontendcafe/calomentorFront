@@ -4,13 +4,13 @@ import DashboardLayout from '@/components/DashboardLayout';
 import { useRouter } from 'next/dist/client/router';
 import { UserContext } from '@/context/UserContext';
 import CustomHead from '@/components/CustomHead';
-import { axiosGet } from '@/lib/api';
-import { MENTORSHIP, PROFILE, SCHEDULE, USER } from '@/config/Routes';
+import { PROFILE, SCHEDULE } from '@/config/Routes';
 import CancelModal from '@/components/CancelModal';
 import { IMentorhip } from '@/interfaces/mentorship.interface';
 import MentorshipCard from '@/components/MentorshipCard';
 import Link from 'next/link';
 import Spinner from '@/components/Spinner';
+import { getUserData, getActiveMentorships } from '@/services';
 
 const Home: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -42,28 +42,26 @@ const Home: React.FC = () => {
   useEffect(() => {
     if (!loading && session) {
       const userID = session.user.id.toString();
-      const getMentorshipsData = async (id: string) =>
-        await axiosGet(`${MENTORSHIP}?id=${id}&filter=ACTIVE`);
-      const getUserData = async (id: string) =>
-        await axiosGet(`${USER}?id=${id}`);
+
       // Get user data and verify if the profile is configured,
       // if not, go to the profile settings
       getUserData(userID)
-        .then(res => {
-          !res.data.full_name && session.user.role !== '0'
+        .then(({ data }) => {
+          !data.full_name && session.user.role !== '0'
             ? router.push(PROFILE)
-            : dispatch({ type: 'SET', payload: { ...res.data } });
+            : dispatch({ type: 'SET', payload: { ...data } });
         })
-        .catch(err => {
+        .catch(() => {
           signOut({ callbackUrl: '/' });
         });
+
       // Get user mentorships data
-      getMentorshipsData(userID)
+      getActiveMentorships(userID)
         .then(({ data }) => {
           setIsLoading(false);
           setMentorships(data);
         })
-        .catch(err => {
+        .catch(() => {
           signOut({ callbackUrl: '/' });
         });
     }
