@@ -25,6 +25,7 @@ const MentorshipFeedback: React.FC = () => {
     register,
     formState: { errors, isValid },
     handleSubmit,
+    setValue,
   } = useForm<IFeedbackForm>({
     mode: 'onChange',
     defaultValues: { fecFeedback: '' },
@@ -75,7 +76,7 @@ const MentorshipFeedback: React.FC = () => {
   return (
     <>
       <CustomHead title="Feedback" />
-      <div className="flex items-center justify-center w-screen h-screen px-5 bg-cardHeader">
+      <div className="flex items-center justify-center w-full h-screen p-5 bg-cardHeader">
         <div className="inline-block w-full px-4 pt-5 pb-4 overflow-hidden text-left align-bottom transition-all transform border rounded-lg shadow-xl border-cardHeader bg-cardContent sm:my-8 sm:align-middle sm:max-w-lg sm:w-full sm:p-6">
           <form onSubmit={handleSubmit(onSubmit)}>
             <div>
@@ -109,7 +110,7 @@ const MentorshipFeedback: React.FC = () => {
                   <h1 className="text-lg font-medium leading-6 text-mainTextColor">
                     ¿Cómo te fue en la mentoría?
                   </h1>
-                  <div className="my-5 mx-28">
+                  <div className="mx-6 my-5 md:mx-28">
                     <div className="grid grid-cols-5">
                       <StarButton
                         id={1}
@@ -174,7 +175,12 @@ const MentorshipFeedback: React.FC = () => {
                     <div className="flex items-center h-5">
                       <input
                         id="enableFecFeedback"
-                        onChange={val => setFecFeedback(val.target.checked)}
+                        onChange={val => {
+                          setFecFeedback(val.target.checked);
+                          if (!val.target.checked) {
+                            setValue('fecFeedback', '');
+                          }
+                        }}
                         name="enableFecFeedback"
                         type="checkbox"
                         className="w-4 h-4 bg-gray-500 rounded outline-none text-fecGreen focus:outline-none focus:ring-0 focus:border-0"
