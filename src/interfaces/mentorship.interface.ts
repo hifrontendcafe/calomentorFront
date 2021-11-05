@@ -28,3 +28,8 @@ export interface IMentorhip {
 export interface ICancelForm {
   cancelCause: string;
 }
+
+export interface IFeedbackForm {
+  mentorFeedback: string;
+  fecFeedback: string;
+}

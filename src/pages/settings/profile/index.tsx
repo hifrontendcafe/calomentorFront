@@ -40,7 +40,7 @@ const SettingsProfilePage: React.FC = () => {
     handleSubmit,
     reset,
     control,
-    setValue
+    setValue,
   } = useForm<IUser>({
     defaultValues: {
       url_photo: '',
@@ -71,7 +71,7 @@ const SettingsProfilePage: React.FC = () => {
             links,
             timezone: timezone?.toString(),
           });
-          setUrlPhoto(url_photo ?? "");
+          setUrlPhoto(url_photo ?? '');
           dispatch({ type: 'SET', payload: { ...data } });
         }
       });

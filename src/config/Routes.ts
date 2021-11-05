@@ -24,6 +24,7 @@ export const AWS_TIMESLOT = '/time-slot';
 export const MENTORSHIP = '/mentorship';
 export const ACTIVATE = '/activate';
 export const CONFIRMATION = '/confirmation';
+export const FEEDBACK = '/feedback';
 
 // ---------- NAVIGATION ROUTES ----------
 

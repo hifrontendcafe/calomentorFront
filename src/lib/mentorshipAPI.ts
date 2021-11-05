@@ -1,5 +1,5 @@
 import { axiosAWSInstance } from '@/config/AxiosConfig';
-import { CONFIRMATION, MENTORSHIP } from '@/config/Routes';
+import { CONFIRMATION, FEEDBACK, MENTORSHIP } from '@/config/Routes';
 import { IMentorhip } from '@/interfaces/mentorship.interface';
 
 /**
@@ -54,6 +54,36 @@ export const confirmMentorship = async (token: string) => {
   } catch ({ response }) {
     if (response.data.data.responseCode === '-109') {
       return { message: 'Already cancelled' };
+    }
+    throw new Error(response.status);
+  }
+};
+
+/**
+ * Send mentorship feedback
+ * @param token Mentorship token
+ * @param feedback Mentor feedback
+ * @param privateFeedback Mentee message for staff
+ * @param starsFeedback Mentor rating
+ * @returns
+ */
+export const sendFeedback = async (
+  token: string,
+  feedback: string,
+  privateFeedback: string,
+  starsFeedback: number,
+) => {
+  try {
+    const { data } = await axiosAWSInstance.patch(`${MENTORSHIP}${FEEDBACK}`, {
+      token,
+      feedback,
+      privateFeedback,
+      starsFeedback,
+    });
+    return data;
+  } catch ({ response }) {
+    if (response.data.data.responseCode === '-112') {
+      return { message: 'Feedback already sent' };
     }
     throw new Error(response.status);
   }
