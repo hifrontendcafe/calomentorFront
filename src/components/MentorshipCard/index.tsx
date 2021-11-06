@@ -1,7 +1,9 @@
+import React from 'react';
+import Timezones from '@/lib/completeTimezones.json';
+import AddToCalendar from '../AddToCalendar';
 import { formatMentorshipDate } from '@/helpers/formatDate';
 import { IMentorhip } from '@/interfaces/mentorship.interface';
 import { CalendarIcon, UserRemoveIcon } from '@heroicons/react/outline';
-import React, { Dispatch, SetStateAction } from 'react';
 
 interface IMentorshipCard {
   mentorship: IMentorhip;
@@ -12,6 +14,24 @@ const MentorshipCard: React.FC<IMentorshipCard> = ({
   mentorship,
   handleCancelMentorship,
 }) => {
+  const getTimezone = () => {
+    const timezone = Intl.DateTimeFormat()
+      .resolvedOptions()
+      .timeZone.split('/')
+      .at(-1);
+    return (
+      timezone && Timezones.find(tz => tz.tzCode.includes(timezone))?.tzCode
+    );
+  };
+
+  const calendarEvent = {
+    title: `Mentoría con ${mentorship.mentee_username_discord} - FrontendCafé`,
+    description: mentorship.info,
+    location: 'FrontendCafé Discord',
+    startTime: mentorship.time_slot_info.date,
+    tz: getTimezone() || '',
+  };
+
   return (
     <div key={mentorship.id} className="px-4 pb-5 sm:px-6">
       <div className="flex border-t border-b border-r border-green-500 rounded-lg">
@@ -46,17 +66,22 @@ const MentorshipCard: React.FC<IMentorshipCard> = ({
               {mentorship.info}
             </p>
           </div>
-          {handleCancelMentorship && (
-            <div className="flex p-3 ">
-              <button
-                type="button"
-                className="relative inline-flex items-center px-2 py-2 -ml-px text-5xl text-red-500 bg-transparent outline-none hover:text-red-800"
-                onClick={handleCancelMentorship}
-              >
-                <UserRemoveIcon className="w-6 h-6" aria-hidden="true" />
-              </button>
-            </div>
-          )}
+          <div className="flex p-3 ">
+            {handleCancelMentorship && (
+              <>
+                <div className="flex items-center justify-center pt-1 my-auto mr-2">
+                  <AddToCalendar event={calendarEvent} />
+                </div>
+                <button
+                  type="button"
+                  className="relative inline-flex items-center px-2 py-2 -ml-px text-5xl text-red-500 bg-transparent outline-none hover:text-red-800"
+                  onClick={handleCancelMentorship}
+                >
+                  <UserRemoveIcon className="w-5 h-5" aria-hidden="true" />
+                </button>
+              </>
+            )}
+          </div>
         </div>
       </div>
     </div>

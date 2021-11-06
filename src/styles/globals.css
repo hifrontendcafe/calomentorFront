@@ -3,6 +3,7 @@
 @tailwind utilities;
 @import url(./react-select.css);
 @import url(./react-datepicker.css);
+@import url(./addevent-theme.css);
 
 html,
 body {
