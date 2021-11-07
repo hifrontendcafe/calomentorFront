@@ -6,7 +6,7 @@ import { UserContext } from '@/context/UserContext';
 import CustomHead from '@/components/CustomHead';
 import { PROFILE } from '@/config/Routes';
 import { IMentorhip } from '@/interfaces/mentorship.interface';
-import MentorshipCard from '@/components/MentorshipCard';
+import HistoryMentorshipCard from '@/components/HistoryMentorshipCard';
 import Spinner from '@/components/Spinner';
 import { getAllMentorshipHistory, getUserData } from '@/services/index';
 
@@ -48,6 +48,8 @@ const History: React.FC = () => {
     }
   }, [loadingUser, session, router, dispatch]);
 
+  console.log(mentorships);
+
   return (
     <>
       <CustomHead title="Historial de mentorías" />
@@ -73,7 +75,9 @@ const History: React.FC = () => {
             </div>
           )}
           {!isLoading &&
-            mentorships.map(m => <MentorshipCard key={m.id} mentorship={m} />)}
+            mentorships.map(mentorship => (
+              <HistoryMentorshipCard key={mentorship.id} mentorship={mentorship} />
+            ))}
         </div>
       </DashboardLayout>
     </>
