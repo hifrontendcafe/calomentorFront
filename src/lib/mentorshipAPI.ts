@@ -2,6 +2,16 @@ import { axiosAWSInstance } from '@/config/AxiosConfig';
 import { CONFIRMATION, FEEDBACK, MENTORSHIP } from '@/config/Routes';
 import { IMentorhip } from '@/interfaces/mentorship.interface';
 
+interface ResponseError {
+  response: {
+    status: string;
+  }
+}
+
+function isResponseError(error: unknown): error is ResponseError {
+  return (error as Record<string, any>)?.response?.status;
+}
+
 /**
  * Get all mentorships from a user
  * @returns An array of mentorships
@@ -13,7 +23,11 @@ export const getUserMentorships = async (id: string, filter: string) => {
     );
     return data;
   } catch (error) {
-    throw new Error(error.response.status);
+    if (isResponseError(error)) {
+      throw new Error(error.response.status);
+    }
+
+    throw new Error(`unknown error: ${error}`);
   }
 };
 
@@ -35,7 +49,11 @@ export const cancelMentorship = async (
     );
     return data;
   } catch (error) {
-    throw new Error(error.response.status);
+    if (isResponseError(error)) {
+      throw new Error(error.response.status);
+    }
+
+    throw new Error(`unknown error: ${error}`);
   }
 };
 
@@ -51,11 +69,12 @@ export const confirmMentorship = async (token: string) => {
       { token },
     );
     return data;
-  } catch ({ response }) {
-    if (response.data.data.responseCode === '-109') {
-      return { message: 'Already cancelled' };
+  } catch (error) {
+    if (isResponseError(error)) {
+      throw new Error(error.response.status);
     }
-    throw new Error(response.status);
+
+    throw new Error(`unknown error: ${error}`);
   }
 };
 

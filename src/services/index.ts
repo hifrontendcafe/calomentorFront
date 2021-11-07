@@ -5,7 +5,7 @@ import { ITimeslot } from '@/interfaces/timeslot.interface';
 import { IUser } from '@/interfaces/user.interface';
 
 async function getAllMentorshipHistory(id: string) {
-  return axiosGet<IMentorhip[]>(`${MENTORSHIP}?id=${id}`);
+  return axiosGet<IMentorhip[]>(`${MENTORSHIP}?id=${id}&filterDates=PAST`);
 }
 
 async function getActiveMentorships(id: string) {
