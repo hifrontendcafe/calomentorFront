@@ -1,10 +1,10 @@
 import React from 'react';
 import Timezones from '@/lib/completeTimezones.json';
-import AddToCalendar from '../AddToCalendar';
 import { formatMentorshipDate } from '@/helpers/formatDate';
 import { IMentorhip } from '@/interfaces/mentorship.interface';
 import { CalendarIcon, UserRemoveIcon } from '@heroicons/react/outline';
-
+import { addMinutes } from 'date-fns';
+import Link from 'next/link';
 interface IMentorshipCard {
   mentorship: IMentorhip;
   handleCancelMentorship?: () => void;
@@ -24,13 +24,25 @@ const MentorshipCard: React.FC<IMentorshipCard> = ({
     );
   };
 
-  const calendarEvent = {
-    title: `Mentoría con ${mentorship.mentee_username_discord} - FrontendCafé`,
-    description: mentorship.info,
-    location: 'FrontendCafé Discord',
-    startTime: mentorship.time_slot_info.date,
-    tz: getTimezone() || '',
-  };
+  const formatedStartDatetime = new Date(mentorship.time_slot_info.date)
+    .toISOString()
+    .replace(/[-:.]/g, '');
+
+  const formatedEndDatetime = addMinutes(
+    new Date(mentorship.time_slot_info.date),
+    45,
+  )
+    .toISOString()
+    .replace(/[-:.]/g, '');
+
+  const formatedMenteeUsername = mentorship.mentee_username_discord.replace(
+    '#',
+    '%23',
+  );
+
+  const googleCalendarURL = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=Mentoría con ${formatedMenteeUsername} - FrontendCafé&dates=${formatedStartDatetime}/${formatedEndDatetime}&details=${
+    mentorship.info
+  }&location=FrontendCafé Discord&trp=true&ctz=${getTimezone()}`;
 
   return (
     <div key={mentorship.id} className="px-4 pb-5 sm:px-6">
@@ -67,11 +79,16 @@ const MentorshipCard: React.FC<IMentorshipCard> = ({
             </p>
           </div>
           <div className="flex p-3 ">
-            {handleCancelMentorship && (
-              <>
-                <div className="flex items-center justify-center pt-1 my-auto mr-2">
-                  <AddToCalendar event={calendarEvent} />
-                </div>
+            <div className="flex items-center justify-center pt-1 my-auto mr-2">
+              <Link href={googleCalendarURL}>
+                <a
+                  target="_blank"
+                  className="text-mainTextColor hover:text-mainBtnColor"
+                >
+                  <CalendarIcon className="w-6 h-6" aria-hidden="true" />
+                </a>
+              </Link>
+              {handleCancelMentorship && (
                 <button
                   type="button"
                   className="relative inline-flex items-center px-2 py-2 -ml-px text-5xl text-red-500 bg-transparent outline-none hover:text-red-800"
@@ -79,8 +96,8 @@ const MentorshipCard: React.FC<IMentorshipCard> = ({
                 >
                   <UserRemoveIcon className="w-5 h-5" aria-hidden="true" />
                 </button>
-              </>
-            )}
+              )}
+            </div>
           </div>
         </div>
       </div>
