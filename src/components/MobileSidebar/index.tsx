@@ -11,6 +11,7 @@ import NavigationRoute from '../NavigationRoute';
 import { useSession } from 'next-auth/client';
 import PepeJedi from '@/assets/gif/pepe-jedi.gif';
 import Image from 'next/image';
+import PwdByVercel from '@/assets/img/powered-by-vercel.svg';
 
 interface IMobileSidebar {
   sidebarOpen: boolean;
@@ -94,6 +95,16 @@ export const MobileSidebar: React.FC<IMobileSidebar> = ({
                 <NavigationRoute routes={secondaryNavigation} />
               </div>
             </nav>
+            <div className="absolute bottom-0 self-center mb-4">
+              <a href="https://vercel.com/?utm_source=hifrontendcafe&utm_campaign=oss">
+                <Image
+                  src={PwdByVercel}
+                  height="40"
+                  width="206"
+                  alt="Powered by Vercel"
+                />
+              </a>
+            </div>
           </div>
         </Transition.Child>
         <div className="flex-shrink-0 w-14" aria-hidden="true">
