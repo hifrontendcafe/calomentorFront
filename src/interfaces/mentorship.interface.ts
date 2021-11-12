@@ -1,3 +1,8 @@
+interface ITimeslotInfo {
+  id: string;
+  date: number;
+  is_occupied: boolean;
+}
 export interface IMentorhip {
   id: string;
   mentee_email: string;
@@ -14,11 +19,7 @@ export interface IMentorhip {
   cancel_cause: string;
   feedback_mentee: string;
   feedback_stars: number;
-  time_slot_info: {
-    id: string;
-    date: number;
-    is_occupied: boolean;
-  };
+  time_slot_info: ITimeslotInfo;
 }
 
 export interface ICancelForm {

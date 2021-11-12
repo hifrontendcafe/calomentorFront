@@ -1,3 +1,9 @@
+interface ILinks {
+  portfolio: string;
+  twitter: string;
+  linkedin: string;
+  github: string;
+}
 export interface IUser {
   id: string;
   discord_username?: string;
@@ -6,12 +12,7 @@ export interface IUser {
   email?: string;
   url_photo?: string;
   role?: string[];
-  links?: {
-    portfolio: string;
-    twitter: string;
-    linkedin: string;
-    github: string;
-  };
+  links?: ILinks;
   isActive?: boolean;
   skills?: string[];
   timezone?: string;
