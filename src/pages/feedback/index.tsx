@@ -10,6 +10,7 @@ import CustomHead from '@/components/CustomHead';
 import StarButton from '@/components/StarButton';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { IFeedbackForm } from '@/interfaces/mentorship.interface';
+import PwdByVercel from '@/components/PwdByVercel';
 
 const MentorshipFeedback: React.FC = () => {
   const { addToast } = useToastContext();
@@ -76,7 +77,7 @@ const MentorshipFeedback: React.FC = () => {
   return (
     <>
       <CustomHead title="Feedback" />
-      <div className="flex items-center justify-center w-full h-screen p-5 bg-cardHeader">
+      <div className="flex flex-col items-center justify-center w-full min-h-screen p-5 bg-cardHeader">
         <div className="inline-block w-full px-4 pt-5 pb-4 overflow-hidden text-left align-bottom transition-all transform border rounded-lg shadow-xl border-cardHeader bg-cardContent sm:my-8 sm:align-middle sm:max-w-lg sm:w-full sm:p-6">
           <form onSubmit={handleSubmit(onSubmit)}>
             <div>
@@ -238,6 +239,7 @@ const MentorshipFeedback: React.FC = () => {
             )}
           </form>
         </div>
+        <PwdByVercel />
       </div>
     </>
   );

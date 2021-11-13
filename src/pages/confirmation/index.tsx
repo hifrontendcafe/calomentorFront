@@ -8,6 +8,7 @@ import { MENTORSHIP } from '@/config/Routes';
 import { useRouter } from 'next/dist/client/router';
 import CustomHead from '@/components/CustomHead';
 import { format } from 'date-fns';
+import PwdByVercel from '@/components/PwdByVercel';
 
 const ConfirmMentorship: React.FC = () => {
   const { addToast } = useToastContext();
@@ -66,7 +67,7 @@ const ConfirmMentorship: React.FC = () => {
   return (
     <>
       <CustomHead title="Confirmar mentoría" />
-      <div className="flex items-center justify-center w-screen h-screen px-5 bg-cardHeader">
+      <div className="flex flex-col items-center justify-center w-screen min-h-screen px-5 bg-cardHeader">
         <div className="inline-block w-full px-4 pt-5 pb-4 overflow-hidden text-left align-bottom transition-all transform border rounded-lg shadow-xl border-cardHeader bg-cardContent sm:my-8 sm:align-middle sm:max-w-lg sm:w-full sm:p-6">
           <div>
             <div className="flex items-center justify-center mx-auto text-6xl rounded-full">
@@ -117,6 +118,7 @@ const ConfirmMentorship: React.FC = () => {
             </div>
           )}
         </div>
+        <PwdByVercel />
       </div>
     </>
   );

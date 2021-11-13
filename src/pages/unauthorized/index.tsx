@@ -1,4 +1,5 @@
 import CustomHead from '@/components/CustomHead';
+import PwdByVercel from '@/components/PwdByVercel';
 
 const Unauthorized: React.FC = () => {
   return (
@@ -22,6 +23,7 @@ const Unauthorized: React.FC = () => {
             </div>
           </div>
         </div>
+        <PwdByVercel />
       </div>
     </>
   );

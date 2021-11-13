@@ -1,11 +1,11 @@
 import Image from 'next/image';
 import DiscordLogo from '@/assets/img/Discord-Logo-White.svg';
-import PwdByVercel from '@/assets/img/powered-by-vercel.svg';
 import { signIn, useSession } from 'next-auth/client';
 import { useRouter } from 'next/dist/client/router';
 import { useEffect } from 'react';
 import { HOME } from '@/config/Routes';
 import CustomHead from '@/components/CustomHead';
+import PwdByVercel from '@/components/PwdByVercel';
 
 const Home = () => {
   const [session, loading] = useSession();
@@ -63,16 +63,7 @@ const Home = () => {
             </div>
           </div>
         </div>
-        <div className="absolute bottom-0 self-center mb-4">
-          <a href="https://vercel.com/?utm_source=hifrontendcafe&utm_campaign=oss">
-            <Image
-              src={PwdByVercel}
-              height="40"
-              width="206"
-              alt="Powered by Vercel"
-            />
-          </a>
-        </div>
+        <PwdByVercel />
       </div>
     </>
   );

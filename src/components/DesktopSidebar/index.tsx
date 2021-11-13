@@ -8,7 +8,7 @@ import { useSession } from 'next-auth/client';
 import NavigationRoute from '../NavigationRoute';
 import Image from 'next/image';
 import PepeJedi from '@/assets/gif/pepe-jedi.gif';
-import PwdByVercel from '@/assets/img/powered-by-vercel.svg';
+import PwdByVercel from '../PwdByVercel';
 
 export const DesktopSidebar: React.FC = () => {
   const [session, loading] = useSession();
@@ -42,16 +42,7 @@ export const DesktopSidebar: React.FC = () => {
               <NavigationRoute routes={secondaryNavigation} />
             </div>
           </nav>
-          <div className="absolute bottom-0 self-center mb-4">
-            <a href="https://vercel.com/?utm_source=hifrontendcafe&utm_campaign=oss">
-              <Image
-                src={PwdByVercel}
-                height="40"
-                width="206"
-                alt="Powered by Vercel"
-              />
-            </a>
-          </div>
+          <PwdByVercel />
         </div>
       </div>
     </div>

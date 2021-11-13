@@ -9,6 +9,7 @@ import useToastContext from '@/hooks/useToastContext';
 import { MENTORSHIP, USER } from '@/config/Routes';
 import { useRouter } from 'next/dist/client/router';
 import CustomHead from '@/components/CustomHead';
+import PwdByVercel from '@/components/PwdByVercel';
 
 const CancelMentorship: React.FC = () => {
   const { addToast } = useToastContext();
@@ -56,7 +57,7 @@ const CancelMentorship: React.FC = () => {
   return (
     <>
       <CustomHead title="Cancelar mentoría" />
-      <div className="flex items-center justify-center w-screen h-screen px-5 bg-cardHeader">
+      <div className="flex flex-col items-center justify-center w-screen min-h-screen px-5 bg-cardHeader">
         <div className="inline-block w-full px-4 pt-5 pb-4 overflow-hidden text-left align-bottom transition-all transform border rounded-lg shadow-xl border-cardHeader bg-cardContent sm:my-8 sm:align-middle sm:max-w-lg sm:w-full sm:p-6">
           <form onSubmit={handleSubmit(onSubmit)}>
             <div>
@@ -121,6 +122,7 @@ const CancelMentorship: React.FC = () => {
             )}
           </form>
         </div>
+        <PwdByVercel />
       </div>
     </>
   );
