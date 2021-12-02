@@ -20,13 +20,27 @@ export interface IMentorhip {
   feedback_mentee: string;
   feedback_stars: number;
   time_slot_info: ITimeslotInfo;
+  warning_info: IWarningInfo;
 }
 
 export interface ICancelForm {
   cancelCause: string;
 }
 
+export interface IWarnForm {
+  warn_type: 'NO_ASSIST' | ' COC_WARN';
+  warn_cause: string;
+}
+
 export interface IFeedbackForm {
   mentorFeedback: string;
   fecFeedback: string;
+}
+
+interface IWarningInfo {
+  date: number;
+  warn_type: 'NO_ASSIST' | ' COC_WARN';
+  warn_cause: string;
+  status: 'ACTIVE' | 'FORGIVE';
+  forgive_cause: string;
 }

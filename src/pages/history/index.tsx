@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react';
+import { useCallback, useContext, useEffect, useState } from 'react';
 import { signOut, useSession } from 'next-auth/client';
 import DashboardLayout from '@/components/DashboardLayout';
 import { useRouter } from 'next/dist/client/router';
@@ -9,15 +9,51 @@ import { IMentorhip } from '@/interfaces/mentorship.interface';
 import HistoryMentorshipCard from '@/components/HistoryMentorshipCard';
 import Spinner from '@/components/Spinner';
 import { getAllMentorshipHistory, getUserData } from '@/services/index';
+import WarnModal from '@/components/WarnModal';
 
 const History: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [mentorships, setMentorships] = useState<IMentorhip[]>([]);
-
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [modalData, setModalData] = useState({
+    menteeName: '',
+    menteeId: '',
+    mentorshipId: '',
+  });
   const [session, loadingUser] = useSession();
 
   const { dispatch } = useContext(UserContext);
   const router = useRouter();
+
+  const getHistoryData = useCallback(() => {
+    if (!loadingUser && session) {
+      const userID = session.user.id.toString();
+
+      // Get user data and verify if the profile is configured,
+      // if not, go to the profile settings
+      // only admins could access without signup
+      getUserData(userID)
+        .then(res => {
+          !res.data.full_name && session.user.role !== '0'
+            ? router.push(PROFILE)
+            : dispatch({ type: 'SET', payload: { ...res.data } });
+        })
+        .catch(err => {
+          signOut({ callbackUrl: '/' });
+        });
+
+      // Get user mentorships data
+      getAllMentorshipHistory(userID)
+        .then(({ data }) => {
+          setIsLoading(false);
+          setMentorships(data);
+          console.log('🚀 ~ file: index.tsx ~ line 50 ~ .then ~ data', data);
+        })
+        .catch(() => {
+          signOut({ callbackUrl: '/' });
+        });
+    }
+  }, [dispatch, loadingUser, router, session]);
 
   useEffect(() => {
     if (!loadingUser && session) {
@@ -41,6 +77,7 @@ const History: React.FC = () => {
         .then(({ data }) => {
           setIsLoading(false);
           setMentorships(data);
+          console.log('🚀 ~ file: index.tsx ~ line 50 ~ .then ~ data', data);
         })
         .catch(() => {
           signOut({ callbackUrl: '/' });
@@ -48,18 +85,11 @@ const History: React.FC = () => {
     }
   }, [loadingUser, session, router, dispatch]);
 
-  console.log(mentorships);
-
   return (
     <>
       <CustomHead title="Historial de mentorías" />
       <DashboardLayout title="Historial">
-        <div className="px-4 py-5 rounded-t-lg bg-cardHeader sm:px-6">
-          <h3 className="text-lg font-medium leading-6 text-mainTextColor">
-            Historial de mentorías
-          </h3>
-        </div>
-        <div className="p-5 rounded-b-lg bg-cardContent">
+        <div className="pt-10 pb-5 rounded-lg bg-cardContent">
           {isLoading && <Spinner />}
           {!isLoading && mentorships.length === 0 && (
             <div
@@ -76,9 +106,21 @@ const History: React.FC = () => {
           )}
           {!isLoading &&
             mentorships.map(mentorship => (
-              <HistoryMentorshipCard key={mentorship.id} mentorship={mentorship} />
+              <HistoryMentorshipCard
+                key={mentorship.id}
+                mentorship={mentorship}
+                setModalData={setModalData}
+                setModalIsOpen={setModalIsOpen}
+              />
             ))}
         </div>
+        <WarnModal
+          open={modalIsOpen}
+          setModal={setModalIsOpen}
+          menteeName={modalData.menteeName}
+          menteeId={modalData.menteeId}
+          mentorshipId={modalData.mentorshipId}
+        />
       </DashboardLayout>
     </>
   );

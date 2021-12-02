@@ -26,12 +26,13 @@ export const MENTORSHIP = '/mentorship';
 export const ACTIVATE = '/activate';
 export const CONFIRMATION = '/confirmation';
 export const FEEDBACK = '/feedback';
+export const WARNING = '/warning';
 
 // ---------- NAVIGATION ROUTES ----------
 
 export const primaryRoutes = [
   { name: 'Inicio', href: HOME, icon: HomeIcon, current: true },
-  { name: "Historial", href: HISTORY, icon: ClockIcon, current: false },
+  { name: 'Historial', href: HISTORY, icon: ClockIcon, current: false },
 ];
 
 export const secondaryNavigation = [

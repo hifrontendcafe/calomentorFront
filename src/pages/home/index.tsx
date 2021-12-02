@@ -10,7 +10,7 @@ import { IMentorhip } from '@/interfaces/mentorship.interface';
 import MentorshipCard from '@/components/MentorshipCard';
 import Link from 'next/link';
 import Spinner from '@/components/Spinner';
-import { getUserData, getActiveMentorships } from '@/services';
+import { getUserData, getFutureMentorships } from '@/services';
 
 const Home: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -56,7 +56,7 @@ const Home: React.FC = () => {
         });
 
       // Get user mentorships data
-      getActiveMentorships(userID)
+      getFutureMentorships(userID)
         .then(({ data }) => {
           setIsLoading(false);
           setMentorships(data);

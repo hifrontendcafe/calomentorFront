@@ -89,13 +89,18 @@ const MentorshipCard: React.FC<IMentorshipCard> = ({
                 </a>
               </Link>
               {handleCancelMentorship && (
-                <button
-                  type="button"
-                  className="relative inline-flex items-center px-2 py-2 -ml-px text-5xl text-red-500 bg-transparent outline-none hover:text-red-800"
-                  onClick={handleCancelMentorship}
-                >
-                  <UserRemoveIcon className="w-5 h-5" aria-hidden="true" />
-                </button>
+                <div className="has-tooltip">
+                  <span className="px-2 py-1 -mt-8 text-sm text-red-500 bg-gray-700 rounded shadow-lg -ml-14 tooltip">
+                    Cancelar mentoría
+                  </span>
+                  <button
+                    type="button"
+                    className="relative inline-flex items-center px-2 py-2 -ml-px text-5xl text-red-500 bg-transparent outline-none hover:text-red-800"
+                    onClick={handleCancelMentorship}
+                  >
+                    <UserRemoveIcon className="w-5 h-5" aria-hidden="true" />
+                  </button>
+                </div>
               )}
             </div>
           </div>

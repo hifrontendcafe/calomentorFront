@@ -1,11 +1,11 @@
 import { axiosAWSInstance } from '@/config/AxiosConfig';
-import { CONFIRMATION, FEEDBACK, MENTORSHIP } from '@/config/Routes';
+import { CONFIRMATION, FEEDBACK, MENTORSHIP, WARNING } from '@/config/Routes';
 import { IMentorhip } from '@/interfaces/mentorship.interface';
 
 interface ResponseError {
   response: {
     status: string;
-  }
+  };
 }
 
 function isResponseError(error: unknown): error is ResponseError {
@@ -14,12 +14,19 @@ function isResponseError(error: unknown): error is ResponseError {
 
 /**
  * Get all mentorships from a user
+ * @param id
+ * @param filter
+ * @param filterDates
  * @returns An array of mentorships
  */
-export const getUserMentorships = async (id: string, filter: string) => {
+export const getUserMentorships = async (
+  id: string,
+  filter: string,
+  filterDates: string,
+) => {
   try {
     const { data } = await axiosAWSInstance.get<IMentorhip>(
-      `${MENTORSHIP}/${id}?filter=${filter} `,
+      `${MENTORSHIP}/${id}?filter=${filter}&filterDates=${filterDates} `,
     );
     return data;
   } catch (error) {
@@ -104,6 +111,33 @@ export const sendFeedback = async (
     if (response.data.data.responseCode === '-112') {
       return { message: 'Feedback already sent' };
     }
+    throw new Error(response.status);
+  }
+};
+
+/**
+ * Warn a user
+ * @param mentee_id Id of the user who is going to be warned
+ * @param warn_type Type of warn, it can be "NO_ASSIST" or "COC_WARN"
+ * @param warn_cause Cause of the warn (only when the warn_type is "COC_WARN")
+ * @param mentorship_id Id of the mentorship where the mentee is going to be warned
+ * @returns Ok if warned or an error?
+ */
+export const addWarning = async (
+  mentee_id: string,
+  warn_type: string,
+  warn_cause: string,
+  mentorship_id: string,
+) => {
+  try {
+    const { data } = await axiosAWSInstance.post(`${WARNING}`, {
+      mentee_id,
+      warn_type,
+      warn_cause,
+      mentorship_id,
+    });
+    return data;
+  } catch ({ response }) {
     throw new Error(response.status);
   }
 };
