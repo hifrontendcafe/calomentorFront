@@ -12,6 +12,10 @@ async function getActiveMentorships(id: string) {
   return axiosGet<IMentorhip[]>(`${MENTORSHIP}?id=${id}&filter=ACTIVE`);
 }
 
+async function getFutureMentorships(id: string) {
+  return axiosGet<IMentorhip[]>(`${MENTORSHIP}?id=${id}&filterDates=FUTURE`);
+}
+
 async function getUserData(id: string) {
   return axiosGet<IUser>(`${USER}?id=${id}`);
 }
@@ -30,4 +34,5 @@ export {
   getTimeslots,
   getAllUsersData,
   getActiveMentorships,
+  getFutureMentorships,
 };

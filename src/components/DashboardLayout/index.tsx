@@ -29,7 +29,7 @@ const DashboardLayout: React.FC<IDashboardLayout> = ({ title, children }) => {
         <main
           className={`relative z-0 flex-1 p-5 overflow-y-auto bg-mainContent ${styles.mainHeight}`}
         >
-          <div className="max-w-screen-xl px-4 pb-6 mx-auto sm:px-6 lg:pb-16 lg:px-8">
+          <div className="px-4 pb-6 mx-auto sm:px-6 lg:pb-16 lg:px-8">
             {children}
           </div>
         </main>

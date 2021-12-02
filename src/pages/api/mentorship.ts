@@ -17,10 +17,14 @@ export default async function handler(
     if (!query.filter) {
       query.filter = '';
     }
+    if (!query.filterDates) {
+      query.filterDates = '';
+    }
     try {
       const data = await getUserMentorships(
         query.id as string,
         query.filter as string,
+        query.filterDates as string,
       );
       return res.status(200).json(data);
     } catch (error) {
