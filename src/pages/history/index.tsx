@@ -47,7 +47,6 @@ const History: React.FC = () => {
         .then(({ data }) => {
           setIsLoading(false);
           setMentorships(data);
-          console.log('🚀 ~ file: index.tsx ~ line 50 ~ .then ~ data', data);
         })
         .catch(() => {
           signOut({ callbackUrl: '/' });
@@ -56,34 +55,8 @@ const History: React.FC = () => {
   }, [dispatch, loadingUser, router, session]);
 
   useEffect(() => {
-    if (!loadingUser && session) {
-      const userID = session.user.id.toString();
-
-      // Get user data and verify if the profile is configured,
-      // if not, go to the profile settings
-      // only admins could access without signup
-      getUserData(userID)
-        .then(res => {
-          !res.data.full_name && session.user.role !== '0'
-            ? router.push(PROFILE)
-            : dispatch({ type: 'SET', payload: { ...res.data } });
-        })
-        .catch(err => {
-          signOut({ callbackUrl: '/' });
-        });
-
-      // Get user mentorships data
-      getAllMentorshipHistory(userID)
-        .then(({ data }) => {
-          setIsLoading(false);
-          setMentorships(data);
-          console.log('🚀 ~ file: index.tsx ~ line 50 ~ .then ~ data', data);
-        })
-        .catch(() => {
-          signOut({ callbackUrl: '/' });
-        });
-    }
-  }, [loadingUser, session, router, dispatch]);
+    getHistoryData();
+  }, [getHistoryData]);
 
   return (
     <>
@@ -120,6 +93,7 @@ const History: React.FC = () => {
           menteeName={modalData.menteeName}
           menteeId={modalData.menteeId}
           mentorshipId={modalData.mentorshipId}
+          callback={getHistoryData}
         />
       </DashboardLayout>
     </>
