@@ -28,6 +28,10 @@ async function getTimeslots(id: string) {
   return axiosGet<ITimeslot[]>(`${TIMESLOTS}?id=${id}`);
 }
 
+async function getAllWarnings() {
+  return axiosGet<ITimeslot[]>(`${TIMESLOTS}`);
+}
+
 export {
   getAllMentorshipHistory,
   getUserData,
@@ -35,4 +39,5 @@ export {
   getAllUsersData,
   getActiveMentorships,
   getFutureMentorships,
+  getAllWarnings,
 };

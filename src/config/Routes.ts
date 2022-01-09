@@ -1,6 +1,8 @@
 import {
+  ClipboardListIcon,
   ClockIcon,
   CogIcon,
+  DocumentTextIcon,
   HomeIcon,
   UserCircleIcon,
   UserGroupIcon,
@@ -16,6 +18,7 @@ export const SETTINGS = '/settings/profile';
 export const PROFILE = '/settings/profile';
 export const SCHEDULE = '/settings/schedule';
 export const HISTORY = '/history';
+export const WARNINGS = '/warnings';
 
 // ---------- API ROUTE CONSTANTS ----------
 
@@ -32,7 +35,7 @@ export const WARNING = '/warning';
 
 export const primaryRoutes = [
   { name: 'Inicio', href: HOME, icon: HomeIcon, current: true },
-  { name: 'Historial', href: HISTORY, icon: ClockIcon, current: false },
+  { name: 'Historial', href: HISTORY, icon: DocumentTextIcon, current: false },
 ];
 
 export const secondaryNavigation = [
@@ -45,6 +48,12 @@ export const adminNavigation = [
     href: MENTORS,
     icon: UserGroupIcon,
     current: true,
+  },
+  {
+    name: 'Blacklist',
+    href: WARNINGS,
+    icon: ClipboardListIcon,
+    current: false,
   },
 ];
 
