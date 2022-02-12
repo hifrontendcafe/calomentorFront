@@ -4,7 +4,13 @@ export interface ITimeslot {
   date: number;
   is_occupied: boolean;
   is_cancelled: boolean;
-  tokenForCancel: string;
-  mentee_id: string;
   mentee_username: string;
+  mentee_id: string;
+  tokenForCancel: string;
+}
+
+export interface ITimeslotInfo {
+  id: string;
+  date: number;
+  is_occupied: boolean;
 }
