@@ -4,7 +4,7 @@ import { ExclamationIcon } from '@heroicons/react/outline';
 import CustomButton from '../CustomButton';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { axiosPost } from '@/lib/api';
-import { MENTORSHIP, WARNING } from '@/config/Routes';
+import { WARNING } from '@/config/Routes';
 import useToastContext from '@/hooks/useToastContext';
 import { IWarnForm } from '@/interfaces/mentorship.interface';
 
