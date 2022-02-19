@@ -1,4 +1,4 @@
-import { addWarning } from '@/lib/mentorshipAPI';
+import { addWarning, getWarnings } from '@/lib/warningAPI';
 import { NextApiRequest, NextApiResponse } from 'next';
 
 export default async function handler(
@@ -23,6 +23,9 @@ export default async function handler(
       warn_cause,
       mentorship_id,
     );
+    return res.status(200).json(data);
+  } else if (req.method === 'GET') {
+    const { data } = await getWarnings();
     return res.status(200).json(data);
   }
   return res.status(400).json({ message: 'Invalid method' });
