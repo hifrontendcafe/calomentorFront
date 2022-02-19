@@ -31,10 +31,10 @@ const CancelModal: React.FC<IModal> = ({
     reset,
   } = useForm<ICancelForm>();
 
-  const onSubmit: SubmitHandler<ICancelForm> = async ({ cancelCause }) => {
+  const onSubmit: SubmitHandler<ICancelForm> = async ({ cancel_cause }) => {
     axiosPost(MENTORSHIP, {
       token: mentorshipToken,
-      cancelCause,
+      cancel_cause,
       whoCancel: 'MENTOR',
     })
       .then(() => {
@@ -126,9 +126,9 @@ const CancelModal: React.FC<IModal> = ({
                           className="custom_input"
                           placeholder="Mensaje..."
                           rows={6}
-                          {...register('cancelCause', { required: true })}
+                          {...register('cancel_cause', { required: true })}
                         />
-                        {errors.cancelCause && (
+                        {errors.cancel_cause && (
                           <p className="pl-1 text-xs text-left text-red-600">
                             Este campo es requerido
                           </p>
