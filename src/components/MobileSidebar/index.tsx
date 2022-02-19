@@ -2,11 +2,7 @@ import React, { Dispatch } from 'react';
 import { Fragment } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import { XIcon } from '@heroicons/react/outline';
-import {
-  adminNavigation,
-  primaryRoutes,
-  secondaryNavigation,
-} from '@/config/Routes';
+import { adminNavigation, primaryRoutes } from '@/config/Routes';
 import NavigationRoute from '../NavigationRoute';
 import { useSession } from 'next-auth/client';
 import PepeJedi from '@/assets/gif/pepe-jedi.gif';
@@ -91,9 +87,6 @@ export const MobileSidebar: React.FC<IMobileSidebar> = ({
                     <NavigationRoute routes={adminNavigation} />
                   </div>
                 )}
-              <div className="pt-6 mt-6">
-                <NavigationRoute routes={secondaryNavigation} />
-              </div>
             </nav>
             <PwdByVercel />
           </div>
