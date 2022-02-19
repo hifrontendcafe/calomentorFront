@@ -4,7 +4,7 @@ import Spinner from '../Spinner';
 
 type GenericCardProps = {
   title?: string;
-  noDataMessage?: string;
+  noDataMessage?: string | ReactNode;
   isLoading?: boolean;
   isDataEmpty?: boolean;
   children: ReactNode;

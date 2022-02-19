@@ -11,6 +11,7 @@ import MentorshipCard from '@/components/MentorshipCard';
 import Link from 'next/link';
 import Spinner from '@/components/Spinner';
 import { getUserData, getFutureMentorships } from '@/services';
+import GenericCard from '@/components/GenericCard';
 
 const Home: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -24,7 +25,7 @@ const Home: React.FC = () => {
   const [session, loading] = useSession();
   const { dispatch } = useContext(UserContext);
   const router = useRouter();
-
+  const mentorshipsEmpty = mentorships.length === 0;
   const removeMentorship = () => {
     setMentorships(prev =>
       prev.filter(m => m.tokenForCancel !== modalData.mentorshipToken),
@@ -71,44 +72,32 @@ const Home: React.FC = () => {
     <>
       <CustomHead title="Inicio" />
       <DashboardLayout title="Inicio">
-        <div className="px-4 py-5 rounded-t-lg bg-cardHeader sm:px-6">
-          <h3 className="text-lg font-medium leading-6 text-mainTextColor">
-            Próximas Mentorías
-          </h3>
-        </div>
-        <div className="p-5 rounded-b-lg bg-cardContent">
-          {isLoading && <Spinner />}
-          {!isLoading && mentorships.length === 0 && (
-            <div
-              className={
-                'border-green-500 mx-6 flex items-center justify-between my-5 border bg-cardContentLight rounded-md'
+        <GenericCard
+          title="Próximas Mentorías"
+          isDataEmpty={mentorshipsEmpty}
+          isLoading={isLoading}
+          noDataMessage={
+            <span>
+              Actualmente no posees mentorías agendadas, recuerda configurar tus{' '}
+              <Link href={SCHEDULE}>
+                <a className="underline">horarios disponibles.</a>
+              </Link>
+            </span>
+          }
+        >
+          {mentorships.map(m => (
+            <MentorshipCard
+              key={m.id}
+              mentorship={m}
+              handleCancelMentorship={() =>
+                handleModalConfirmBtn(
+                  m.tokenForCancel,
+                  m.mentee_username_discord,
+                )
               }
-            >
-              <div className="flex-1 px-4 py-2 text-sm truncate">
-                <p className="py-2 text-center text-mainTextColor">
-                  Actualmente no posees mentorías agendadas, recuerda configurar
-                  tus{' '}
-                  <Link href={SCHEDULE}>
-                    <a className="underline">horarios disponibles.</a>
-                  </Link>
-                </p>
-              </div>
-            </div>
-          )}
-          {!isLoading &&
-            mentorships.map(m => (
-              <MentorshipCard
-                key={m.id}
-                mentorship={m}
-                handleCancelMentorship={() =>
-                  handleModalConfirmBtn(
-                    m.tokenForCancel,
-                    m.mentee_username_discord,
-                  )
-                }
-              />
-            ))}
-        </div>
+            />
+          ))}
+        </GenericCard>
         <CancelModal
           open={isOpen}
           mentorshipToken={modalData.mentorshipToken}

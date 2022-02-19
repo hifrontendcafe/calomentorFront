@@ -1,6 +1,6 @@
 import CustomHead from '@/components/CustomHead';
 import DashboardLayout from '@/components/DashboardLayout';
-import Spinner from '@/components/Spinner';
+import GenericCard from '@/components/GenericCard';
 import WarningCard from '@/components/WarningCard';
 import { HOME } from '@/config/Routes';
 import { isAdmin } from '@/helpers/IsAdmin';
@@ -15,7 +15,7 @@ const Warnings = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [session, loading] = useSession();
   const router = useRouter();
-
+  const emptyWarnings = warnings.length === 0;
   useEffect(() => console.log(warnings), [warnings]);
   useEffect(() => {
     if (session && !loading) {
@@ -34,11 +34,15 @@ const Warnings = () => {
     <>
       <CustomHead title="Blacklist" />
       <DashboardLayout title="Blacklist">
-        <div className="pt-10 pb-5 rounded-lg bg-cardContent">
-          {isLoading && <Spinner />}
-          {!isLoading &&
-            warnings.map(warn => <WarningCard key={warn.id} warning={warn} />)}
-        </div>
+        <GenericCard
+          isLoading={isLoading}
+          isDataEmpty={emptyWarnings}
+          noDataMessage="Actualmente no hay usuarios con advertencias 🥳"
+        >
+          {warnings.map(warn => (
+            <WarningCard key={warn.id} warning={warn} />
+          ))}
+        </GenericCard>
       </DashboardLayout>
     </>
   );

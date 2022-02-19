@@ -6,7 +6,6 @@ import { PlusIcon, XIcon } from '@heroicons/react/outline';
 import { ITimeslot } from '@/interfaces/timeslot.interface';
 import AddTimeslot from '@/components/AddTimeslot/Index';
 import CancelModal from '@/components/CancelModal';
-import Spinner from '@/components/Spinner';
 import { getTimeslots } from '@/services';
 import CustomHead from '@/components/CustomHead';
 import DashboardLayout from '@/components/DashboardLayout';
@@ -22,6 +21,7 @@ const SettingsSchedulePage: React.FC = () => {
     mentorshipToken: string;
     menteeName: string;
   }>({ mentorshipToken: '', menteeName: '' });
+  const emptyTimeslots = timeslots.length === 0;
 
   const removeTimeslot = () => {
     setTimeslots(prev =>
@@ -80,7 +80,7 @@ const SettingsSchedulePage: React.FC = () => {
           isLoading={isLoading}
           noDataMessage='No tienes ningún horario registrado, presiona en el botón
                       "Agregar" para añadir uno.'
-          isDataEmpty={timeslots.length === 0}
+          isDataEmpty={emptyTimeslots}
         >
           <AddTimeslot
             getSchedule={getSchedule}
@@ -88,23 +88,21 @@ const SettingsSchedulePage: React.FC = () => {
             close={() => setAddNew(false)}
             timeslots={timeslots}
           />
-          {!isLoading &&
-            timeslots.length > 0 &&
-            timeslots.map((timeslot: ITimeslot) => (
-              <Timeslot
-                id={timeslot.id}
-                key={timeslot.id}
-                date={timeslot.date}
-                is_occupied={timeslot.is_occupied}
-                updateTimeslots={setTimeslots}
-                handleCancelTimeslot={() =>
-                  handleModalConfirmBtn(
-                    timeslot.tokenForCancel,
-                    timeslot.mentee_username,
-                  )
-                }
-              />
-            ))}
+          {timeslots.map((timeslot: ITimeslot) => (
+            <Timeslot
+              id={timeslot.id}
+              key={timeslot.id}
+              date={timeslot.date}
+              is_occupied={timeslot.is_occupied}
+              updateTimeslots={setTimeslots}
+              handleCancelTimeslot={() =>
+                handleModalConfirmBtn(
+                  timeslot.tokenForCancel,
+                  timeslot.mentee_username,
+                )
+              }
+            />
+          ))}
           <CancelModal
             open={isOpen}
             mentorshipToken={modalData.mentorshipToken}

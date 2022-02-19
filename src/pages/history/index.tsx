@@ -4,12 +4,13 @@ import DashboardLayout from '@/components/DashboardLayout';
 import { useRouter } from 'next/dist/client/router';
 import { UserContext } from '@/context/UserContext';
 import CustomHead from '@/components/CustomHead';
-import { PROFILE } from '@/config/Routes';
+import { PROFILE, SCHEDULE } from '@/config/Routes';
 import { IMentorhip } from '@/interfaces/mentorship.interface';
 import HistoryMentorshipCard from '@/components/HistoryMentorshipCard';
-import Spinner from '@/components/Spinner';
 import { getAllMentorshipHistory, getUserData } from '@/services/index';
 import WarnModal from '@/components/WarnModal';
+import GenericCard from '@/components/GenericCard';
+import Link from 'next/link';
 
 const History: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -21,6 +22,7 @@ const History: React.FC = () => {
     mentorshipId: '',
   });
   const [session, loadingUser] = useSession();
+  const noMentorships = mentorships.length === 0;
 
   const { dispatch } = useContext(UserContext);
   const router = useRouter();
@@ -60,33 +62,30 @@ const History: React.FC = () => {
 
   return (
     <>
-      <CustomHead title="Historial de mentorías" />
+      <CustomHead title="Historial" />
       <DashboardLayout title="Historial">
-        <div className="pt-10 pb-5 rounded-lg bg-cardContent">
-          {isLoading && <Spinner />}
-          {!isLoading && mentorships.length === 0 && (
-            <div
-              className={
-                'border-green-500 mx-6 flex items-center justify-between my-5 border bg-cardContentLight rounded-md'
-              }
-            >
-              <div className="flex-1 px-4 py-2 text-sm truncate">
-                <p className="py-2 text-center text-mainTextColor">
-                  No existen mentorías pasadas
-                </p>
-              </div>
-            </div>
-          )}
-          {!isLoading &&
-            mentorships.map(mentorship => (
-              <HistoryMentorshipCard
-                key={mentorship.id}
-                mentorship={mentorship}
-                setModalData={setModalData}
-                setModalIsOpen={setModalIsOpen}
-              />
-            ))}
-        </div>
+        <GenericCard
+          isLoading={isLoading}
+          isDataEmpty={noMentorships}
+          noDataMessage={
+            <span>
+              Hasta el momento no has dado una mentoría, recuerda configurar tus{' '}
+              <Link href={SCHEDULE}>
+                <a className="underline">horarios disponibles</a>
+              </Link>{' '}
+              :)
+            </span>
+          }
+        >
+          {mentorships.map(mentorship => (
+            <HistoryMentorshipCard
+              key={mentorship.id}
+              mentorship={mentorship}
+              setModalData={setModalData}
+              setModalIsOpen={setModalIsOpen}
+            />
+          ))}
+        </GenericCard>
         <WarnModal
           open={modalIsOpen}
           setModal={setModalIsOpen}
