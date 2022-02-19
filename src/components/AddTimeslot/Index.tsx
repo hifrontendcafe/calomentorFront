@@ -104,12 +104,12 @@ const AddTimeslot: React.FC<IAddTimeslot> = ({
       {visible && (
         <div
           className={
-            'border-addTimeslot flex items-center justify-between flex-1 truncate border bg-cardContentLight rounded-md'
+            'border-addTimeslot flex items-center justify-between flex-1 mx-4 truncate border bg-cardContentLight rounded-md'
           }
         >
           <div className="flex-1 px-4 py-4 text-sm truncate">
             <form onSubmit={handleSubmit(handleConfirmBtn)}>
-              <div className="flex flex-row items-center justify-between">
+              <div className="flex flex-row items-center justify-evenly">
                 <div className="flex flex-col">
                   <div className="flex flex-row items-center">
                     <label

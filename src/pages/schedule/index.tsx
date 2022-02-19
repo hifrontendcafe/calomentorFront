@@ -3,12 +3,14 @@ import { useSession } from 'next-auth/client';
 import CustomButton from '@/components/CustomButton';
 import Timeslot from '@/components/Timeslot';
 import { PlusIcon, XIcon } from '@heroicons/react/outline';
-import SettingsPage from '..';
 import { ITimeslot } from '@/interfaces/timeslot.interface';
 import AddTimeslot from '@/components/AddTimeslot/Index';
 import CancelModal from '@/components/CancelModal';
 import Spinner from '@/components/Spinner';
 import { getTimeslots } from '@/services';
+import CustomHead from '@/components/CustomHead';
+import DashboardLayout from '@/components/DashboardLayout';
+import GenericCard from '@/components/GenericCard';
 
 const SettingsSchedulePage: React.FC = () => {
   const [session, loading] = useSession();
@@ -55,53 +57,43 @@ const SettingsSchedulePage: React.FC = () => {
   }, [getSchedule, loading]);
 
   return (
-    <SettingsPage
-      title="Horarios"
-      description="Configuración de horarios disponibles para mentorías"
-      component={
-        <CustomButton
-          bntIcon={
-            !addNew ? (
-              <PlusIcon className="-ml-0.5 mr-2 h-4 w-4" aria-hidden="true" />
-            ) : (
-              <XIcon className="-ml-0.5 mr-2 h-4 w-4" aria-hidden="true" />
-            )
-          }
-          bntLabel={addNew ? 'Cancelar' : 'Agregar'}
-          primary
-          clickAction={() => setAddNew(!addNew)}
-        />
-      }
-    >
-      <div className="my-4">
-        <AddTimeslot
-          getSchedule={getSchedule}
-          visible={addNew}
-          close={() => setAddNew(false)}
-          timeslots={timeslots}
-        />
-        <div className="py-5">
-          {isLoading && <Spinner />}
-          {!isLoading && timeslots?.length === 0 && (
-            <div
-              className={
-                'border-green-500 flex items-center justify-between my-5 border bg-cardContentLight rounded-md'
-              }
-            >
-              <div className="flex-1 px-4 py-2 text-sm truncate">
-                <p className="py-2 text-center text-mainTextColor">
-                  No tienes ningún horario registrado, presiona en el botón
-                  &quot;Agregar&quot; para añadir uno.
-                </p>
-              </div>
-            </div>
-          )}
+    <>
+      <CustomHead title="Horarios" />
+      <DashboardLayout
+        title="Horarios"
+        endEnhancer={
+          <CustomButton
+            bntIcon={
+              !addNew ? (
+                <PlusIcon className="-ml-0.5 mr-2 h-4 w-4" aria-hidden="true" />
+              ) : (
+                <XIcon className="-ml-0.5 mr-2 h-4 w-4" aria-hidden="true" />
+              )
+            }
+            bntLabel={addNew ? 'Cancelar' : 'Agregar'}
+            primary
+            clickAction={() => setAddNew(!addNew)}
+          />
+        }
+      >
+        <GenericCard
+          isLoading={isLoading}
+          noDataMessage='No tienes ningún horario registrado, presiona en el botón
+                      "Agregar" para añadir uno.'
+          isDataEmpty={timeslots.length === 0}
+        >
+          <AddTimeslot
+            getSchedule={getSchedule}
+            visible={addNew}
+            close={() => setAddNew(false)}
+            timeslots={timeslots}
+          />
           {!isLoading &&
             timeslots.length > 0 &&
             timeslots.map((timeslot: ITimeslot) => (
               <Timeslot
-                key={timeslot.id}
                 id={timeslot.id}
+                key={timeslot.id}
                 date={timeslot.date}
                 is_occupied={timeslot.is_occupied}
                 updateTimeslots={setTimeslots}
@@ -113,16 +105,16 @@ const SettingsSchedulePage: React.FC = () => {
                 }
               />
             ))}
-        </div>
-      </div>
-      <CancelModal
-        open={isOpen}
-        mentorshipToken={modalData.mentorshipToken}
-        menteeName={modalData.menteeName}
-        setModal={setIsOpen}
-        callback={removeTimeslot}
-      />
-    </SettingsPage>
+          <CancelModal
+            open={isOpen}
+            mentorshipToken={modalData.mentorshipToken}
+            menteeName={modalData.menteeName}
+            setModal={setIsOpen}
+            callback={removeTimeslot}
+          />
+        </GenericCard>
+      </DashboardLayout>
+    </>
   );
 };
 

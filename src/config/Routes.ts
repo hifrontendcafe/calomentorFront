@@ -1,6 +1,5 @@
 import {
   ClockIcon,
-  CogIcon,
   DocumentTextIcon,
   HomeIcon,
   UserCircleIcon,
@@ -13,9 +12,8 @@ export const LOGIN = '/';
 export const HOME = '/home';
 export const UNAUTHORIZED = '/unauthorized';
 export const MENTORS = '/mentors';
-export const SETTINGS = '/settings/profile';
-export const PROFILE = '/settings/profile';
-export const SCHEDULE = '/settings/schedule';
+export const PROFILE = '/profile';
+export const SCHEDULE = '/schedule';
 export const HISTORY = '/history';
 export const WARNINGS = '/warnings';
 
@@ -35,14 +33,20 @@ export const WARNING = '/warning';
 export const primaryRoutes = [
   { name: 'Inicio', href: HOME, icon: HomeIcon },
   {
+    name: 'Perfil',
+    href: PROFILE,
+    icon: UserCircleIcon,
+  },
+  {
+    name: 'Horarios',
+    href: SCHEDULE,
+    icon: ClockIcon,
+  },
+  {
     name: 'Historial',
     href: HISTORY,
     icon: DocumentTextIcon,
   },
-];
-
-export const secondaryNavigation = [
-  { name: 'Configuración', href: SETTINGS, icon: CogIcon },
 ];
 
 export const adminNavigation = [
@@ -55,20 +59,5 @@ export const adminNavigation = [
     name: 'Blacklist',
     href: WARNINGS,
     icon: DocumentTextIcon,
-  },
-];
-
-// ---------- NAVIGATION ROUTES | Settings ----------
-
-export const settingsNavigation = [
-  {
-    name: 'Perfil',
-    href: PROFILE,
-    icon: UserCircleIcon,
-  },
-  {
-    name: 'Horarios',
-    href: SCHEDULE,
-    icon: ClockIcon,
   },
 ];
