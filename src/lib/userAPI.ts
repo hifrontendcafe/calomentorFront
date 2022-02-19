@@ -10,7 +10,7 @@ export const getUsers = async () => {
   try {
     const { data } = await axiosAWSInstance.get<IUser>(USER);
     return data;
-  } catch (error) {
+  } catch (error: any) {
     throw new Error(error.response.status);
   }
 };
@@ -24,7 +24,7 @@ export const getUserByID = async (id: string) => {
   try {
     const { data } = await axiosAWSInstance.get<IUser>(`${USER}/${id}`);
     return data;
-  } catch (error) {
+  } catch (error: any) {
     throw new Error(error.response.status);
   }
 };
@@ -38,7 +38,7 @@ export const createUser = async (userData: IUser) => {
   try {
     const { data } = await axiosAWSInstance.post(USER, userData);
     return data;
-  } catch (error) {
+  } catch (error: any) {
     throw new Error(error.response.status);
   }
 };
@@ -50,10 +50,11 @@ export const createUser = async (userData: IUser) => {
  * @returns an object with the user data and the result of the operation
  */
 export const updateUserByID = async (userId: string, userData: IUser) => {
+  userData.user_timezone = 'America / Buenos_Aires'; // ESTO HAY QUE BORRARLO Y ACOMODAR LO DE LOS TIMEZONES EN LA CONFIGURACIÓN DEL PERFIL
   try {
     const { data } = await axiosAWSInstance.put(`${USER}/${userId}`, userData);
     return data;
-  } catch (error) {
+  } catch (error: any) {
     throw new Error(error.response.status);
   }
 };
@@ -69,7 +70,7 @@ export const getUserSchedule = async (userId: string) => {
       `${AWS_TIMESLOT}${USER}/${userId}`,
     );
     return data;
-  } catch (error) {
+  } catch (error: any) {
     throw new Error(error.response.status);
   }
 };
@@ -91,7 +92,7 @@ export const updateUserStatus = async (
       { isActive: isActive, lastActivateBy: actionAuthor },
     );
     return data;
-  } catch (error) {
+  } catch (error: any) {
     throw new Error(error.response.status);
   }
 };

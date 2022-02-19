@@ -27,16 +27,16 @@ export default async function handler(
         query.filterDates as string,
       );
       return res.status(200).json(data);
-    } catch (error) {
+    } catch (error: any) {
       if (error.message === '404') {
         return res.status(200).json({ data: [] });
       }
       return res.status(400).json({ message: 'An error has occurred' });
     }
   } else if (req.method === 'POST') {
-    const { token, cancelCause, whoCancel } = req.body;
+    const { token, cancel_cause, who_cancel } = req.body;
     try {
-      const data = await cancelMentorship(token, cancelCause, whoCancel);
+      const data = await cancelMentorship(token, cancel_cause, who_cancel);
       return res.status(200).json(data);
     } catch (error) {
       return res.status(400).json({ message: 'An error has occurred' });

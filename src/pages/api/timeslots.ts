@@ -14,7 +14,7 @@ export default async function handler(
     try {
       const data = await getUserSchedule(query.id as string);
       return res.status(200).json(data);
-    } catch (error) {
+    } catch (error: any) {
       if (error.message === '400') {
         return res.status(200).json({ data: [] });
       }
@@ -22,11 +22,11 @@ export default async function handler(
     }
   } else if (req.method === 'POST') {
     const { body } = req;
-    if (!body.datetime) {
+    if (!body.slot_date) {
       return res.status(400).json({ message: 'Date and time are required' });
     }
     try {
-      const data = await addNewTimeslot(body.id, body.datetime);
+      const data = await addNewTimeslot(body.user_id, body.slot_date);
       return res.status(200).json(data);
     } catch (error) {
       return res.status(400).json({ message: 'An error has occurred' });

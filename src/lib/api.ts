@@ -4,7 +4,9 @@ import { AxiosError } from 'axios';
 
 export const axiosGet = async <T extends unknown>(endpoint: string) => {
   try {
-    const { data } = await axiosInstance.get<ServerResponse<T>>(`/api${endpoint}`);
+    const { data } = await axiosInstance.get<ServerResponse<T>>(
+      `/api${endpoint}`,
+    );
     return data;
   } catch (error) {
     const axiosError = error as AxiosError;
@@ -21,7 +23,7 @@ export const axiosPost = async (endpoint: string, body: {}) => {
   try {
     const { data } = await axiosInstance.post(`/api${endpoint}`, body);
     return data;
-  } catch (error) {
+  } catch (error: any) {
     throw new Error(error.response.status);
   }
 };
@@ -30,7 +32,7 @@ export const axiosPut = async (endpoint: string, body: {}) => {
   try {
     const { data } = await axiosInstance.put(`/api${endpoint}`, body);
     return data;
-  } catch (error) {
+  } catch (error: any) {
     throw new Error(error.response.status);
   }
 };
@@ -39,7 +41,7 @@ export const axiosPatch = async (endpoint: string, body: {}) => {
   try {
     const { data } = await axiosInstance.patch(`/api${endpoint}`, body);
     return data;
-  } catch (error) {
+  } catch (error: any) {
     throw new Error(error.response.status);
   }
 };
@@ -48,7 +50,7 @@ export const axiosDelete = async (endpoint: string) => {
   try {
     const { data } = await axiosInstance.delete(`/api${endpoint}`);
     return data;
-  } catch (error) {
+  } catch (error: any) {
     throw new Error(error.response.status);
   }
 };
