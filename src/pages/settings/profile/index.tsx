@@ -13,6 +13,7 @@ import { USER } from '@/config/Routes';
 import CustomButton from '@/components/CustomButton';
 import TimezoneList from '@/lib/timezones.json';
 import { getUserData } from '@/services';
+import { getRoleArray } from '@/helpers/getRoleArray';
 
 const SettingsProfilePage: React.FC = () => {
   const [session, loading] = useSession();
@@ -29,7 +30,7 @@ const SettingsProfilePage: React.FC = () => {
       url_photo,
       isActive,
       links,
-      timezone,
+      user_timezone,
     },
     dispatch,
   } = useUserContext();
@@ -59,7 +60,7 @@ const SettingsProfilePage: React.FC = () => {
             url_photo,
             isActive,
             links,
-            timezone,
+            user_timezone,
           } = data;
           reset({
             full_name,
@@ -69,7 +70,7 @@ const SettingsProfilePage: React.FC = () => {
             url_photo,
             isActive,
             links,
-            timezone: timezone?.toString(),
+            user_timezone: user_timezone?.toString(),
           });
           setUrlPhoto(url_photo ?? '');
           dispatch({ type: 'SET', payload: { ...data } });
@@ -77,7 +78,7 @@ const SettingsProfilePage: React.FC = () => {
       });
     }
     if (id && !loading) {
-      const timezoneString = timezone ? timezone.toString() : '';
+      const timezoneString = user_timezone ? user_timezone.toString() : '';
       reset({
         full_name,
         about_me,
@@ -86,7 +87,7 @@ const SettingsProfilePage: React.FC = () => {
         url_photo,
         isActive,
         links,
-        timezone: timezoneString,
+        user_timezone: timezoneString,
       });
       if (url_photo && url_photo !== '') {
         setUrlPhoto(url_photo);
@@ -118,6 +119,7 @@ const SettingsProfilePage: React.FC = () => {
   ];
 
   const onSubmit: SubmitHandler<IUser> = async data => {
+    data.role = getRoleArray(session?.user.role);
     axiosPut(USER, { data })
       .then(({ data }) => {
         console.log(data);
@@ -322,7 +324,7 @@ const SettingsProfilePage: React.FC = () => {
               </label>
               <Controller
                 control={control}
-                name="timezone"
+                name="user_timezone"
                 render={({ field: { onChange, ref, value } }) => (
                   <Select
                     placeholder="Seleccionar"
@@ -341,7 +343,7 @@ const SettingsProfilePage: React.FC = () => {
                 )}
                 rules={{ required: true }}
               />
-              {errors.skills && (
+              {errors.user_timezone && (
                 <p className="pl-1 text-xs text-red-600">
                   El campo es requerido
                 </p>

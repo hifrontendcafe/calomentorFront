@@ -22,7 +22,7 @@ export interface IMentorhip {
 }
 
 export interface ICancelForm {
-  cancelCause: string;
+  cancel_cause: string;
 }
 
 export interface IWarnForm {
@@ -31,6 +31,6 @@ export interface IWarnForm {
 }
 
 export interface IFeedbackForm {
-  mentorFeedback: string;
-  fecFeedback: string;
+  mentor_feedback: string;
+  fec_feedback: string;
 }

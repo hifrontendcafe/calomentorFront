@@ -22,14 +22,14 @@ const CancelMentorship: React.FC = () => {
     handleSubmit,
   } = useForm<ICancelForm>();
 
-  const onSubmit: SubmitHandler<ICancelForm> = async ({ cancelCause }) => {
+  const onSubmit: SubmitHandler<ICancelForm> = async ({ cancel_cause }) => {
     setIsLoading(true);
     const { token } = router.query;
 
     if (token) {
       axiosPost(MENTORSHIP, {
         token,
-        cancelCause,
+        cancel_cause,
         whoCancel: 'MENTEE',
       })
         .then(() => {
@@ -98,9 +98,9 @@ const CancelMentorship: React.FC = () => {
                         className="custom_input"
                         placeholder="Mensaje..."
                         rows={6}
-                        {...register('cancelCause', { required: true })}
+                        {...register('cancel_cause', { required: true })}
                       />
-                      {errors.cancelCause && (
+                      {errors.cancel_cause && (
                         <p className="pl-1 text-xs text-left text-red-600">
                           Este campo es requerido
                         </p>

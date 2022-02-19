@@ -29,22 +29,22 @@ const MentorshipFeedback: React.FC = () => {
     setValue,
   } = useForm<IFeedbackForm>({
     mode: 'onChange',
-    defaultValues: { fecFeedback: '' },
+    defaultValues: { fec_feedback: '' },
   });
 
   const router = useRouter();
 
   const onSubmit: SubmitHandler<IFeedbackForm> = async ({
-    mentorFeedback,
-    fecFeedback,
+    mentor_feedback,
+    fec_feedback,
   }) => {
     setIsLoading(true);
     const { token } = router.query;
     if (token) {
       axiosPatch(FEEDBACK, {
         token,
-        feedback: mentorFeedback,
-        privateFeedback: fecFeedback,
+        feedback: mentor_feedback,
+        privateFeedback: fec_feedback,
         starsFeedback: rating,
       })
         .then(res => {
@@ -154,7 +154,7 @@ const MentorshipFeedback: React.FC = () => {
                     <textarea
                       className="custom_input"
                       rows={5}
-                      {...register('mentorFeedback', {
+                      {...register('mentor_feedback', {
                         required: true,
                         minLength: {
                           value: 20,
@@ -166,9 +166,9 @@ const MentorshipFeedback: React.FC = () => {
                         },
                       })}
                     />
-                    {errors.mentorFeedback && (
+                    {errors.mentor_feedback && (
                       <p className="pl-1 text-xs text-left text-red-600">
-                        {errors.mentorFeedback.message}
+                        {errors.mentor_feedback.message}
                       </p>
                     )}
                   </div>
@@ -179,7 +179,7 @@ const MentorshipFeedback: React.FC = () => {
                         onChange={val => {
                           setFecFeedback(val.target.checked);
                           if (!val.target.checked) {
-                            setValue('fecFeedback', '');
+                            setValue('fec_feedback', '');
                           }
                         }}
                         name="enableFecFeedback"
@@ -203,7 +203,7 @@ const MentorshipFeedback: React.FC = () => {
                         className="custom_input"
                         rows={5}
                         maxLength={500}
-                        {...register('fecFeedback', {
+                        {...register('fec_feedback', {
                           minLength: {
                             value: 20,
                             message:
@@ -216,9 +216,9 @@ const MentorshipFeedback: React.FC = () => {
                           },
                         })}
                       />
-                      {errors.fecFeedback && (
+                      {errors.fec_feedback && (
                         <p className="pl-1 text-xs text-left text-red-600">
-                          {errors.fecFeedback.message}
+                          {errors.fec_feedback.message}
                         </p>
                       )}
                     </div>

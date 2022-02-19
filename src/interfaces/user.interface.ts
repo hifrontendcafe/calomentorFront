@@ -5,7 +5,8 @@ interface IUserLinks {
   portfolio: string;
 }
 
-type Role = 'admin' | 'mentor';
+export type RoleType = 'admin' | 'mentor';
+
 export interface IUser {
   id: string;
   discord_username?: string;
@@ -13,13 +14,13 @@ export interface IUser {
   about_me?: string;
   email?: string;
   url_photo?: string;
-  role?: Role[];
+  role?: RoleType[];
   links?: IUserLinks;
   skills?: string[];
-  isActive: boolean;
-  lastActivateBy: string; // discord id
-  timezone: string;
-  userToken: string;
+  isActive?: boolean;
+  lastActivateBy?: string; // discord id
+  user_timezone?: string;
+  userToken?: string;
 }
 
 export interface ICreateUser {
