@@ -1,3 +1,4 @@
+import classNames from 'classnames';
 import React from 'react';
 
 interface ICustomButton {
@@ -24,18 +25,18 @@ const CustomButton: React.FC<ICustomButton> = ({
   return (
     <button
       type={type}
-      className={`${className} inline-flex items-center px-3 py-2 text-sm font-medium leading-4 border border-transparent rounded-md shadow-sm focus:outline-none ${
-        primary && !disabled
-          ? 'text-mainBtnTxt bg-mainBtnColor hover:bg-mainBtnHoverColor'
-          : !danger && !primary && !disabled
-          ? 'text-black bg-secondaryBtnColor hover:bg-secondaryBtnHoverColor'
-          : disabled
-          ? 'text-mainBtnTxt bg-gray-600 cursor-not-allowed'
-          : danger
-          ? 'text-mainBtnTxt bg-red-600 hover:bg-red-700'
-          : null
-      }
-      `}
+      className={classNames(
+        'inline-flex items-center px-3 py-2 text-sm font-medium leading-4 border border-transparent rounded-md shadow-sm focus:outline-none',
+        className,
+        {
+          'text-mainBtnTxt bg-mainBtnColor hover:bg-mainBtnHoverColor':
+            primary && !disabled && !danger,
+          'text-black bg-secondaryBtnColor hover:bg-secondaryBtnHoverColor':
+            !danger && !primary && !disabled,
+          'text-mainBtnTxt bg-gray-600 cursor-not-allowed': disabled,
+          'text-mainBtnTxt bg-red-600 hover:bg-red-700': danger,
+        },
+      )}
       onClick={clickAction ? clickAction : () => {}}
       disabled={disabled}
     >

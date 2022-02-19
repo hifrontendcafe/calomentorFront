@@ -46,9 +46,7 @@ const MentorshipCard: React.FC<IMentorshipCard> = ({
   return (
     <div key={mentorship.id} className="px-4 pb-5 sm:px-6">
       <div className="flex border-t border-b border-r border-green-500 rounded-lg">
-        <div
-          className={`bg-green-500 flex-shrink-0 flex items-center justify-center w-14 text-cardContentLight text-sm font-medium rounded-l-md`}
-        >
+        <div className="bg-green-500 flex-shrink-0 flex items-center justify-center w-14 text-cardContentLight text-sm font-medium rounded-l-md">
           <CalendarIcon style={{ padding: 12 }} />
         </div>
         <div className="flex justify-between w-full">

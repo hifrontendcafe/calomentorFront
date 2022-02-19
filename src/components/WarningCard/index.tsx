@@ -2,6 +2,7 @@ import { ChevronRightIcon } from '@heroicons/react/outline';
 import React, { Dispatch, SetStateAction, useState } from 'react';
 import { IWarning, WARN, WARNSTATE } from '@/interfaces/warning.interface';
 import dayjs from 'dayjs';
+import classNames from 'classnames';
 
 interface IWarningCard {
   warning: IWarning;
@@ -65,16 +66,20 @@ const WarningCard: React.FC<IWarningCard> = ({
           </div>
           <div className="flex flex-row items-center">
             <ChevronRightIcon
-              className={`w-5 h-5 transform transition-transform ${
-                isOpen ? 'rotate-90' : null
-              }`}
+              className={classNames('w-5 h-5 transform transition-transform', {
+                'rotate-90': isOpen,
+              })}
             />
           </div>
         </div>
         <div
-          className={` px-4 py-5 transition-all transform ease-in-out origin-top border-t border-gray-700 xm:px-6 ${
-            isOpen ? 'block' : 'hidden'
-          }`}
+          className={classNames(
+            'px-4 py-5 transition-all transform ease-in-out origin-top border-t border-gray-700 xm:px-6',
+            {
+              block: isOpen,
+              hidden: !isOpen,
+            },
+          )}
         >
           <dl className="grid grid-cols-1 gap-x-4 gap-y-4 sm:grid-cols-2">
             <div className="sm:col-span-1">

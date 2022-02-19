@@ -9,6 +9,7 @@ import { Menu, Transition } from '@headlessui/react';
 import { signOut, useSession } from 'next-auth/client';
 import Link from 'next/link';
 import { PROFILE } from '@/config/Routes';
+import classNames from 'classnames';
 
 interface ITopBar {
   setSidebarOpen: Dispatch<boolean>;
@@ -74,9 +75,12 @@ export const TopBar: React.FC<ITopBar> = ({ setSidebarOpen }) => {
                   <Menu.Item>
                     {({ active }) => (
                       <a
-                        className={`${
-                          active ? 'bg-hoverNavigation' : ''
-                        } block px-4 py-2 text-sm text-mainTextColor cursor-pointer active:bg-activeNavigation`}
+                        className={classNames(
+                          'block px-4 py-2 text-sm text-mainTextColor cursor-pointer active:bg-activeNavigation',
+                          {
+                            'bg-hoverNavigation': active,
+                          },
+                        )}
                       >
                         Tu perfil
                       </a>
@@ -87,9 +91,12 @@ export const TopBar: React.FC<ITopBar> = ({ setSidebarOpen }) => {
                   {({ active }) => (
                     <a
                       onClick={() => signOut({ callbackUrl: '/' })}
-                      className={`${
-                        active ? 'bg-hoverNavigation' : ''
-                      } block px-4 py-2 text-sm text-mainTextColor cursor-pointer active:bg-activeNavigation`}
+                      className={classNames(
+                        'block px-4 py-2 text-sm text-mainTextColor cursor-pointer active:bg-activeNavigation',
+                        {
+                          'bg-hoverNavigation': active,
+                        },
+                      )}
                     >
                       Cerrar sesión
                     </a>

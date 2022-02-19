@@ -7,6 +7,7 @@ import React, { Dispatch, SetStateAction } from 'react';
 import { useState } from 'react';
 import Modal from '../Modal';
 import { formatDate } from '@/helpers/formatDate';
+import classNames from 'classnames';
 
 interface ISlot {
   id: string;
@@ -50,17 +51,23 @@ const Timeslot: React.FC<ISlot> = ({
   };
 
   return (
-    <div className="flex col-span-1 my-2 rounded-md shadow-sm">
+    <div className="flex flex-row m-5 rounded-md shadow-sm">
       <div
-        className={`${is_occupied ? 'bg-red-500' : 'bg-green-500'}
-            flex-shrink-0 flex items-center justify-center w-14 text-cardContentLight text-sm font-medium rounded-l-md`}
+        className={classNames(
+          'flex-shrink-0 flex items-center justify-center w-14 text-cardContentLight text-sm font-medium rounded-l-md',
+          { 'bg-red-500': is_occupied, 'bg-green-500': !is_occupied },
+        )}
       >
         <CalendarIcon style={{ padding: 12 }} />
       </div>
       <div
-        className={`${
-          is_occupied ? 'border-red-500' : 'border-green-500'
-        } flex items-center justify-between flex-1 truncate border-t border-b border-r  bg-cardContentLight rounded-r-md`}
+        className={classNames(
+          'flex items-center justify-between flex-1 truncate border-t border-b border-r bg-cardContentLight rounded-r-md',
+          {
+            'border-red-500': is_occupied,
+            'border-green-500': !is_occupied,
+          },
+        )}
       >
         <div className="flex-1 px-4 py-2 text-sm truncate">
           <p className="font-semibold text-mainTextColor">{formatDate(date)}</p>

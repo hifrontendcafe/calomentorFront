@@ -5,6 +5,7 @@ import { axiosPatch } from '@/lib/api';
 import { USER } from '@/config/Routes';
 import useUserContext from '@/hooks/useUserContext';
 import useToastContext from '@/hooks/useToastContext';
+import classNames from 'classnames';
 
 interface IMentorCard {
   mentor: IUser;
@@ -64,11 +65,13 @@ const MentorCard: React.FC<IMentorCard> = ({
           <div className="flex flex-1 w-0">
             <button
               onClick={handleButton}
-              className={`relative tracking-wider inline-flex items-center justify-center flex-1 w-0 py-4 -mr-px text-sm font-medium text-gray-300 border rounded-bl-lg border-cardContentLight hover:text-gray-500 ${
-                isActivated
-                  ? 'text-red-300 hover:text-red-500'
-                  : 'text-green-300 hover:text-green-500'
-              }`}
+              className={classNames(
+                'relative tracking-wider inline-flex items-center justify-center flex-1 w-0 py-4 -mr-px text-sm font-medium text-gray-300 border rounded-bl-lg border-cardContentLight hover:text-gray-500',
+                {
+                  'text-red-300 hover:text-red-500': isActivated,
+                  'text-green-300 hover:text-green-500': !isActivated,
+                },
+              )}
             >
               <span className="ml-3">
                 {isActivated ? 'Deshabilitar' : 'Habilitar'}
