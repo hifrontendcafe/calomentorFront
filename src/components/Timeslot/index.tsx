@@ -6,7 +6,7 @@ import { CalendarIcon, TrashIcon, XIcon } from '@heroicons/react/outline';
 import React, { Dispatch, SetStateAction } from 'react';
 import { useState } from 'react';
 import Modal from '../Modal';
-import { formatMentorshipDate } from '@/helpers/formatDate';
+import { formatDate } from '@/helpers/formatDate';
 
 interface ISlot {
   id: string;
@@ -28,7 +28,7 @@ const Timeslot: React.FC<ISlot> = ({
 
   const handleDelete = (timeslotId: string) => {
     axiosDelete(`${TIMESLOTS}?timeslotId=${timeslotId}`).then(res => {
-      if (res.message === 'The slot was succesfully deleted') {
+      if (res.message === 'Time slot successfully deleted') {
         setModalIsOpen(false);
         updateTimeslots(prevTimeslots =>
           prevTimeslots.filter(slot => slot.id !== id),
@@ -63,9 +63,7 @@ const Timeslot: React.FC<ISlot> = ({
         } flex items-center justify-between flex-1 truncate border-t border-b border-r  bg-cardContentLight rounded-r-md`}
       >
         <div className="flex-1 px-4 py-2 text-sm truncate">
-          <p className="font-semibold text-mainTextColor">
-            {formatMentorshipDate(date)}
-          </p>
+          <p className="font-semibold text-mainTextColor">{formatDate(date)}</p>
           <p className="text-mainTextColor">
             Estado: {is_occupied ? 'agendada' : 'disponible'}
           </p>

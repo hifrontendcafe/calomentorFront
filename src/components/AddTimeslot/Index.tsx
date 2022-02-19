@@ -5,11 +5,9 @@ import CustomButton from '../CustomButton';
 import { axiosPost } from '@/lib/api';
 import { useSession } from 'next-auth/client';
 import { TIMESLOTS } from '@/config/Routes';
-import { format, set, addMonths } from 'date-fns';
-import DatePicker, { registerLocale } from 'react-datepicker';
+import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import es from 'date-fns/locale/es';
-registerLocale('es', es);
+import dayjs from 'dayjs';
 import { ITimeslot } from '@/interfaces/timeslot.interface';
 
 interface IAddTimeslot {
@@ -42,17 +40,20 @@ const AddTimeslot: React.FC<IAddTimeslot> = ({
   } = useForm<ITimeForm>();
 
   const unifyDates = (date1: Date, date2: Date) => {
-    date1.setHours(date2.getHours());
-    date1.setMinutes(date2.getMinutes());
-    return date1;
+    return dayjs(new Date(date1))
+      .add(dayjs(new Date(date2)).hour(), 'hour')
+      .add(dayjs(new Date(date2)).minute(), 'minute');
   };
 
   const handleConfirmBtn: SubmitHandler<ITimeForm> = data => {
-    unifyDates(data.date, data.time);
     if (!loading && session) {
+      console.log(
+        '🚀 ~ file: Index.tsx ~ line 53 ~ unifyDates(data.date, data.time).toDate()',
+        unifyDates(data.date, data.time).toDate(),
+      );
       axiosPost(TIMESLOTS, {
-        id: session.user.id.toString(),
-        datetime: unifyDates(data.date, data.time),
+        user_id: session.user.id.toString(),
+        slot_date: unifyDates(data.date, data.time).toDate().getTime(),
       })
         .then(res => {
           addToast({
@@ -82,16 +83,17 @@ const AddTimeslot: React.FC<IAddTimeslot> = ({
     timeslots
       .filter(
         ({ date }) =>
-          format(new Date(date), 'dd/MM/yyyy') ===
-          format(new Date(getValues('date')), 'dd/MM/yyyy'),
+          dayjs(date).format('dd/MM/yyyy') ===
+          dayjs(getValues('date')).format('dd/MM/yyyy'),
       )
       .forEach(({ date: time }) => {
-        const [hours, minutes] = format(new Date(time), 'HH:mm').split(':');
+        const [hours, minutes] = dayjs(time).format('HH:mm').split(':');
+        // const [hours, minutes] = format(new Date(time), 'HH:mm').split(':');
         excludedTimes.push(
-          set(new Date(), {
-            hours: parseInt(hours, 10),
-            minutes: parseInt(minutes, 10),
-          }),
+          dayjs()
+            .hour(parseInt(hours, 10))
+            .minute(parseInt(minutes, 10))
+            .toDate(),
         );
       });
     setExcludedTimes(excludedTimes);
@@ -128,9 +130,8 @@ const AddTimeslot: React.FC<IAddTimeslot> = ({
                             onChange(date as Date);
                             formatExcludedTimes();
                           }}
-                          locale="es"
                           minDate={new Date()}
-                          maxDate={addMonths(new Date(), 2)}
+                          maxDate={dayjs().add(2, 'month').toDate()}
                           showDisabledMonthNavigation
                           dateFormat="dd/MM/yyyy"
                         />

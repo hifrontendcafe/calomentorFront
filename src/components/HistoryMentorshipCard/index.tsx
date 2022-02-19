@@ -1,4 +1,4 @@
-import { formatMentorshipDate } from '@/helpers/formatDate';
+import { formatDate } from '@/helpers/formatDate';
 import { IMentorhip } from '@/interfaces/mentorship.interface';
 import {
   BanIcon,
@@ -71,7 +71,7 @@ const MentorshipCard: React.FC<IMentorshipCard> = ({
               {mentee_name}
             </h3>
             <p className="max-w-2xl mt-1 text-sm">
-              {formatMentorshipDate(time_slot_info.date)}
+              {formatDate(time_slot_info.date)}
             </p>
           </div>
           <div className="flex flex-row items-center">
@@ -99,7 +99,7 @@ const MentorshipCard: React.FC<IMentorshipCard> = ({
                 />
               </div>
             )}
-            {isWarned && warning_info.status === 'ACTIVE' && (
+            {isWarned && warning_info.warning_status === 'ACTIVE' && (
               <div className="has-tooltip">
                 <span className="px-2 py-1 -mt-8 text-sm text-red-500 bg-gray-700 rounded shadow-lg -ml-14 tooltip">
                   El usuario fue advertido
@@ -107,7 +107,7 @@ const MentorshipCard: React.FC<IMentorshipCard> = ({
                 <BanIcon className="w-5 h-5 mx-2 text-red-400" />
               </div>
             )}
-            {isWarned && warning_info.status === 'FORGIVE' && (
+            {isWarned && warning_info.warning_status === 'FORGIVE' && (
               <div className="has-tooltip">
                 <span className="px-2 py-1 -mt-8 text-sm text-yellow-500 bg-gray-700 rounded shadow-lg -ml-14 tooltip">
                   El usuario fue perdonado
@@ -162,7 +162,7 @@ const MentorshipCard: React.FC<IMentorshipCard> = ({
                 </dd>
               </div>
             )}
-            {isWarned && warning_info.status === 'FORGIVE' && (
+            {isWarned && warning_info.warning_status === 'FORGIVE' && (
               <div className="sm:col-span-2">
                 <dt className="text-sm font-medium text-mainTextColor">
                   Perdonado por:

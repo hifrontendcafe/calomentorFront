@@ -1,9 +1,10 @@
 import React from 'react';
 import Timezones from '@/lib/completeTimezones.json';
-import { formatMentorshipDate } from '@/helpers/formatDate';
+import { formatDate } from '@/helpers/formatDate';
 import { IMentorhip } from '@/interfaces/mentorship.interface';
 import { CalendarIcon, UserRemoveIcon } from '@heroicons/react/outline';
-import { addMinutes } from 'date-fns';
+import dayjs from 'dayjs';
+
 import Link from 'next/link';
 interface IMentorshipCard {
   mentorship: IMentorhip;
@@ -24,14 +25,12 @@ const MentorshipCard: React.FC<IMentorshipCard> = ({
     );
   };
 
-  const formatedStartDatetime = new Date(mentorship.time_slot_info.date)
+  const formatedStartDatetime = dayjs(mentorship.time_slot_info.date)
     .toISOString()
     .replace(/[-:.]/g, '');
 
-  const formatedEndDatetime = addMinutes(
-    new Date(mentorship.time_slot_info.date),
-    45,
-  )
+  const formatedEndDatetime = dayjs(mentorship.time_slot_info.date)
+    .add(45, 'minute')
     .toISOString()
     .replace(/[-:.]/g, '');
 
@@ -55,7 +54,7 @@ const MentorshipCard: React.FC<IMentorshipCard> = ({
         <div className="flex justify-between w-full">
           <div className="flex flex-col justify-center p-3">
             <p className="text-sm font-medium text-mainTextColor">
-              {formatMentorshipDate(mentorship.time_slot_info.date)}
+              {formatDate(mentorship.time_slot_info.date)}
             </p>
             <p className="text-sm text-gray-300">
               <span className="font-medium text-mainTextColor">Mentee:</span>{' '}

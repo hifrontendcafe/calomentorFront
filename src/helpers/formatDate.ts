@@ -1,8 +1,5 @@
-import { format } from 'date-fns';
-import es from 'date-fns/locale/es';
+import dayjs from 'dayjs';
 
-export const formatMentorshipDate = (date: number) => {
-  return format(new Date(date), "d 'de' MMMM - HH:mm 'hs'", {
-    locale: es,
-  });
+export const formatDate = (date: number) => {
+  return dayjs(date).format('MMMM D, YYYY h:mm A');
 };
