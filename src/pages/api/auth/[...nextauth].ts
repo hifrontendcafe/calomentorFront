@@ -8,6 +8,7 @@ import {
 import { LOGIN, UNAUTHORIZED } from '@/config/Routes';
 import axios from 'axios';
 import { createUser, getUserByID } from '@/lib/userAPI';
+import { RoleType } from '@/interfaces/user.interface';
 
 export default NextAuth({
   providers: [
@@ -57,9 +58,9 @@ export default NextAuth({
         // Check if user exists else create it
         try {
           await getUserByID(user.id as string);
-        } catch (error) {
+        } catch (error: any) {
           if (error.message === '404') {
-            const role =
+            const role: RoleType[] =
               isAdmin && isMentor
                 ? ['admin', 'mentor']
                 : isAdmin
@@ -68,7 +69,7 @@ export default NextAuth({
             try {
               await createUser({
                 id: user.id as string,
-                role,
+                role: role,
               });
             } catch (error) {
               return false;
