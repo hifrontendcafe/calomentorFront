@@ -3,9 +3,11 @@ import { IUser } from '@/interfaces/user.interface';
 import Image from 'next/image';
 import { axiosPatch } from '@/lib/api';
 import { USER } from '@/config/Routes';
-import useUserContext from '@/hooks/useUserContext';
 import useToastContext from '@/hooks/useToastContext';
 import classNames from 'classnames';
+import GenericCard from '../GenericCard';
+import CustomButton from '../CustomButton';
+import { useSession } from 'next-auth/client';
 
 interface IMentorCard {
   mentor: IUser;
@@ -15,12 +17,34 @@ const MentorCard: React.FC<IMentorCard> = ({
   mentor: { id, url_photo, full_name, email, isActive },
 }) => {
   const [isActivated, setIsActivated] = useState(isActive);
-  const { state } = useUserContext();
+  const [isLoading, setIsLoading] = useState(false);
+  const [session] = useSession();
   const { addToast } = useToastContext();
 
+  const renderButtonLabel = () => {
+    if (isLoading) {
+      return (
+        <div className="flex items-center justify-center p-5">
+          <div className="w-4 h-4 border-b-2 rounded-full border-fecGreen animate-spin"></div>
+        </div>
+      );
+    } else if (isActivated) {
+      return 'Deshabilitar';
+    } else {
+      return 'Habilitar';
+    }
+  };
+
   const handleButton = () => {
-    axiosPatch(USER, { userID: id, authorID: state.id, isActive: !isActivated })
+    setIsLoading(true);
+    axiosPatch(USER, {
+      userID: id,
+      authorID: session?.user.id,
+      isActive: !isActivated,
+    })
       .then(() => {
+        setIsLoading(false);
+        setIsActivated(!isActivated);
         addToast({
           title: 'El usuario se ha actualizado',
           subText: `${full_name} ha sido ${
@@ -28,9 +52,9 @@ const MentorCard: React.FC<IMentorCard> = ({
           }.`,
           type: 'default',
         });
-        setIsActivated(!isActivated);
       })
       .catch(() => {
+        setIsLoading(false);
         addToast({
           title: 'El usuario no se ha actualizado',
           subText: `Ocurrió un problema al intentar actualizar a ${full_name}`,
@@ -40,47 +64,39 @@ const MentorCard: React.FC<IMentorCard> = ({
   };
 
   return (
-    <div className="flex flex-col col-span-1 text-center divide-y divide-gray-200 rounded-lg bg-cardContent">
-      <div className="flex flex-col p-8">
-        <div className="flex-grow mt-6 lg:mt-0 lg:flex-grow-0 lg:flex-shrink-0">
+    <GenericCard
+      bodyClassnames={classNames('rounded border', {
+        'border-red-500 ': !isActivated,
+        'border-green-500': isActivated,
+      })}
+    >
+      <div className="flex p-5 items-center">
+        <div className="flex w-full">
           <Image
-            className="relative rounded-full"
+            className="relative rounded-full flex-grow lg:mt-0 lg:flex-grow-0 lg:flex-shrink"
             src={
               url_photo
                 ? url_photo
                 : 'https://res.cloudinary.com/frontendcafe/image/upload/v1631388475/defaultUserImage_advu4k.svg'
             }
             alt="Mentor profile image"
-            width="180px"
-            height="180px"
+            width="60px"
+            height="60px"
           />
-        </div>
-        <h3 className="mt-6 text-sm font-medium text-white">{full_name}</h3>
-        <div className="flex flex-col justify-between flex-grow mt-1">
-          <span className="text-sm text-white">{email}</span>
-        </div>
-      </div>
-      <div>
-        <div className="flex -mt-px divide-x divide-gray-200">
-          <div className="flex flex-1 w-0">
-            <button
-              onClick={handleButton}
-              className={classNames(
-                'relative tracking-wider inline-flex items-center justify-center flex-1 w-0 py-4 -mr-px text-sm font-medium text-gray-300 border rounded-bl-lg border-cardContentLight hover:text-gray-500',
-                {
-                  'text-red-300 hover:text-red-500': isActivated,
-                  'text-green-300 hover:text-green-500': !isActivated,
-                },
-              )}
-            >
-              <span className="ml-3">
-                {isActivated ? 'Deshabilitar' : 'Habilitar'}
-              </span>
-            </button>
+          <div className="flex flex-col justify-center ml-4">
+            <h3 className="text-sm font-medium text-white">{full_name}</h3>
+            <span className="text-sm text-white">{email}</span>
           </div>
         </div>
+        <CustomButton
+          primary={!isActivated}
+          danger={isActivated}
+          bntLabel={renderButtonLabel()}
+          clickAction={handleButton}
+          className="h-10"
+        />
       </div>
-    </div>
+    </GenericCard>
   );
 };
 

@@ -8,6 +8,7 @@ type GenericCardProps = {
   isLoading?: boolean;
   isDataEmpty?: boolean;
   children: ReactNode;
+  bodyClassnames?: string;
 };
 
 const GenericCard = ({
@@ -16,6 +17,7 @@ const GenericCard = ({
   isLoading,
   isDataEmpty,
   children,
+  bodyClassnames,
 }: GenericCardProps) => {
   return (
     <>
@@ -46,7 +48,7 @@ const GenericCard = ({
             </div>
           </div>
         )}
-        {!isLoading && children}
+        {!isLoading && <div className={bodyClassnames}>{children}</div>}
       </div>
     </>
   );

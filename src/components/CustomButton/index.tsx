@@ -1,9 +1,9 @@
 import classNames from 'classnames';
-import React from 'react';
+import React, { ReactNode } from 'react';
 
 interface ICustomButton {
   type?: 'button' | 'submit' | 'reset' | undefined;
-  bntLabel: string;
+  bntLabel: string | ReactNode;
   bntIcon?: React.ReactNode;
   primary: boolean;
   clickAction?: () => void;
