@@ -4,6 +4,7 @@ import {
   HomeIcon,
   UserCircleIcon,
   UserGroupIcon,
+  ExclamationIcon,
 } from '@heroicons/react/outline';
 
 // ---------- ROUTE CONSTANTS ----------
@@ -58,6 +59,6 @@ export const adminNavigation = [
   {
     name: 'Blacklist',
     href: WARNINGS,
-    icon: DocumentTextIcon,
+    icon: ExclamationIcon,
   },
 ];
