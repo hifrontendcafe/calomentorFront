@@ -12,6 +12,7 @@ import Link from 'next/link';
 import Spinner from '@/components/Spinner';
 import { getUserData, getFutureMentorships } from '@/services';
 import GenericCard from '@/components/GenericCard';
+import useUserContext from '@/hooks/useUserContext';
 
 const Home: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -23,7 +24,7 @@ const Home: React.FC = () => {
   }>({ mentorshipToken: '', menteeName: '' });
 
   const [session, loading] = useSession();
-  const { dispatch } = useContext(UserContext);
+  const { dispatch } = useUserContext();
   const router = useRouter();
   const mentorshipsEmpty = mentorships.length === 0;
   const removeMentorship = () => {

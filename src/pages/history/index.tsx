@@ -11,6 +11,7 @@ import { getAllMentorshipHistory, getUserData } from '@/services/index';
 import WarnModal from '@/components/WarnModal';
 import GenericCard from '@/components/GenericCard';
 import Link from 'next/link';
+import useUserContext from '@/hooks/useUserContext';
 
 const History: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -24,7 +25,7 @@ const History: React.FC = () => {
   const [session, loadingUser] = useSession();
   const noMentorships = mentorships.length === 0;
 
-  const { dispatch } = useContext(UserContext);
+  const { dispatch } = useUserContext();
   const router = useRouter();
 
   const getHistoryData = useCallback(() => {
