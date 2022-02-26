@@ -4,51 +4,81 @@ import {
   confirmMentorship,
   getUserMentorships,
 } from '@/lib/mentorshipAPI';
+import {
+  confirmMentorshipRequestBodySchema,
+  cancelMentorshipBodySchema,
+  getUserMentorshipsQuerySchema,
+} from '@/schemas/schemas';
+
+async function handleConfirmMentorship(
+  req: NextApiRequest,
+  res: NextApiResponse,
+) {
+  const parsedBody = confirmMentorshipRequestBodySchema.safeParse(req.body);
+
+  if (!parsedBody.success) {
+    return res.status(400).json({ message: parsedBody.error.message });
+  }
+
+  try {
+    const data = await confirmMentorship(parsedBody.data.token);
+    return res.status(200).json(data);
+  } catch (error) {
+    return res.status(400).json({ message: 'An error has occurred' });
+  }
+}
+
+async function handleGetUserMentorships(
+  req: NextApiRequest,
+  res: NextApiResponse,
+) {
+  const parsedQuery = getUserMentorshipsQuerySchema.safeParse(req.query);
+
+  if (!parsedQuery.success) {
+    return res.status(400).json({ message: parsedQuery.error.message });
+  }
+
+  try {
+    const data = await getUserMentorships(parsedQuery.data);
+    return res.status(200).json(data);
+  } catch (error: any) {
+    if (error.message === '404') {
+      return res.status(200).json({ data: [] });
+    }
+    return res.status(400).json({ message: 'An error has occurred' });
+  }
+}
+
+async function handleCancelMentorship(
+  req: NextApiRequest,
+  res: NextApiResponse,
+) {
+  const parsedBody = cancelMentorshipBodySchema.safeParse(req.body);
+
+  if (!parsedBody.success) {
+    return res.status(400).json({ message: parsedBody.error.message });
+  }
+
+  try {
+    const data = await cancelMentorship(parsedBody.data);
+    return res.status(200).json(data);
+  } catch (error) {
+    return res.status(400).json({ message: 'An error has occurred' });
+  }
+}
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse,
 ) {
-  if (req.method === 'GET') {
-    const { query } = req;
-    if (!query.id) {
-      return res.status(400).json({ message: 'ID is required' });
-    }
-    if (!query.filter) {
-      query.filter = '';
-    }
-    if (!query.filterDates) {
-      query.filterDates = '';
-    }
-    try {
-      const data = await getUserMentorships(
-        query.id as string,
-        query.filter as string,
-        query.filterDates as string,
-      );
-      return res.status(200).json(data);
-    } catch (error: any) {
-      if (error.message === '404') {
-        return res.status(200).json({ data: [] });
-      }
-      return res.status(400).json({ message: 'An error has occurred' });
-    }
-  } else if (req.method === 'POST') {
-    const { token, cancel_cause, who_cancel } = req.body;
-    try {
-      const data = await cancelMentorship(token, cancel_cause, who_cancel);
-      return res.status(200).json(data);
-    } catch (error) {
-      return res.status(400).json({ message: 'An error has occurred' });
-    }
-  } else if (req.method === 'PATCH') {
-    const { token } = req.body;
-    try {
-      const data = await confirmMentorship(token);
-      return res.status(200).json(data);
-    } catch (error) {
-      return res.status(400).json({ message: 'An error has occurred' });
-    }
+  switch (req.method) {
+    case 'GET':
+      return handleGetUserMentorships(req, res);
+    case 'POST':
+      return handleCancelMentorship(req, res);
+    case 'PATCH':
+      return handleConfirmMentorship(req, res);
+    default:
+      return res.status(400).json({ message: 'Invalid method' });
   }
-  return res.status(400).json({ message: 'Invalid method' });
 }

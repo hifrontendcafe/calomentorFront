@@ -1,6 +1,11 @@
 import { axiosAWSInstance } from '@/config/AxiosConfig';
 import { CONFIRMATION, FEEDBACK, MENTORSHIP, WARNING } from '@/config/Routes';
 import { IMentorhip } from '@/interfaces/mentorship.interface';
+import {
+  cancelMentorshipBodySchema,
+  getUserMentorshipsQuerySchema,
+} from '@/schemas/schemas';
+import { z } from 'zod';
 
 interface ResponseError {
   response: {
@@ -14,16 +19,17 @@ function isResponseError(error: unknown): error is ResponseError {
 
 /**
  * Get all mentorships from a user
+ *
  * @param id
  * @param filter
  * @param filterDates
  * @returns An array of mentorships
  */
-export const getUserMentorships = async (
-  id: string,
-  filter: string,
-  filterDates: string,
-) => {
+export const getUserMentorships = async ({
+  id,
+  filter,
+  filterDates,
+}: z.infer<typeof getUserMentorshipsQuerySchema>) => {
   try {
     const { data } = await axiosAWSInstance.get<IMentorhip>(
       `${MENTORSHIP}/${id}?filter=${filter}&filterDates=${filterDates} `,
@@ -44,11 +50,11 @@ export const getUserMentorships = async (
  * @param cancelCause Cause for cancellation of mentorship
  * @returns if the mentorship was cancelled or an error occurred
  */
-export const cancelMentorship = async (
-  token: string,
-  cancelCause: string,
-  whoCancel: string,
-) => {
+export const cancelMentorship = async ({
+  token,
+  cancelCause,
+  whoCancel,
+}: z.infer<typeof cancelMentorshipBodySchema>) => {
   try {
     const { data } = await axiosAWSInstance.post(
       `${MENTORSHIP}/cancel?token=${token}`,
