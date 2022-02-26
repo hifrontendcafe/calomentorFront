@@ -1,6 +1,6 @@
 import { axiosAWSInstance } from '@/config/AxiosConfig';
 import { WARNING } from '@/config/Routes';
-import { IWarning } from '@/interfaces/warning.interface';
+import { IWarning, WARN } from '@/interfaces/warning.interface';
 
 /**
  * Get all warnings
@@ -25,7 +25,7 @@ export const getWarnings = async () => {
  */
 export const addWarning = async (
   mentee_id: string,
-  warn_type: string,
+  warn_type: WARN,
   warn_cause: string,
   mentorship_id: string,
 ) => {
