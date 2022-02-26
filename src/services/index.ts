@@ -1,4 +1,4 @@
-import { axiosGet } from '@/lib/api';
+import { axiosDelete, axiosGet } from '@/lib/api';
 import { MENTORSHIP, USER, TIMESLOTS, WARNING } from '@/config/Routes';
 import { IMentorhip } from '@/interfaces/mentorship.interface';
 import { ITimeslot } from '@/interfaces/timeslot.interface';
@@ -33,6 +33,10 @@ async function getWarnings() {
   return axiosGet<IWarning[]>(WARNING);
 }
 
+function deleteTimeSlot(id: string) {
+  return axiosDelete(`${TIMESLOTS}?timeslotId=${id}`);
+}
+
 export {
   getAllMentorshipHistory,
   getUserData,
@@ -41,4 +45,5 @@ export {
   getActiveMentorships,
   getFutureMentorships,
   getWarnings,
+  deleteTimeSlot,
 };
