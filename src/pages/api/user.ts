@@ -58,7 +58,6 @@ export default async function handler(
       );
       return res.status(200).json(data);
     } catch (error) {
-      console.log('🚀 ~ file: user.ts ~ line 57 ~ error', error);
       return res.status(400).json(error);
     }
   }

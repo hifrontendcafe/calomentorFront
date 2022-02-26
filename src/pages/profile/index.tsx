@@ -123,16 +123,14 @@ const SettingsProfilePage: React.FC = () => {
   const onSubmit: SubmitHandler<IUser> = async data => {
     data.role = getRoleArray(session?.user.role);
     axiosPut(USER, { data })
-      .then(({ data }) => {
-        console.log(data);
+      .then(() => {
         addToast({
           title: 'Actualizado',
           subText: 'El usuario se ha actualizado correctamente',
           type: 'default',
         });
       })
-      .catch(err => {
-        console.log(err);
+      .catch(() => {
         addToast({
           title: 'Hubo un problema',
           subText: 'El usuario no ha sido actualizado',

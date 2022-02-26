@@ -16,7 +16,6 @@ const Warnings = () => {
   const [session, loading] = useSession();
   const router = useRouter();
   const emptyWarnings = warnings.length === 0;
-  useEffect(() => console.log(warnings), [warnings]);
   useEffect(() => {
     if (session && !loading) {
       isAdmin(session.user.role)
