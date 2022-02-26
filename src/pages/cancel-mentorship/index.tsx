@@ -4,9 +4,9 @@ import Image from 'next/image';
 import FECGif from '@/assets/gif/Fec.gif';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { ICancelForm } from '@/interfaces/mentorship.interface';
-import { axiosPost, axiosPut } from '@/lib/api';
+import { axiosPost } from '@/lib/api';
 import useToastContext from '@/hooks/useToastContext';
-import { MENTORSHIP, USER } from '@/config/Routes';
+import { MENTORSHIP } from '@/config/Routes';
 import { useRouter } from 'next/dist/client/router';
 import CustomHead from '@/components/CustomHead';
 import PwdByVercel from '@/components/PwdByVercel';
@@ -24,13 +24,13 @@ const CancelMentorship: React.FC = () => {
 
   const onSubmit: SubmitHandler<ICancelForm> = async ({ cancel_cause }) => {
     setIsLoading(true);
-    const { token } = router.query;
+    const { mentorship_token } = router.query;
 
-    if (token) {
+    if (mentorship_token) {
       axiosPost(MENTORSHIP, {
-        token,
+        mentorship_token,
         cancel_cause,
-        whoCancel: 'MENTEE',
+        who_cancelled: 'MENTEE',
       })
         .then(() => {
           setIsCanceled(true);

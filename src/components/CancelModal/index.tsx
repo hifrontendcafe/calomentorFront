@@ -9,16 +9,16 @@ import useToastContext from '@/hooks/useToastContext';
 import { ICancelForm } from '@/interfaces/mentorship.interface';
 
 interface IModal {
-  menteeName: string;
-  mentorshipToken: string;
+  mentee_name: string;
+  mentorship_token: string;
   open: boolean;
   setModal: Dispatch<SetStateAction<boolean>>;
   callback?: () => void;
 }
 
 const CancelModal: React.FC<IModal> = ({
-  menteeName,
-  mentorshipToken,
+  mentee_name,
+  mentorship_token,
   open,
   setModal,
   callback,
@@ -33,9 +33,9 @@ const CancelModal: React.FC<IModal> = ({
 
   const onSubmit: SubmitHandler<ICancelForm> = async ({ cancel_cause }) => {
     axiosPost(MENTORSHIP, {
-      token: mentorshipToken,
+      mentorship_token,
       cancel_cause,
-      whoCancel: 'MENTOR',
+      who_cancelled: 'MENTOR',
     })
       .then(() => {
         addToast({
@@ -111,8 +111,8 @@ const CancelModal: React.FC<IModal> = ({
                       as="h3"
                       className="text-lg font-medium leading-6 text-red-500"
                     >
-                      ¿Seguro/a que quieres cancelar la mentoría de {menteeName}
-                      ?
+                      ¿Seguro/a que quieres cancelar la mentoría de{' '}
+                      {mentee_name}?
                     </Dialog.Title>
                     <div className="my-5">
                       <p className="text-sm text-left text-gray-300">
@@ -147,7 +147,8 @@ const CancelModal: React.FC<IModal> = ({
                   <CustomButton
                     type="submit"
                     bntLabel="Confirmar"
-                    primary
+                    primary={false}
+                    danger
                     className="justify-center"
                   />
                 </div>

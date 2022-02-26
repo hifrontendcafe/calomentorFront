@@ -34,17 +34,21 @@ export default async function handler(
       return res.status(400).json({ message: 'An error has occurred' });
     }
   } else if (req.method === 'POST') {
-    const { token, cancel_cause, who_cancel } = req.body;
+    const { mentorship_token, cancel_cause, who_cancelled } = req.body;
     try {
-      const data = await cancelMentorship(token, cancel_cause, who_cancel);
+      const data = await cancelMentorship(
+        mentorship_token,
+        cancel_cause,
+        who_cancelled,
+      );
       return res.status(200).json(data);
     } catch (error) {
       return res.status(400).json({ message: 'An error has occurred' });
     }
   } else if (req.method === 'PATCH') {
-    const { token } = req.body;
+    const { mentorship_token } = req.body;
     try {
-      const data = await confirmMentorship(token);
+      const data = await confirmMentorship(mentorship_token);
       return res.status(200).json(data);
     } catch (error) {
       return res.status(400).json({ message: 'An error has occurred' });

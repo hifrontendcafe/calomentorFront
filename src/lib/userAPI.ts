@@ -45,14 +45,14 @@ export const createUser = async (userData: IUser) => {
 
 /**
  * Update an user
- * @param userId The id of the user
+ * @param id The id of the user
  * @param userData The data the user wants to update
  * @returns an object with the user data and the result of the operation
  */
-export const updateUserByID = async (userId: string, userData: IUser) => {
-  userData.user_timezone = 'America / Buenos_Aires'; // ESTO HAY QUE BORRARLO Y ACOMODAR LO DE LOS TIMEZONES EN LA CONFIGURACIÓN DEL PERFIL
+export const updateUserByID = async (id: string, userData: IUser) => {
+  userData.user_timezone = 'America/Buenos_Aires'; // ESTO HAY QUE BORRARLO Y ACOMODAR LO DE LOS TIMEZONES EN LA CONFIGURACIÓN DEL PERFIL
   try {
-    const { data } = await axiosAWSInstance.put(`${USER}/${userId}`, userData);
+    const { data } = await axiosAWSInstance.put(`${USER}/${id}`, userData);
     return data;
   } catch (error: any) {
     throw new Error(error.response.status);
@@ -61,14 +61,12 @@ export const updateUserByID = async (userId: string, userData: IUser) => {
 
 /**
  * Get user schedule
- * @param userId The id of the user
+ * @param id The id of the user
  * @returns an object with the user schedule data
  */
-export const getUserSchedule = async (userId: string) => {
+export const getUserSchedule = async (id: string) => {
   try {
-    const { data } = await axiosAWSInstance.get(
-      `${AWS_TIMESLOT}${USER}/${userId}`,
-    );
+    const { data } = await axiosAWSInstance.get(`${AWS_TIMESLOT}${USER}/${id}`);
     return data;
   } catch (error: any) {
     throw new Error(error.response.status);
@@ -77,20 +75,20 @@ export const getUserSchedule = async (userId: string) => {
 
 /**
  *
- * @param userId The id of the user to activate/deactivate
- * @param actionAuthor The id of the one who activate/deactivate a user
+ * @param id The id of the user to activate/deactivate
+ * @param last_activate_by The id of the one who activate/deactivate a user
  * @returns If the user was activated/deactivated
  */
 export const updateUserStatus = async (
-  userId: string,
-  actionAuthor: string,
-  isActive: boolean,
+  id: string,
+  last_activate_by: string,
+  is_active: boolean,
 ) => {
   try {
-    const { data } = await axiosAWSInstance.patch(
-      `${USER}${ACTIVATE}/${userId}`,
-      { isActive: isActive, lastActivateBy: actionAuthor },
-    );
+    const { data } = await axiosAWSInstance.patch(`${USER}${ACTIVATE}/${id}`, {
+      is_active,
+      last_activate_by,
+    });
     return data;
   } catch (error: any) {
     throw new Error(error.response.status);

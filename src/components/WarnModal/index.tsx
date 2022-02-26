@@ -9,7 +9,7 @@ import useToastContext from '@/hooks/useToastContext';
 import { IWarnForm } from '@/interfaces/mentorship.interface';
 
 interface IModal {
-  menteeName: string;
+  mentee_name: string;
   menteeId: string;
   mentorshipId: string;
   open: boolean;
@@ -18,7 +18,7 @@ interface IModal {
 }
 
 const WarnModal: React.FC<IModal> = ({
-  menteeName,
+  mentee_name,
   menteeId,
   open,
   setModal,
@@ -121,7 +121,7 @@ const WarnModal: React.FC<IModal> = ({
                       as="h3"
                       className="text-lg font-medium leading-6 text-red-500"
                     >
-                      Estás por dar una advertencia al usuario {menteeName}
+                      Estás por dar una advertencia al usuario {mentee_name}
                     </Dialog.Title>
                     <div className="my-5">
                       <p className="text-sm text-left text-gray-300">

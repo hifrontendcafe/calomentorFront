@@ -3,7 +3,7 @@ import { useSession } from 'next-auth/client';
 import CustomButton from '@/components/CustomButton';
 import Timeslot from '@/components/Timeslot';
 import { PlusIcon, XIcon } from '@heroicons/react/outline';
-import { ITimeslot } from '@/interfaces/timeslot.interface';
+import { ITimeSlot } from '@/interfaces/timeslot.interface';
 import AddTimeslot from '@/components/AddTimeslot/Index';
 import CancelModal from '@/components/CancelModal';
 import { getTimeslots } from '@/services';
@@ -15,24 +15,27 @@ const SettingsSchedulePage: React.FC = () => {
   const [session, loading] = useSession();
   const [isOpen, setIsOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-  const [timeslots, setTimeslots] = useState<ITimeslot[]>([]);
+  const [timeslots, setTimeslots] = useState<ITimeSlot[]>([]);
   const [addNew, setAddNew] = useState(false);
   const [modalData, setModalData] = useState<{
-    mentorshipToken: string;
-    menteeName: string;
-  }>({ mentorshipToken: '', menteeName: '' });
+    mentorship_token: string;
+    mentee_name: string;
+  }>({ mentorship_token: '', mentee_name: '' });
   const emptyTimeslots = timeslots.length === 0;
 
   const removeTimeslot = () => {
     setTimeslots(prev =>
-      prev.filter(m => m.tokenForCancel !== modalData.mentorshipToken),
+      prev.filter(m => m.mentorship_token !== modalData.mentorship_token),
     );
   };
 
-  const handleModalConfirmBtn = (token: string, name: string) => {
+  const handleModalConfirmBtn = (
+    mentorship_token: string,
+    mentee_name: string,
+  ) => {
     setModalData({
-      mentorshipToken: token,
-      menteeName: name,
+      mentorship_token,
+      mentee_name,
     });
     setIsOpen(true);
   };
@@ -88,7 +91,7 @@ const SettingsSchedulePage: React.FC = () => {
             close={() => setAddNew(false)}
             timeslots={timeslots}
           />
-          {timeslots.map((timeslot: ITimeslot) => (
+          {timeslots.map((timeslot: ITimeSlot) => (
             <Timeslot
               id={timeslot.id}
               key={timeslot.id}
@@ -97,7 +100,7 @@ const SettingsSchedulePage: React.FC = () => {
               updateTimeslots={setTimeslots}
               handleCancelTimeslot={() =>
                 handleModalConfirmBtn(
-                  timeslot.tokenForCancel,
+                  timeslot.mentorship_token,
                   timeslot.mentee_username,
                 )
               }
@@ -105,8 +108,8 @@ const SettingsSchedulePage: React.FC = () => {
           ))}
           <CancelModal
             open={isOpen}
-            mentorshipToken={modalData.mentorshipToken}
-            menteeName={modalData.menteeName}
+            mentorship_token={modalData.mentorship_token}
+            mentee_name={modalData.mentee_name}
             setModal={setIsOpen}
             callback={removeTimeslot}
           />

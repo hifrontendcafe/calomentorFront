@@ -1,27 +1,25 @@
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { signOut, useSession } from 'next-auth/client';
 import DashboardLayout from '@/components/DashboardLayout';
 import { useRouter } from 'next/dist/client/router';
-import { UserContext } from '@/context/UserContext';
 import CustomHead from '@/components/CustomHead';
 import { PROFILE, SCHEDULE } from '@/config/Routes';
 import CancelModal from '@/components/CancelModal';
-import { IMentorhip } from '@/interfaces/mentorship.interface';
+import { IMentorship } from '@/interfaces/mentorship.interface';
 import MentorshipCard from '@/components/MentorshipCard';
 import Link from 'next/link';
-import Spinner from '@/components/Spinner';
 import { getUserData, getFutureMentorships } from '@/services';
 import GenericCard from '@/components/GenericCard';
 import useUserContext from '@/hooks/useUserContext';
 
 const Home: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
-  const [mentorships, setMentorships] = useState<IMentorhip[]>([]);
+  const [mentorships, setMentorships] = useState<IMentorship[]>([]);
   const [isOpen, setIsOpen] = useState(false);
   const [modalData, setModalData] = useState<{
-    mentorshipToken: string;
-    menteeName: string;
-  }>({ mentorshipToken: '', menteeName: '' });
+    mentorship_token: string;
+    mentee_name: string;
+  }>({ mentorship_token: '', mentee_name: '' });
 
   const [session, loading] = useSession();
   const { dispatch } = useUserContext();
@@ -29,25 +27,28 @@ const Home: React.FC = () => {
   const mentorshipsEmpty = mentorships.length === 0;
   const removeMentorship = () => {
     setMentorships(prev =>
-      prev.filter(m => m.tokenForCancel !== modalData.mentorshipToken),
+      prev.filter(m => m.mentorship_token !== modalData.mentorship_token),
     );
   };
 
-  const handleModalConfirmBtn = (token: string, name: string) => {
+  const handleModalConfirmBtn = (
+    mentorship_token: string,
+    mentee_name: string,
+  ) => {
     setModalData({
-      mentorshipToken: token,
-      menteeName: name,
+      mentorship_token,
+      mentee_name,
     });
     setIsOpen(true);
   };
 
   useEffect(() => {
     if (!loading && session) {
-      const userID = session.user.id.toString();
+      const id = session.user.id.toString();
 
       // Get user data and verify if the profile is configured,
       // if not, go to the profile settings
-      getUserData(userID)
+      getUserData(id)
         .then(({ data }) => {
           !data.full_name && session.user.role !== '0'
             ? router.push(PROFILE)
@@ -58,7 +59,7 @@ const Home: React.FC = () => {
         });
 
       // Get user mentorships data
-      getFutureMentorships(userID)
+      getFutureMentorships(id)
         .then(({ data }) => {
           setIsLoading(false);
           setMentorships(data);
@@ -92,7 +93,7 @@ const Home: React.FC = () => {
               mentorship={m}
               handleCancelMentorship={() =>
                 handleModalConfirmBtn(
-                  m.tokenForCancel,
+                  m.mentorship_token,
                   m.mentee_username_discord,
                 )
               }
@@ -101,8 +102,8 @@ const Home: React.FC = () => {
         </GenericCard>
         <CancelModal
           open={isOpen}
-          mentorshipToken={modalData.mentorshipToken}
-          menteeName={modalData.menteeName}
+          mentorship_token={modalData.mentorship_token}
+          mentee_name={modalData.mentee_name}
           setModal={setIsOpen}
           callback={removeMentorship}
         />

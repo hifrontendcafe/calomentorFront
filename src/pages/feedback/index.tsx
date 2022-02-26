@@ -4,7 +4,7 @@ import Image from 'next/image';
 import FECGif from '@/assets/gif/Fec.gif';
 import { axiosPatch } from '@/lib/api';
 import useToastContext from '@/hooks/useToastContext';
-import { FEEDBACK, MENTORSHIP } from '@/config/Routes';
+import { FEEDBACK } from '@/config/Routes';
 import { useRouter } from 'next/dist/client/router';
 import CustomHead from '@/components/CustomHead';
 import StarButton from '@/components/StarButton';
@@ -29,23 +29,23 @@ const MentorshipFeedback: React.FC = () => {
     setValue,
   } = useForm<IFeedbackForm>({
     mode: 'onChange',
-    defaultValues: { fec_feedback: '' },
+    defaultValues: { feedback_mentee: '' },
   });
 
   const router = useRouter();
 
   const onSubmit: SubmitHandler<IFeedbackForm> = async ({
-    mentor_feedback,
-    fec_feedback,
+    feedback_mentee,
+    feedback_mentee_private,
   }) => {
     setIsLoading(true);
-    const { token } = router.query;
-    if (token) {
+    const { mentorship_token } = router.query;
+    if (mentorship_token) {
       axiosPatch(FEEDBACK, {
-        token,
-        feedback: mentor_feedback,
-        privateFeedback: fec_feedback,
-        starsFeedback: rating,
+        mentorship_token,
+        feedback_mentee: feedback_mentee,
+        feedback_mentee_private: feedback_mentee_private,
+        feedback_stars: rating,
       })
         .then(res => {
           if (res.message === 'Feedback already sent') {
@@ -154,7 +154,7 @@ const MentorshipFeedback: React.FC = () => {
                     <textarea
                       className="custom_input"
                       rows={5}
-                      {...register('mentor_feedback', {
+                      {...register('feedback_mentee', {
                         required: true,
                         minLength: {
                           value: 20,
@@ -166,9 +166,9 @@ const MentorshipFeedback: React.FC = () => {
                         },
                       })}
                     />
-                    {errors.mentor_feedback && (
+                    {errors.feedback_mentee && (
                       <p className="pl-1 text-xs text-left text-red-600">
-                        {errors.mentor_feedback.message}
+                        {errors.feedback_mentee.message}
                       </p>
                     )}
                   </div>
@@ -179,7 +179,7 @@ const MentorshipFeedback: React.FC = () => {
                         onChange={val => {
                           setFecFeedback(val.target.checked);
                           if (!val.target.checked) {
-                            setValue('fec_feedback', '');
+                            setValue('feedback_mentee_private', '');
                           }
                         }}
                         name="enableFecFeedback"
@@ -203,7 +203,7 @@ const MentorshipFeedback: React.FC = () => {
                         className="custom_input"
                         rows={5}
                         maxLength={500}
-                        {...register('fec_feedback', {
+                        {...register('feedback_mentee_private', {
                           minLength: {
                             value: 20,
                             message:
@@ -216,9 +216,9 @@ const MentorshipFeedback: React.FC = () => {
                           },
                         })}
                       />
-                      {errors.fec_feedback && (
+                      {errors.feedback_mentee_private && (
                         <p className="pl-1 text-xs text-left text-red-600">
-                          {errors.fec_feedback.message}
+                          {errors.feedback_mentee_private.message}
                         </p>
                       )}
                     </div>

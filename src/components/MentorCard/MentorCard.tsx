@@ -14,9 +14,9 @@ interface IMentorCard {
 }
 
 const MentorCard: React.FC<IMentorCard> = ({
-  mentor: { id, url_photo, full_name, email, isActive },
+  mentor: { id, url_photo, full_name, email, is_active },
 }) => {
-  const [isActivated, setIsActivated] = useState(isActive);
+  const [isActivated, setIsActivated] = useState(is_active);
   const [isLoading, setIsLoading] = useState(false);
   const [session] = useSession();
   const { addToast } = useToastContext();
@@ -38,9 +38,9 @@ const MentorCard: React.FC<IMentorCard> = ({
   const handleButton = () => {
     setIsLoading(true);
     axiosPatch(USER, {
-      userID: id,
-      authorID: session?.user.id,
-      isActive: !isActivated,
+      id,
+      last_activate_by: session?.user.id,
+      is_active: !isActivated,
     })
       .then(() => {
         setIsLoading(false);

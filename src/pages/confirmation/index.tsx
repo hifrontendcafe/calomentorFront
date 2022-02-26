@@ -30,11 +30,11 @@ const ConfirmMentorship: React.FC = () => {
 
   const handleConfirm = async () => {
     setIsLoading(true);
-    const { token } = router.query;
+    const { mentorship_token } = router.query;
 
-    if (token) {
+    if (mentorship_token) {
       axiosPatch(MENTORSHIP, {
-        token,
+        mentorship_token,
       })
         .then(res => {
           if (res.message === 'Already cancelled') {

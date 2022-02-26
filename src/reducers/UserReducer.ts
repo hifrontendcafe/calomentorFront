@@ -15,7 +15,7 @@ export const userInitialState = {
     linkedin: '',
     github: '',
   },
-  isActive: false,
+  is_active: false,
   skills: [],
 };
 

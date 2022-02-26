@@ -1,6 +1,6 @@
 import { axiosAWSInstance } from '@/config/AxiosConfig';
 import { CONFIRMATION, FEEDBACK, MENTORSHIP, WARNING } from '@/config/Routes';
-import { IMentorhip } from '@/interfaces/mentorship.interface';
+import { IMentorship } from '@/interfaces/mentorship.interface';
 
 interface ResponseError {
   response: {
@@ -25,7 +25,7 @@ export const getUserMentorships = async (
   filterDates: string,
 ) => {
   try {
-    const { data } = await axiosAWSInstance.get<IMentorhip>(
+    const { data } = await axiosAWSInstance.get<IMentorship>(
       `${MENTORSHIP}/${id}?filter=${filter}&filterDates=${filterDates} `,
     );
     return data;
@@ -40,20 +40,21 @@ export const getUserMentorships = async (
 
 /**
  * Cancel a mentorship
- * @param token Token for cancel the mentorship
- * @param cancelCause Cause for cancellation of mentorship
+ * @param mentorship_token Token for cancel the mentorship
+ * @param cancel_cause Cause for cancellation of mentorship
  * @returns if the mentorship was cancelled or an error occurred
  */
 export const cancelMentorship = async (
-  token: string,
-  cancelCause: string,
-  whoCancel: string,
+  mentorship_token: string,
+  cancel_cause: string,
+  who_cancelled: string,
 ) => {
   try {
-    const { data } = await axiosAWSInstance.post(
-      `${MENTORSHIP}/cancel?token=${token}`,
-      { cancelCause, whoCancel },
-    );
+    const { data } = await axiosAWSInstance.post(`${MENTORSHIP}/cancel`, {
+      cancel_cause,
+      who_cancelled,
+      mentorship_token,
+    });
     return data;
   } catch (error) {
     if (isResponseError(error)) {
@@ -66,14 +67,14 @@ export const cancelMentorship = async (
 
 /**
  * Confirm a mentorship
- * @param token Mentorship token
+ * @param mentorship_token Mentorship token
  * @returns
  */
-export const confirmMentorship = async (token: string) => {
+export const confirmMentorship = async (mentorship_token: string) => {
   try {
     const { data } = await axiosAWSInstance.patch(
       `${MENTORSHIP}${CONFIRMATION}`,
-      { token },
+      { mentorship_token },
     );
     return data;
   } catch (error) {
@@ -87,24 +88,24 @@ export const confirmMentorship = async (token: string) => {
 
 /**
  * Send mentorship feedback
- * @param token Mentorship token
- * @param feedback Mentor feedback
- * @param privateFeedback Mentee message for staff
- * @param starsFeedback Mentor rating
+ * @param mentorship_token Mentorship token
+ * @param feedback_mentee Mentor feedback
+ * @param feedback_mentee_private Mentee message for staff
+ * @param feedback_stars Mentor rating
  * @returns
  */
 export const sendFeedback = async (
-  token: string,
-  feedback: string,
-  privateFeedback: string,
-  starsFeedback: number,
+  mentorship_token: string,
+  feedback_mentee: string,
+  feedback_mentee_private: string,
+  feedback_stars: number,
 ) => {
   try {
     const { data } = await axiosAWSInstance.patch(`${MENTORSHIP}${FEEDBACK}`, {
-      token,
-      feedback,
-      privateFeedback,
-      starsFeedback,
+      mentorship_token,
+      feedback_mentee,
+      feedback_mentee_private,
+      feedback_stars,
     });
     return data;
   } catch (error: any) {

@@ -1,5 +1,5 @@
 import { formatDate } from '@/helpers/formatDate';
-import { IMentorhip } from '@/interfaces/mentorship.interface';
+import { IMentorship } from '@/interfaces/mentorship.interface';
 import {
   BanIcon,
   ChevronRightIcon,
@@ -12,10 +12,10 @@ import Image from 'next/image';
 import classNames from 'classnames';
 
 interface IMentorshipCard {
-  mentorship: IMentorhip;
+  mentorship: IMentorship;
   setModalData: Dispatch<
     SetStateAction<{
-      menteeName: string;
+      mentee_name: string;
       menteeId: string;
       mentorshipId: string;
     }>
@@ -40,7 +40,7 @@ const MentorshipCard: React.FC<IMentorshipCard> = ({
     cancel_cause,
     mentee_name,
     mentorship_status,
-    who_cancel,
+    who_cancelled,
     mentor_name,
     feedback_stars,
     feedback_mentee,
@@ -52,8 +52,8 @@ const MentorshipCard: React.FC<IMentorshipCard> = ({
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const isCancelled = mentorship_status === 'CANCEL';
-  const cancelledBy = who_cancel === 'MENTOR' ? mentor_name : mentee_name;
-  const isWarned = Object.keys(warning_info).length > 0;
+  const cancelledBy = who_cancelled === 'MENTOR' ? mentor_name : mentee_name;
+  const isWarned = warning_info && Object.keys(warning_info).length > 0;
 
   return (
     <div key={id} className="px-4 mb-5 sm:px-6">
@@ -71,7 +71,7 @@ const MentorshipCard: React.FC<IMentorshipCard> = ({
               {mentee_name}
             </h3>
             <p className="max-w-2xl mt-1 text-sm">
-              {formatDate(time_slot_info.date)}
+              {time_slot_info && formatDate(time_slot_info.date)}
             </p>
           </div>
           <div className="flex flex-row items-center">
@@ -90,7 +90,7 @@ const MentorshipCard: React.FC<IMentorshipCard> = ({
                   className="w-5 h-5 mx-2 text-red-400 cursor-pointer hover:text-red-600"
                   onClick={() => {
                     setModalData({
-                      menteeName: mentee_name,
+                      mentee_name,
                       menteeId: mentee_id,
                       mentorshipId: id,
                     });
@@ -99,7 +99,7 @@ const MentorshipCard: React.FC<IMentorshipCard> = ({
                 />
               </div>
             )}
-            {isWarned && warning_info.warning_status === 'ACTIVE' && (
+            {isWarned && warning_info?.warning_status === 'ACTIVE' && (
               <div className="has-tooltip">
                 <span className="px-2 py-1 -mt-8 text-sm text-red-500 bg-gray-700 rounded shadow-lg -ml-14 tooltip">
                   El usuario fue advertido
@@ -107,7 +107,7 @@ const MentorshipCard: React.FC<IMentorshipCard> = ({
                 <BanIcon className="w-5 h-5 mx-2 text-red-400" />
               </div>
             )}
-            {isWarned && warning_info.warning_status === 'FORGIVE' && (
+            {isWarned && warning_info?.warning_status === 'FORGIVE' && (
               <div className="has-tooltip">
                 <span className="px-2 py-1 -mt-8 text-sm text-yellow-500 bg-gray-700 rounded shadow-lg -ml-14 tooltip">
                   El usuario fue perdonado
@@ -160,19 +160,19 @@ const MentorshipCard: React.FC<IMentorshipCard> = ({
                   Causa de la advertencia
                 </dt>
                 <dd className="mt-1 text-sm text-gray-200">
-                  {warning_info.warn_cause
-                    ? warning_info.warn_cause
+                  {warning_info?.warn_cause
+                    ? warning_info?.warn_cause
                     : 'Ausencia'}
                 </dd>
               </div>
             )}
-            {isWarned && warning_info.warning_status === 'FORGIVE' && (
+            {isWarned && warning_info?.warning_status === 'FORGIVE' && (
               <div className="sm:col-span-2">
                 <dt className="text-sm font-medium text-mainTextColor">
                   Perdonado por:
                 </dt>
                 <dd className="mt-1 text-sm text-gray-200">
-                  {warning_info.forgive_cause}
+                  {warning_info?.forgive_cause}
                 </dd>
               </div>
             )}
