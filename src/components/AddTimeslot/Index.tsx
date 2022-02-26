@@ -8,13 +8,13 @@ import { TIMESLOTS } from '@/config/Routes';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import dayjs from 'dayjs';
-import { ITimeslot } from '@/interfaces/timeslot.interface';
+import { ITimeSlot } from '@/interfaces/timeslot.interface';
 
 interface IAddTimeslot {
   getSchedule: () => void;
   close: () => void;
   visible: Boolean;
-  timeslots: ITimeslot[];
+  timeslots: ITimeSlot[];
 }
 
 interface ITimeForm {

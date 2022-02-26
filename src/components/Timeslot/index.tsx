@@ -1,6 +1,6 @@
 import { TIMESLOTS } from '@/config/Routes';
 import useToastContext from '@/hooks/useToastContext';
-import { ITimeslot } from '@/interfaces/timeslot.interface';
+import { ITimeSlot } from '@/interfaces/timeslot.interface';
 import { axiosDelete } from '@/lib/api';
 import { CalendarIcon, TrashIcon, XIcon } from '@heroicons/react/outline';
 import React, { Dispatch, SetStateAction } from 'react';
@@ -13,7 +13,7 @@ interface ISlot {
   id: string;
   date: number;
   is_occupied: boolean;
-  updateTimeslots: Dispatch<SetStateAction<ITimeslot[]>>;
+  updateTimeslots: Dispatch<SetStateAction<ITimeSlot[]>>;
   handleCancelTimeslot: () => void;
 }
 
