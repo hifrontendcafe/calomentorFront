@@ -28,6 +28,7 @@ export const addWarning = async (
   warn_type: string,
   warn_cause: string,
   mentorship_id: string,
+  warning_author_id: string,
 ) => {
   try {
     const { data } = await axiosAWSInstance.post(`${WARNING}`, {
@@ -35,6 +36,7 @@ export const addWarning = async (
       warn_type,
       warn_cause,
       mentorship_id,
+      warning_author_id,
     });
     return data;
   } catch (error: any) {

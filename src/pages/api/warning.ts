@@ -6,12 +6,19 @@ export default async function handler(
   res: NextApiResponse,
 ) {
   if (req.method === 'POST') {
-    const { mentee_id, warn_type, warn_cause, mentorship_id } = req.body;
+    const {
+      mentee_id,
+      warn_type,
+      warn_cause,
+      mentorship_id,
+      warning_author_id,
+    } = req.body;
     if (
       !mentee_id ||
       !warn_type ||
       (warn_type === 'COC_WARN' && !warn_cause) ||
-      !mentorship_id
+      !mentorship_id ||
+      !warning_author_id
     ) {
       return res
         .status(400)
@@ -22,6 +29,7 @@ export default async function handler(
       warn_type,
       warn_cause,
       mentorship_id,
+      warning_author_id,
     );
     return res.status(200).json(data);
   } else if (req.method === 'GET') {
