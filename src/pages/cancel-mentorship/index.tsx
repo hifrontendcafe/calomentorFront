@@ -30,7 +30,7 @@ const CancelMentorship: React.FC = () => {
       axiosPost(MENTORSHIP, {
         mentorship_token,
         cancel_cause,
-        who_cancelled: 'MENTEE',
+        who_canceled: 'MENTEE',
       })
         .then(() => {
           setIsCanceled(true);

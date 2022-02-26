@@ -34,12 +34,12 @@ export default async function handler(
       return res.status(400).json({ message: 'An error has occurred' });
     }
   } else if (req.method === 'POST') {
-    const { mentorship_token, cancel_cause, who_cancelled } = req.body;
+    const { mentorship_token, cancel_cause, who_canceled } = req.body;
     try {
       const data = await cancelMentorship(
         mentorship_token,
         cancel_cause,
-        who_cancelled,
+        who_canceled,
       );
       return res.status(200).json(data);
     } catch (error) {

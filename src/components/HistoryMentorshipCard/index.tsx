@@ -40,7 +40,7 @@ const MentorshipCard: React.FC<IMentorshipCard> = ({
     cancel_cause,
     mentee_name,
     mentorship_status,
-    who_cancelled,
+    who_canceled,
     mentor_name,
     feedback_stars,
     feedback_mentee,
@@ -52,7 +52,7 @@ const MentorshipCard: React.FC<IMentorshipCard> = ({
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const isCancelled = mentorship_status === 'CANCEL';
-  const cancelledBy = who_cancelled === 'MENTOR' ? mentor_name : mentee_name;
+  const cancelledBy = who_canceled === 'MENTOR' ? mentor_name : mentee_name;
   const isWarned = warning_info && Object.keys(warning_info).length > 0;
 
   return (

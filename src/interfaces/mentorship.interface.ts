@@ -27,7 +27,7 @@ export interface IMentorship {
   mentee_id: string;
   mentorship_status: STATUS;
   cancel_cause: string;
-  who_cancelled: WHOCANCELED;
+  who_canceled: WHOCANCELED;
   time_slot_info?: ITimeslotInfo;
   time_slot_id?: string;
   feedback_stars: 1 | 2 | 3 | 4 | 5;

@@ -47,12 +47,12 @@ export const getUserMentorships = async (
 export const cancelMentorship = async (
   mentorship_token: string,
   cancel_cause: string,
-  who_cancelled: string,
+  who_canceled: string,
 ) => {
   try {
     const { data } = await axiosAWSInstance.post(`${MENTORSHIP}/cancel`, {
       cancel_cause,
-      who_cancelled,
+      who_canceled,
       mentorship_token,
     });
     return data;

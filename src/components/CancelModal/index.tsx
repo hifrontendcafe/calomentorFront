@@ -35,7 +35,7 @@ const CancelModal: React.FC<IModal> = ({
     axiosPost(MENTORSHIP, {
       mentorship_token,
       cancel_cause,
-      who_cancelled: 'MENTOR',
+      who_canceled: 'MENTOR',
     })
       .then(() => {
         addToast({
