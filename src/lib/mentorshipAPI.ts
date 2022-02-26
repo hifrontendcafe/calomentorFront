@@ -16,17 +16,17 @@ function isResponseError(error: unknown): error is ResponseError {
  * Get all mentorships from a user
  * @param id
  * @param filter
- * @param filterDates
+ * @param filter_dates
  * @returns An array of mentorships
  */
 export const getUserMentorships = async (
   id: string,
   filter: string,
-  filterDates: string,
+  filter_dates: string,
 ) => {
   try {
     const { data } = await axiosAWSInstance.get<IMentorship>(
-      `${MENTORSHIP}/${id}?filter=${filter}&filterDates=${filterDates} `,
+      `${MENTORSHIP}/${id}?filter=${filter}&filter_dates=${filter_dates} `,
     );
     return data;
   } catch (error) {

@@ -1,20 +1,20 @@
 import { axiosGet } from '@/lib/api';
 import { MENTORSHIP, USER, TIMESLOTS, WARNING } from '@/config/Routes';
-import { IMentorhip } from '@/interfaces/mentorship.interface';
-import { ITimeslot } from '@/interfaces/timeslot.interface';
+import { IMentorship } from '@/interfaces/mentorship.interface';
+import { ITimeSlot } from '@/interfaces/timeslot.interface';
 import { IUser } from '@/interfaces/user.interface';
 import { IWarning } from '@/interfaces/warning.interface';
 
 async function getAllMentorshipHistory(id: string) {
-  return axiosGet<IMentorhip[]>(`${MENTORSHIP}?id=${id}&filterDates=PAST`);
+  return axiosGet<IMentorship[]>(`${MENTORSHIP}?id=${id}&filter_dates=PAST`);
 }
 
 async function getActiveMentorships(id: string) {
-  return axiosGet<IMentorhip[]>(`${MENTORSHIP}?id=${id}&filter=ACTIVE`);
+  return axiosGet<IMentorship[]>(`${MENTORSHIP}?id=${id}&filter=ACTIVE`);
 }
 
 async function getFutureMentorships(id: string) {
-  return axiosGet<IMentorhip[]>(`${MENTORSHIP}?id=${id}&filterDates=FUTURE`);
+  return axiosGet<IMentorship[]>(`${MENTORSHIP}?id=${id}&filter_dates=FUTURE`);
 }
 
 async function getUserData(id: string) {
@@ -26,7 +26,7 @@ async function getAllUsersData() {
 }
 
 async function getTimeslots(id: string) {
-  return axiosGet<ITimeslot[]>(`${TIMESLOTS}?id=${id}`);
+  return axiosGet<ITimeSlot[]>(`${TIMESLOTS}?id=${id}`);
 }
 
 async function getWarnings() {
