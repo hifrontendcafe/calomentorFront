@@ -45,7 +45,7 @@ const WarningCard: React.FC<IWarningCard> = ({
   const [isOpen, setIsOpen] = useState(false);
   const isForgived = warning_status === WARNSTATE.FORGIVE;
   return (
-    <div key={id} className="px-4 mb-5 sm:px-6">
+    <div key={id} className="px-4 my-4 sm:px-6">
       <div className="overflow-hidden border-2 border-gray-700 border-solid sm:rounded-lg">
         <div
           className="flex flex-row items-center justify-between px-2 py-3 cursor-pointer sm:px-6 text-mainTextColor hover:bg-cardHeader"
