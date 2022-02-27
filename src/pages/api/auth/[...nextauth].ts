@@ -7,7 +7,7 @@ import {
 } from '@/config/DiscordID';
 import { LOGIN, UNAUTHORIZED } from '@/config/Routes';
 import axios from 'axios';
-import { createUser, getUserByID } from '@/services/userAPI';
+import { createUser, getUserByID } from '@/lib/userAPI';
 import { RoleType } from '@/interfaces/user.interface';
 
 export default NextAuth({
