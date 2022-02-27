@@ -43,3 +43,20 @@ export const addWarning = async (
     throw new Error(error.response.status);
   }
 };
+
+/**
+ *
+ * @param id Id of the warning
+ * @param forgive_cause The cause of the removal of the warning
+ * @returns Confirmation of the warning removal
+ */
+export const removeWarning = async (id: string, forgive_cause: string) => {
+  try {
+    const { data } = await axiosAWSInstance.patch(`${WARNING}/${id}`, {
+      forgive_cause,
+    });
+    return data;
+  } catch (error: any) {
+    throw new Error(error.response.status);
+  }
+};

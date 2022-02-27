@@ -1,10 +1,11 @@
-import { addWarning, getWarnings } from '@/lib/warningAPI';
+import { addWarning, getWarnings, removeWarning } from '@/lib/warningAPI';
 import { NextApiRequest, NextApiResponse } from 'next';
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse,
 ) {
+  // Add warning
   if (req.method === 'POST') {
     const {
       mentee_id,
@@ -32,8 +33,19 @@ export default async function handler(
       warning_author_id,
     );
     return res.status(200).json(data);
+    // Get all warnings
   } else if (req.method === 'GET') {
     const { data } = await getWarnings();
+    return res.status(200).json(data);
+    // Remove warning
+  } else if (req.method === 'PATCH') {
+    const { id, forgive_cause } = req.body;
+    if (!id || !forgive_cause) {
+      return res
+        .status(400)
+        .json({ message: 'A required parameter is missing' });
+    }
+    const data = await removeWarning(id, forgive_cause);
     return res.status(200).json(data);
   }
   return res.status(400).json({ message: 'Invalid method' });
