@@ -3,7 +3,7 @@ import {
   cancelMentorship,
   confirmMentorship,
   getUserMentorships,
-} from '@/lib/mentorshipAPI';
+} from '@/services/mentorshipAPI';
 
 export default async function handler(
   req: NextApiRequest,

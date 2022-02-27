@@ -1,4 +1,4 @@
-import { addWarning, getWarnings, removeWarning } from '@/lib/warningAPI';
+import { addWarning, getWarnings, removeWarning } from '@/services/warningAPI';
 import { NextApiRequest, NextApiResponse } from 'next';
 
 export default async function handler(
