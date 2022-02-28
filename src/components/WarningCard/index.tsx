@@ -8,7 +8,7 @@ interface IWarningCard {
   warning: IWarning;
   setModalData?: Dispatch<
     SetStateAction<{
-      menteeName: string;
+      mentee_name: string;
       menteeId: string;
       mentorshipId: string;
     }>

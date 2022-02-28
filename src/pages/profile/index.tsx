@@ -30,7 +30,7 @@ const SettingsProfilePage: React.FC = () => {
       email,
       skills,
       url_photo,
-      isActive,
+      is_active,
       links,
       user_timezone,
     },
@@ -60,7 +60,7 @@ const SettingsProfilePage: React.FC = () => {
             email,
             skills,
             url_photo,
-            isActive,
+            is_active,
             links,
             user_timezone,
           } = data;
@@ -70,7 +70,7 @@ const SettingsProfilePage: React.FC = () => {
             email,
             skills,
             url_photo,
-            isActive,
+            is_active,
             links,
             user_timezone: user_timezone?.toString(),
           });
@@ -87,7 +87,7 @@ const SettingsProfilePage: React.FC = () => {
         email,
         skills,
         url_photo,
-        isActive,
+        is_active,
         links,
         user_timezone: timezoneString,
       });
@@ -123,16 +123,14 @@ const SettingsProfilePage: React.FC = () => {
   const onSubmit: SubmitHandler<IUser> = async data => {
     data.role = getRoleArray(session?.user.role);
     axiosPut(USER, { data })
-      .then(({ data }) => {
-        console.log(data);
+      .then(() => {
         addToast({
           title: 'Actualizado',
           subText: 'El usuario se ha actualizado correctamente',
           type: 'default',
         });
       })
-      .catch(err => {
-        console.log(err);
+      .catch(() => {
         addToast({
           title: 'Hubo un problema',
           subText: 'El usuario no ha sido actualizado',
@@ -423,51 +421,6 @@ const SettingsProfilePage: React.FC = () => {
                 </div>
               </div>
             </div>
-            {/* Others */}
-            {/* <div className="divide-y divide-gray-200">
-      <div className="px-4 sm:px-6">
-        <ul role="list" className="mt-2 divide-y divide-dividerColor">
-          <Switch.Group
-            as="li"
-            className="flex items-center justify-between py-4"
-          >
-            <div className="flex flex-col">
-              <Switch.Label
-                as="p"
-                className="text-sm font-medium label"
-                passive
-              >
-                Activo
-              </Switch.Label>
-              <Switch.Description className="text-sm text-gray-300">
-                Aparecer en la web de FrontendCafé como disponible o no para
-                dar mentorías.
-              </Switch.Description>
-            </div>
-            <Controller
-              control={control}
-              name="isActive"
-              render={({ field: { value, onChange } }) => (
-                <Switch
-                  checked={value as boolean}
-                  onChange={onChange}
-                  className={`${
-                    value ? 'bg-teal-500' : 'bg-gray-200'
-                  } ml-4 relative inline-flex flex-shrink-0 h-6 w-11 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none`}
-                >
-                  <span
-                    aria-hidden="true"
-                    className={`${
-                      value ? 'translate-x-5' : 'translate-x-0'
-                    } inline-block h-5 w-5 rounded-full bg-white shadow transform ring-0 transition ease-in-out duration-200`}
-                  />
-                </Switch>
-              )}
-            />
-          </Switch.Group>
-        </ul>
-      </div>
-    </div> */}
 
             <div className="pt-6 divide-y divide-dividerColor">
               <div className="flex justify-end px-4 py-4 mt-4 sm:px-6">

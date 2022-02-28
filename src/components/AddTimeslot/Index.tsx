@@ -8,13 +8,13 @@ import { TIMESLOTS } from '@/config/Routes';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import dayjs from 'dayjs';
-import { ITimeslot } from '@/interfaces/timeslot.interface';
+import { ITimeSlot } from '@/interfaces/timeslot.interface';
 
 interface IAddTimeslot {
   getSchedule: () => void;
   close: () => void;
   visible: Boolean;
-  timeslots: ITimeslot[];
+  timeslots: ITimeSlot[];
 }
 
 interface ITimeForm {
@@ -47,15 +47,11 @@ const AddTimeslot: React.FC<IAddTimeslot> = ({
 
   const handleConfirmBtn: SubmitHandler<ITimeForm> = data => {
     if (!loading && session) {
-      console.log(
-        '🚀 ~ file: Index.tsx ~ line 53 ~ unifyDates(data.date, data.time).toDate()',
-        unifyDates(data.date, data.time).toDate(),
-      );
       axiosPost(TIMESLOTS, {
         user_id: session.user.id.toString(),
         slot_date: unifyDates(data.date, data.time).toDate().getTime(),
       })
-        .then(res => {
+        .then(() => {
           addToast({
             title: 'Guardado',
             subText: 'El nuevo horario ha sido agregado',
@@ -65,8 +61,7 @@ const AddTimeslot: React.FC<IAddTimeslot> = ({
           getSchedule();
           close();
         })
-        .catch(err => {
-          console.log(err);
+        .catch(() => {
           reset();
           addToast({
             title: 'Error',

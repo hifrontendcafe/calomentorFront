@@ -1,19 +1,19 @@
 import useToastContext from '@/hooks/useToastContext';
-import { ITimeslot } from '@/interfaces/timeslot.interface';
+import { ITimeSlot } from '@/interfaces/timeslot.interface';
 import { CalendarIcon, TrashIcon, XIcon } from '@heroicons/react/outline';
 import React, { Dispatch, SetStateAction } from 'react';
 import { useState } from 'react';
 import Modal from '@/components/Modal';
 import { formatDate } from '@/helpers/formatDate';
 import classNames from 'classnames';
-import { deleteTimeslot } from '@/lib/timeslotAPI';
+import { deleteTimeSlot } from '@/services/index';
 import { deleteTimeSlotResponseSchema } from '@/schemas/schemas';
 
 interface ISlot {
   id: string;
   date: number;
   is_occupied: boolean;
-  updateTimeslots: Dispatch<SetStateAction<ITimeslot[]>>;
+  updateTimeslots: Dispatch<SetStateAction<ITimeSlot[]>>;
   handleCancelTimeslot: () => void;
 }
 
@@ -31,7 +31,7 @@ const Timeslot: React.FC<ISlot> = ({
     let response: unknown;
 
     try {
-      response = await deleteTimeslot(timeslotId);
+      response = await deleteTimeSlot(timeslotId);
     } catch (err) {
       setModalIsOpen(false);
       addToast({
@@ -78,6 +78,7 @@ const Timeslot: React.FC<ISlot> = ({
         )}
       >
         <div className="flex-1 px-4 py-2 text-sm truncate">
+          <pre className="font-semibold text-mainTextColor">id: {id}</pre>
           <p className="font-semibold text-mainTextColor">{formatDate(date)}</p>
           <p className="text-mainTextColor">
             Estado: {is_occupied ? 'agendada' : 'disponible'}

@@ -2,10 +2,9 @@ import { useCallback, useContext, useEffect, useState } from 'react';
 import { signOut, useSession } from 'next-auth/client';
 import DashboardLayout from '@/components/DashboardLayout';
 import { useRouter } from 'next/dist/client/router';
-import { UserContext } from '@/context/UserContext';
 import CustomHead from '@/components/CustomHead';
 import { PROFILE, SCHEDULE } from '@/config/Routes';
-import { IMentorhip } from '@/interfaces/mentorship.interface';
+import { IMentorship } from '@/interfaces/mentorship.interface';
 import HistoryMentorshipCard from '@/components/HistoryMentorshipCard';
 import { getAllMentorshipHistory, getUserData } from '@/services/index';
 import WarnModal from '@/components/WarnModal';
@@ -15,10 +14,10 @@ import useUserContext from '@/hooks/useUserContext';
 
 const History: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
-  const [mentorships, setMentorships] = useState<IMentorhip[]>([]);
+  const [mentorships, setMentorships] = useState<IMentorship[]>([]);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [modalData, setModalData] = useState({
-    menteeName: '',
+    mentee_name: '',
     menteeId: '',
     mentorshipId: '',
   });
@@ -30,12 +29,12 @@ const History: React.FC = () => {
 
   const getHistoryData = useCallback(() => {
     if (!loadingUser && session) {
-      const userID = session.user.id.toString();
+      const id = session.user.id.toString();
 
       // Get user data and verify if the profile is configured,
       // if not, go to the profile settings
       // only admins could access without signup
-      getUserData(userID)
+      getUserData(id)
         .then(res => {
           !res.data.full_name && session.user.role !== '0'
             ? router.push(PROFILE)
@@ -46,7 +45,7 @@ const History: React.FC = () => {
         });
 
       // Get user mentorships data
-      getAllMentorshipHistory(userID)
+      getAllMentorshipHistory(id)
         .then(({ data }) => {
           setIsLoading(false);
           setMentorships(data);
@@ -90,7 +89,7 @@ const History: React.FC = () => {
         <WarnModal
           open={modalIsOpen}
           setModal={setModalIsOpen}
-          menteeName={modalData.menteeName}
+          mentee_name={modalData.mentee_name}
           menteeId={modalData.menteeId}
           mentorshipId={modalData.mentorshipId}
           callback={getHistoryData}

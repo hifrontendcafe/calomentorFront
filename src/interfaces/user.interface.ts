@@ -17,10 +17,10 @@ export interface IUser {
   role?: RoleType[];
   links?: IUserLinks;
   skills?: string[];
-  isActive?: boolean;
-  lastActivateBy?: string; // discord id
+  is_active?: boolean;
+  last_activate_by?: string;
   user_timezone?: string;
-  userToken?: string;
+  user_token?: string;
 }
 
 export interface ICreateUser {

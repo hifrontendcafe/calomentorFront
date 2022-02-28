@@ -1,22 +1,22 @@
 import { axiosDelete, axiosGet, axiosPost } from '@/lib/api';
 import { MENTORSHIP, USER, TIMESLOTS, WARNING } from '@/config/Routes';
-import { IMentorhip } from '@/interfaces/mentorship.interface';
-import { ITimeslot } from '@/interfaces/timeslot.interface';
+import { IMentorship } from '@/interfaces/mentorship.interface';
+import { ITimeSlot } from '@/interfaces/timeslot.interface';
 import { IUser } from '@/interfaces/user.interface';
 import { IWarning } from '@/interfaces/warning.interface';
 import { z } from 'zod';
 import { cancelMentorshipBodySchema } from '@/schemas/schemas';
 
 async function getAllMentorshipHistory(id: string) {
-  return axiosGet<IMentorhip[]>(`${MENTORSHIP}?id=${id}&filterDates=PAST`);
+  return axiosGet<IMentorship[]>(`${MENTORSHIP}?id=${id}&filter_dates=PAST`);
 }
 
 async function getActiveMentorships(id: string) {
-  return axiosGet<IMentorhip[]>(`${MENTORSHIP}?id=${id}&filter=ACTIVE`);
+  return axiosGet<IMentorship[]>(`${MENTORSHIP}?id=${id}&filter=ACTIVE`);
 }
 
 async function getFutureMentorships(id: string) {
-  return axiosGet<IMentorhip[]>(`${MENTORSHIP}?id=${id}&filterDates=FUTURE`);
+  return axiosGet<IMentorship[]>(`${MENTORSHIP}?id=${id}&filter_dates=FUTURE`);
 }
 
 async function getUserData(id: string) {
@@ -28,7 +28,7 @@ async function getAllUsersData() {
 }
 
 async function getTimeslots(id: string) {
-  return axiosGet<ITimeslot[]>(`${TIMESLOTS}?id=${id}`);
+  return axiosGet<ITimeSlot[]>(`${TIMESLOTS}?id=${id}`);
 }
 
 async function getWarnings() {
@@ -40,14 +40,14 @@ async function deleteTimeSlot(id: string) {
 }
 
 async function cancelMentorship({
-  token,
-  cancelCause,
-  whoCancel,
+  mentorship_token,
+  cancel_cause,
+  who_canceled,
 }: z.infer<typeof cancelMentorshipBodySchema>) {
   return axiosPost(MENTORSHIP, {
-    token,
-    cancelCause,
-    whoCancel: 'MENTOR',
+    mentorship_token,
+    cancel_cause,
+    who_canceled,
   });
 }
 

@@ -21,7 +21,7 @@ async function handleConfirmMentorship(
   }
 
   try {
-    const data = await confirmMentorship(parsedBody.data.token);
+    const data = await confirmMentorship(parsedBody.data.mentorship_token);
     return res.status(200).json(data);
   } catch (error) {
     return res.status(400).json({ message: 'An error has occurred' });
@@ -56,7 +56,7 @@ async function handleCancelMentorship(
   const parsedBody = cancelMentorshipBodySchema.safeParse(req.body);
 
   if (!parsedBody.success) {
-    return res.status(400).json({ message: parsedBody.error.message });
+    return res.status(400).json({ message: parsedBody.error.format() });
   }
 
   try {
