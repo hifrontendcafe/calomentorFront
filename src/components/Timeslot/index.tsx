@@ -1,6 +1,6 @@
 import { TIMESLOTS } from '@/config/Routes';
 import useToastContext from '@/hooks/useToastContext';
-import { ITimeSlot } from '@/interfaces/timeslot.interface';
+import { ITimeSlot, TIMESLOT_STATUS } from '@/interfaces/timeslot.interface';
 import { axiosDelete } from '@/lib/api';
 import { CalendarIcon, TrashIcon, XIcon } from '@heroicons/react/outline';
 import React, { Dispatch, SetStateAction } from 'react';
@@ -12,7 +12,7 @@ import classNames from 'classnames';
 interface ISlot {
   id: string;
   date: number;
-  is_occupied: boolean;
+  timeslot_status: TIMESLOT_STATUS;
   updateTimeslots: Dispatch<SetStateAction<ITimeSlot[]>>;
   handleCancelTimeslot: () => void;
 }
@@ -20,12 +20,14 @@ interface ISlot {
 const Timeslot: React.FC<ISlot> = ({
   id,
   date,
-  is_occupied,
+  timeslot_status,
   updateTimeslots,
   handleCancelTimeslot,
 }) => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const { addToast } = useToastContext();
+  const isTaken = timeslot_status === TIMESLOT_STATUS.OCCUPIED;
+  const isFree = timeslot_status === TIMESLOT_STATUS.FREE;
 
   const handleDelete = (timeslotId: string) => {
     axiosDelete(`${TIMESLOTS}?timeslotId=${timeslotId}`).then(res => {
@@ -55,7 +57,10 @@ const Timeslot: React.FC<ISlot> = ({
       <div
         className={classNames(
           'flex-shrink-0 flex items-center justify-center w-14 text-cardContentLight text-sm font-medium rounded-l-md',
-          { 'bg-red-500': is_occupied, 'bg-green-500': !is_occupied },
+          {
+            'bg-red-500': isTaken,
+            'bg-green-500': !isFree,
+          },
         )}
       >
         <CalendarIcon style={{ padding: 12 }} />
@@ -64,20 +69,20 @@ const Timeslot: React.FC<ISlot> = ({
         className={classNames(
           'flex items-center justify-between flex-1 truncate border-t border-b border-r bg-cardContentLight rounded-r-md',
           {
-            'border-red-500': is_occupied,
-            'border-green-500': !is_occupied,
+            'border-red-500': isTaken,
+            'border-green-500': !isFree,
           },
         )}
       >
         <div className="flex-1 px-4 py-2 text-sm truncate">
           <p className="font-semibold text-mainTextColor">{formatDate(date)}</p>
           <p className="text-mainTextColor">
-            Estado: {is_occupied ? 'agendada' : 'disponible'}
+            Estado: {isTaken ? 'agendada' : 'disponible'}
           </p>
         </div>
         <div className="flex-shrink-0 pr-2">
           <span className="relative z-0 inline-flex">
-            {is_occupied && (
+            {isTaken && (
               <button
                 type="button"
                 className="relative inline-flex items-center px-2 py-2 -ml-px text-sm font-medium bg-transparent text-mainTextColor"
@@ -86,7 +91,7 @@ const Timeslot: React.FC<ISlot> = ({
                 <XIcon className="w-4 h-4" aria-hidden="true" />
               </button>
             )}
-            {!is_occupied && (
+            {!isTaken && (
               <button
                 type="button"
                 className="relative inline-flex items-center px-2 py-2 -ml-px text-sm font-medium bg-transparent text-mainTextColor"
