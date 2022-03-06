@@ -10,6 +10,7 @@ interface ICustomButton {
   className?: string;
   disabled?: boolean;
   danger?: boolean;
+  isActive?: boolean;
 }
 
 const CustomButton: React.FC<ICustomButton> = ({
@@ -21,6 +22,7 @@ const CustomButton: React.FC<ICustomButton> = ({
   className = null,
   disabled = false,
   danger = false,
+  isActive = false,
 }) => {
   return (
     <button
@@ -30,14 +32,16 @@ const CustomButton: React.FC<ICustomButton> = ({
         className,
         {
           'text-mainBtnTxt bg-mainBtnColor hover:bg-mainBtnHoverColor':
-            primary && !disabled && !danger,
+            primary && !disabled && !danger && !isActive,
+          'text-mainBtnTxt bg-mainBtnHoverColor':
+            primary && !disabled && !danger && isActive,
           'text-black bg-secondaryBtnColor hover:bg-secondaryBtnHoverColor':
-            !danger && !primary && !disabled,
+            !danger && !primary && !disabled && !isActive,
           'text-mainBtnTxt bg-gray-600 cursor-not-allowed': disabled,
           'text-mainBtnTxt bg-red-600 hover:bg-red-700': danger,
         },
       )}
-      onClick={clickAction ? clickAction : () => {}}
+      onClick={() => clickAction?.()}
       disabled={disabled}
     >
       {bntIcon}
