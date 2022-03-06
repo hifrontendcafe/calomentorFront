@@ -59,7 +59,7 @@ const Timeslot: React.FC<ISlot> = ({
           'flex-shrink-0 flex items-center justify-center w-14 text-cardContentLight text-sm font-medium rounded-l-md',
           {
             'bg-red-500': isTaken,
-            'bg-green-500': !isFree,
+            'bg-green-500': isFree,
           },
         )}
       >
@@ -70,7 +70,7 @@ const Timeslot: React.FC<ISlot> = ({
           'flex items-center justify-between flex-1 truncate border-t border-b border-r bg-cardContentLight rounded-r-md',
           {
             'border-red-500': isTaken,
-            'border-green-500': !isFree,
+            'border-green-500': isFree,
           },
         )}
       >
@@ -91,7 +91,7 @@ const Timeslot: React.FC<ISlot> = ({
                 <XIcon className="w-4 h-4" aria-hidden="true" />
               </button>
             )}
-            {!isTaken && (
+            {isFree && (
               <button
                 type="button"
                 className="relative inline-flex items-center px-2 py-2 -ml-px text-sm font-medium bg-transparent text-mainTextColor"
