@@ -2,6 +2,7 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import {
   cancelMentorship,
   confirmMentorship,
+  getAllMentorships,
   getUserMentorships,
 } from '@/services/mentorshipAPI';
 
@@ -11,6 +12,17 @@ export default async function handler(
 ) {
   if (req.method === 'GET') {
     const { query } = req;
+    if (query.isAdmin && query.isAdmin === 'true') {
+      try {
+        const data = await getAllMentorships();
+        return res.status(200).json(data);
+      } catch (error: any) {
+        if (error.message === '404') {
+          return res.status(200).json({ data: [] });
+        }
+        return res.status(400).json({ message: 'An error has occurred' });
+      }
+    }
     if (!query.id) {
       return res.status(400).json({ message: 'ID is required' });
     }

@@ -115,3 +115,20 @@ export const sendFeedback = async (
     throw new Error(error.response.status);
   }
 };
+
+/**
+ * Get all mentorships (ADMIN)
+ * @returns An array of mentorships
+ */
+export const getAllMentorships = async () => {
+  try {
+    const { data } = await axiosAWSInstance.get<IMentorship>(MENTORSHIP);
+    return data;
+  } catch (error) {
+    if (isResponseError(error)) {
+      throw new Error(error.response.status);
+    }
+
+    throw new Error(`unknown error: ${error}`);
+  }
+};

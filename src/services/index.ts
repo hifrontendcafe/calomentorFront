@@ -37,6 +37,10 @@ async function removeWarning(id: string, forgive_cause: string) {
   return axiosPatch(WARNING, { id, forgive_cause });
 }
 
+async function getAdminMentorshipHistory(admin: boolean) {
+  return axiosGet<IMentorship[]>(`${MENTORSHIP}?isAdmin=${admin}`);
+}
+
 export {
   getAllMentorshipHistory,
   getUserData,
@@ -46,4 +50,5 @@ export {
   getFutureMentorships,
   getWarnings,
   removeWarning,
+  getAdminMentorshipHistory,
 };
