@@ -10,6 +10,8 @@ import React, { Dispatch, SetStateAction, useState } from 'react';
 import Star from '@/assets/img/Star.svg';
 import Image from 'next/image';
 import classNames from 'classnames';
+import { WARNSTATE } from '@/interfaces/warning.interface';
+import { getMentorshipStatus } from '@/helpers/getMentorshipStatus';
 
 interface IMentorshipCard {
   mentorship: IMentorship;
@@ -21,6 +23,7 @@ interface IMentorshipCard {
     }>
   >;
   setModalIsOpen: Dispatch<SetStateAction<boolean>>;
+  isAdmin?: boolean;
 }
 
 interface CardEventTarget extends EventTarget {
@@ -46,9 +49,12 @@ const MentorshipCard: React.FC<IMentorshipCard> = ({
     feedback_mentee,
     mentee_username_discord,
     warning_info,
+    info,
+    feedback_mentee_private,
   },
   setModalData,
   setModalIsOpen,
+  isAdmin = false,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const isCancelled = mentorship_status === 'CANCEL';
@@ -71,7 +77,8 @@ const MentorshipCard: React.FC<IMentorshipCard> = ({
               {mentee_name}
             </h3>
             <p className="max-w-2xl mt-1 text-sm">
-              {time_slot_info && formatDate(time_slot_info.date)}
+              {time_slot_info && formatDate(time_slot_info.date)} | Estado:{' '}
+              {getMentorshipStatus(mentorship_status)}
             </p>
           </div>
           <div className="flex flex-row items-center">
@@ -99,7 +106,7 @@ const MentorshipCard: React.FC<IMentorshipCard> = ({
                 />
               </div>
             )}
-            {isWarned && warning_info?.warning_status === 'ACTIVE' && (
+            {isWarned && warning_info?.warning_status === WARNSTATE.ACTIVE && (
               <div className="has-tooltip">
                 <span className="px-2 py-1 -mt-8 text-sm text-red-500 bg-gray-700 rounded shadow-lg -ml-14 tooltip">
                   El usuario fue advertido
@@ -107,7 +114,7 @@ const MentorshipCard: React.FC<IMentorshipCard> = ({
                 <BanIcon className="w-5 h-5 mx-2 text-red-400" />
               </div>
             )}
-            {isWarned && warning_info?.warning_status === 'FORGIVE' && (
+            {isWarned && warning_info?.warning_status === WARNSTATE.FORGIVE && (
               <div className="has-tooltip">
                 <span className="px-2 py-1 -mt-8 text-sm text-yellow-500 bg-gray-700 rounded shadow-lg -ml-14 tooltip">
                   El usuario fue perdonado
@@ -144,6 +151,12 @@ const MentorshipCard: React.FC<IMentorshipCard> = ({
               <dt className="text-sm font-medium text-mainTextColor">Email</dt>
               <dd className="mt-1 text-sm text-gray-200">{mentee_email}</dd>
             </div>
+            <div className="sm:col-span-2">
+              <dt className="text-sm font-medium text-mainTextColor">
+                Información
+              </dt>
+              <dd className="mt-1 text-sm text-gray-200">{info}</dd>
+            </div>
             {feedback_mentee && (
               <div className="sm:col-span-2">
                 <dt className="text-sm font-medium text-mainTextColor">
@@ -151,6 +164,16 @@ const MentorshipCard: React.FC<IMentorshipCard> = ({
                 </dt>
                 <dd className="mt-1 text-sm text-gray-200">
                   {feedback_mentee}
+                </dd>
+              </div>
+            )}
+            {isAdmin && feedback_mentee_private && (
+              <div className="sm:col-span-2">
+                <dt className="text-sm font-medium text-mainTextColor">
+                  Feedback Privado
+                </dt>
+                <dd className="mt-1 text-sm text-gray-200">
+                  {feedback_mentee_private}
                 </dd>
               </div>
             )}
