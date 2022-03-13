@@ -1,6 +1,6 @@
 import React from 'react';
 import Timezones from '@/lib/completeTimezones.json';
-import { formatDate, getFinishTime } from '@/helpers/formatDate';
+import { formatDate } from '@/helpers/formatDate';
 import { IMentorship } from '@/interfaces/mentorship.interface';
 import { CalendarIcon, UserRemoveIcon } from '@heroicons/react/outline';
 import dayjs from 'dayjs';
