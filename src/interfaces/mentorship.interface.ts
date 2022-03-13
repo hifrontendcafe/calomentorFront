@@ -1,4 +1,4 @@
-import { ITimeslotInfo } from './timeslot.interface';
+import { ITimeSlot } from './timeslot.interface';
 import { IWarning } from './warning.interface';
 
 export enum STATUS {
@@ -28,7 +28,7 @@ export interface IMentorship {
   mentorship_status: STATUS;
   cancel_cause: string;
   who_canceled: WHOCANCELED;
-  time_slot_info?: ITimeslotInfo;
+  time_slot_info?: ITimeSlot;
   time_slot_id?: string;
   feedback_stars: 1 | 2 | 3 | 4 | 5;
   feedback_mentee_private?: string;

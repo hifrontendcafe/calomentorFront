@@ -19,13 +19,19 @@ export const getUserSchedule = async (id: string) => {
  * Add new timeslot
  * @param user_id The user id
  * @param slot_date The datetime to add
+ * @param duration The duration of the mentorship
  * @returns a confirmation if the timeslot was added or an error
  */
-export const addNewTimeslot = async (user_id: string, slot_date: string) => {
+export const addNewTimeslot = async (
+  user_id: string,
+  slot_date: string,
+  duration: number,
+) => {
   try {
     const { data } = await axiosAWSInstance.post('/time-slot', {
       user_id,
       slot_date,
+      duration,
     });
     return data;
   } catch (error: any) {

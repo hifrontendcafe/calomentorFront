@@ -1,11 +1,12 @@
 import React from 'react';
 import Timezones from '@/lib/completeTimezones.json';
-import { formatDate } from '@/helpers/formatDate';
+import { formatDate, getFinishTime } from '@/helpers/formatDate';
 import { IMentorship } from '@/interfaces/mentorship.interface';
 import { CalendarIcon, UserRemoveIcon } from '@heroicons/react/outline';
 import dayjs from 'dayjs';
 
 import Link from 'next/link';
+import { getMentorshipStatus } from '@/helpers/getMentorshipStatus';
 interface IMentorshipCard {
   mentorship: IMentorship;
   handleCancelMentorship?: () => void;
@@ -53,7 +54,16 @@ const MentorshipCard: React.FC<IMentorshipCard> = ({
           <div className="flex flex-col justify-center p-3">
             <p className="text-sm font-medium text-mainTextColor">
               {mentorship.time_slot_info &&
-                formatDate(mentorship.time_slot_info.date)}
+                `${formatDate(
+                  mentorship.time_slot_info.date,
+                )} - ${getFinishTime(
+                  mentorship.time_slot_info.date,
+                  mentorship.time_slot_info.duration,
+                )} `}
+            </p>
+            <p className="text-sm text-gray-300">
+              <span className="font-medium text-mainTextColor">Estado:</span>{' '}
+              {getMentorshipStatus(mentorship.mentorship_status)}
             </p>
             <p className="text-sm text-gray-300">
               <span className="font-medium text-mainTextColor">Mentee:</span>{' '}

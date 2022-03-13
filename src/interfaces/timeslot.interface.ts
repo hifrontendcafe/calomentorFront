@@ -15,9 +15,3 @@ export interface ITimeSlot {
   mentorship_token: string;
   duration: 30 | 45 | 60;
 }
-
-export interface ITimeslotInfo {
-  id: string;
-  date: number;
-  is_occupied: boolean;
-}

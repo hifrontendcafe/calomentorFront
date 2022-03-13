@@ -20,6 +20,7 @@ interface IAddTimeslot {
 interface ITimeForm {
   date: Date;
   time: Date;
+  duration: number;
 }
 
 const AddTimeslot: React.FC<IAddTimeslot> = ({
@@ -34,6 +35,7 @@ const AddTimeslot: React.FC<IAddTimeslot> = ({
   const {
     formState: { errors },
     handleSubmit,
+    register,
     reset,
     control,
     getValues,
@@ -50,6 +52,7 @@ const AddTimeslot: React.FC<IAddTimeslot> = ({
       axiosPost(TIMESLOTS, {
         user_id: session.user.id.toString(),
         slot_date: unifyDates(data.date, data.time).toDate().getTime(),
+        duration: data.duration,
       })
         .then(() => {
           addToast({
@@ -93,6 +96,12 @@ const AddTimeslot: React.FC<IAddTimeslot> = ({
       });
     setExcludedTimes(excludedTimes);
   };
+
+  const mentorshipDuration = [
+    { id: '30 minutos', label: '30 minutos', value: 30 },
+    { id: '45 minutos', label: '45 minutos', value: 45 },
+    { id: '60 minutos', label: '60 minutos', value: 60 },
+  ];
 
   return (
     <>
@@ -176,6 +185,38 @@ const AddTimeslot: React.FC<IAddTimeslot> = ({
                         El campo es requerido
                       </p>
                     )}
+                  </div>
+                </div>
+                <div className="flex flex-col">
+                  <div>
+                    <label
+                      htmlFor="duration"
+                      className="block mr-4 text-sm font-medium label"
+                    >
+                      Duración
+                    </label>
+                    <div className="space-y-4 sm:flex sm:items-center sm:space-y-0 sm:space-x-10">
+                      {mentorshipDuration.map(duration => (
+                        <div key={duration.id} className="flex items-center">
+                          <input
+                            id={duration.id}
+                            value={duration.value}
+                            type="radio"
+                            defaultChecked={duration.id === '60 minutos'}
+                            className="h-4 w-4 text-fecGreen focus:ring-0"
+                            {...register('duration', {
+                              required: true,
+                            })}
+                          />
+                          <label
+                            htmlFor={duration.id}
+                            className="ml-3 block text-sm font-medium text-gray-300"
+                          >
+                            {duration.label}
+                          </label>
+                        </div>
+                      ))}
+                    </div>
                   </div>
                 </div>
                 <CustomButton

@@ -3,7 +3,7 @@ import { STATUS } from '@/interfaces/mentorship.interface';
 export const getMentorshipStatus = (status: STATUS) => {
   switch (status) {
     case STATUS.ACTIVE:
-      return 'Activa';
+      return 'Pendiente de confirmación';
     case STATUS.CANCEL:
       return 'Cancelada';
     case STATUS.CONFIRMED:
