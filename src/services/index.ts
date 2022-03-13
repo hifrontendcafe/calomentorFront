@@ -1,4 +1,4 @@
-import { axiosDelete, axiosGet, axiosPost } from '@/lib/api';
+import { axiosDelete, axiosGet, axiosPost, axiosPatch } from '@/lib/api';
 import { MENTORSHIP, USER, TIMESLOTS, WARNING } from '@/config/Routes';
 import { IMentorship } from '@/interfaces/mentorship.interface';
 import { ITimeSlot } from '@/interfaces/timeslot.interface';
@@ -51,6 +51,14 @@ async function cancelMentorship({
   });
 }
 
+async function removeWarning(id: string, forgive_cause: string) {
+  return axiosPatch(WARNING, { id, forgive_cause });
+}
+
+async function getAdminMentorshipHistory(admin: boolean) {
+  return axiosGet<IMentorship[]>(`${MENTORSHIP}?isAdmin=${admin}`);
+}
+
 export {
   getAllMentorshipHistory,
   getUserData,
@@ -61,4 +69,6 @@ export {
   getWarnings,
   deleteTimeSlot,
   cancelMentorship,
+  removeWarning,
+  getAdminMentorshipHistory,
 };

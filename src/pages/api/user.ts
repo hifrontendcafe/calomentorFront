@@ -4,7 +4,7 @@ import {
   getUsers,
   updateUserByID,
   updateUserStatus,
-} from '@/lib/userAPI';
+} from '@/services/userAPI';
 
 export default async function handler(
   req: NextApiRequest,

@@ -96,7 +96,7 @@ const SettingsSchedulePage: React.FC = () => {
               id={timeslot.id}
               key={timeslot.id}
               date={timeslot.date}
-              is_occupied={timeslot.is_occupied}
+              timeslot_status={timeslot.timeslot_status}
               updateTimeslots={setTimeslots}
               handleCancelTimeslot={() =>
                 handleModalConfirmBtn(

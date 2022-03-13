@@ -1,21 +1,15 @@
-import { ChevronRightIcon } from '@heroicons/react/outline';
+import { ChevronRightIcon, DocumentRemoveIcon } from '@heroicons/react/outline';
 import React, { Dispatch, SetStateAction, useState } from 'react';
 import { IWarning, WARN, WARNSTATE } from '@/interfaces/warning.interface';
 import dayjs from 'dayjs';
 import classNames from 'classnames';
+import { WarningModalData } from '@/pages/warnings';
 
 interface IWarningCard {
   warning: IWarning;
-  setModalData?: Dispatch<
-    SetStateAction<{
-      mentee_name: string;
-      menteeId: string;
-      mentorshipId: string;
-    }>
-  >;
+  setModalData?: Dispatch<SetStateAction<WarningModalData>>;
   setModalIsOpen?: Dispatch<SetStateAction<boolean>>;
 }
-
 interface CardEventTarget extends EventTarget {
   id?: string;
 }
@@ -45,12 +39,12 @@ const WarningCard: React.FC<IWarningCard> = ({
   const [isOpen, setIsOpen] = useState(false);
   const isForgived = warning_status === WARNSTATE.FORGIVE;
   return (
-    <div key={id} className="px-4 mb-5 sm:px-6">
+    <div key={id} className="px-4 my-4 sm:px-6">
       <div className="overflow-hidden border-2 border-gray-700 border-solid sm:rounded-lg">
         <div
           className="flex flex-row items-center justify-between px-2 py-3 cursor-pointer sm:px-6 text-mainTextColor hover:bg-cardHeader"
           onClick={(e: CardMouseEvent) => {
-            if (e.target.id !== 'warnButton') {
+            if (e.target.id !== 'clearWarnButton') {
               setIsOpen(!isOpen);
             }
           }}
@@ -65,6 +59,24 @@ const WarningCard: React.FC<IWarningCard> = ({
             </p>
           </div>
           <div className="flex flex-row items-center">
+            {!isForgived && (
+              <div className="has-tooltip">
+                <span className="px-2 py-1 -mt-8 -ml-12 text-sm text-yellow-500 bg-gray-700 rounded shadow-lg tooltip">
+                  Quitar Advertencia
+                </span>
+                <DocumentRemoveIcon
+                  id="clearWarnButton"
+                  className="w-5 h-5 mx-2 text-yellow-400 cursor-pointer hover:text-yellow-600"
+                  onClick={() => {
+                    setModalData?.({
+                      mentee_name: mentee_name || '',
+                      warning_id: id,
+                    });
+                    setModalIsOpen?.(true);
+                  }}
+                />
+              </div>
+            )}
             <ChevronRightIcon
               className={classNames('w-5 h-5 transform transition-transform', {
                 'rotate-90': isOpen,

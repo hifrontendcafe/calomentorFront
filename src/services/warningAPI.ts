@@ -28,6 +28,7 @@ export const addWarning = async (
   warn_type: WARN,
   warn_cause: string,
   mentorship_id: string,
+  warning_author_id: string,
 ) => {
   try {
     const { data } = await axiosAWSInstance.post(`${WARNING}`, {
@@ -35,6 +36,24 @@ export const addWarning = async (
       warn_type,
       warn_cause,
       mentorship_id,
+      warning_author_id,
+    });
+    return data;
+  } catch (error: any) {
+    throw new Error(error.response.status);
+  }
+};
+
+/**
+ *
+ * @param id Id of the warning
+ * @param forgive_cause The cause of the removal of the warning
+ * @returns Confirmation of the warning removal
+ */
+export const removeWarning = async (id: string, forgive_cause: string) => {
+  try {
+    const { data } = await axiosAWSInstance.patch(`${WARNING}/${id}`, {
+      forgive_cause,
     });
     return data;
   } catch (error: any) {

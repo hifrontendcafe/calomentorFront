@@ -60,20 +60,6 @@ export const updateUserByID = async (id: string, userData: IUser) => {
 };
 
 /**
- * Get user schedule
- * @param id The id of the user
- * @returns an object with the user schedule data
- */
-export const getUserSchedule = async (id: string) => {
-  try {
-    const { data } = await axiosAWSInstance.get(`${AWS_TIMESLOT}${USER}/${id}`);
-    return data;
-  } catch (error: any) {
-    throw new Error(error.response.status);
-  }
-};
-
-/**
  *
  * @param id The id of the user to activate/deactivate
  * @param last_activate_by The id of the one who activate/deactivate a user

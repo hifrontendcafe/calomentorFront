@@ -78,14 +78,19 @@ const MentorshipCard: React.FC<IMentorshipCard> = ({
           </div>
           <div className="flex p-3 ">
             <div className="flex items-center justify-center pt-1 my-auto mr-2">
-              <Link href={googleCalendarURL}>
-                <a
-                  target="_blank"
-                  className="text-mainTextColor hover:text-mainBtnColor"
-                >
-                  <CalendarIcon className="w-6 h-6" aria-hidden="true" />
-                </a>
-              </Link>
+              <div className="has-tooltip">
+                <span className="px-2 py-1 -mt-8 -ml-20 text-sm text-green-500 bg-gray-700 rounded shadow-lg tooltip">
+                  Agregar a Google Calendar
+                </span>
+                <Link href={googleCalendarURL}>
+                  <a
+                    target="_blank"
+                    className="text-mainTextColor hover:text-mainBtnColor"
+                  >
+                    <CalendarIcon className="w-6 h-6" aria-hidden="true" />
+                  </a>
+                </Link>
+              </div>
               {handleCancelMentorship && (
                 <div className="has-tooltip">
                   <span className="px-2 py-1 -mt-8 text-sm text-red-500 bg-gray-700 rounded shadow-lg -ml-14 tooltip">

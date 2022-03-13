@@ -22,7 +22,7 @@ export const confirmMentorshipRequestBodySchema = z.object({
 });
 
 export const getUserMentorshipsQuerySchema = z.object({
-  id: z.string(),
+  id: z.string().default(''),
   filter: z.enum(['', 'ACTIVE', 'CANCEL', 'CONFIRMED']).default(''),
   filter_dates: z.enum(['', 'PAST', 'FUTURE']).default(''),
 });

@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import { sendFeedback } from '@/lib/mentorshipAPI';
+import { sendFeedback } from '@/services/mentorshipAPI';
 
 export default async function handler(
   req: NextApiRequest,

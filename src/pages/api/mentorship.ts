@@ -2,8 +2,9 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import {
   cancelMentorship,
   confirmMentorship,
+  getAllMentorships,
   getUserMentorships,
-} from '@/lib/mentorshipAPI';
+} from '@/services/mentorshipAPI';
 import {
   confirmMentorshipRequestBodySchema,
   cancelMentorshipBodySchema,

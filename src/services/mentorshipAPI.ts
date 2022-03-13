@@ -1,5 +1,5 @@
 import { axiosAWSInstance } from '@/config/AxiosConfig';
-import { CONFIRMATION, FEEDBACK, MENTORSHIP, WARNING } from '@/config/Routes';
+import { CONFIRMATION, FEEDBACK, MENTORSHIP } from '@/config/Routes';
 import { IMentorship } from '@/interfaces/mentorship.interface';
 import {
   cancelMentorshipBodySchema,
@@ -21,7 +21,7 @@ function showError(error: unknown) {
 /**
  * Get all mentorships from a user
  *
- * @param id
+ * @param id - user id
  * @param filter
  * @param filter_dates
  * @returns An array of mentorships
@@ -71,7 +71,7 @@ export const cancelMentorship = async ({
  */
 export const confirmMentorship = async (mentorship_token: string) => {
   try {
-    const { data } = await axiosAWSInstance.patch(
+    const { data } = await axiosAWSInstance.post(
       `${MENTORSHIP}${CONFIRMATION}`,
       { mentorship_token },
     );
@@ -96,7 +96,7 @@ export const sendFeedback = async (
   feedback_stars: number,
 ) => {
   try {
-    const { data } = await axiosAWSInstance.patch(`${MENTORSHIP}${FEEDBACK}`, {
+    const { data } = await axiosAWSInstance.post(`${MENTORSHIP}${FEEDBACK}`, {
       mentorship_token,
       feedback_mentee,
       feedback_mentee_private,
@@ -105,5 +105,22 @@ export const sendFeedback = async (
     return data;
   } catch (error: any) {
     showError(error);
+  }
+};
+
+/**
+ * Get all mentorships (ADMIN)
+ * @returns An array of mentorships
+ */
+export const getAllMentorships = async () => {
+  try {
+    const { data } = await axiosAWSInstance.get<IMentorship>(MENTORSHIP);
+    return data;
+  } catch (error) {
+    if (isResponseError(error)) {
+      throw new Error(error.response.status);
+    }
+
+    throw new Error(`unknown error: ${error}`);
   }
 };

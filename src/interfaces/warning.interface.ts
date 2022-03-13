@@ -22,3 +22,7 @@ export interface IWarning {
   warning_author_id: string;
   warning_author_name: string;
 }
+
+export interface RemoveWarningForm {
+  forgive_cause: string;
+}

@@ -17,6 +17,7 @@ export const PROFILE = '/profile';
 export const SCHEDULE = '/schedule';
 export const HISTORY = '/history';
 export const WARNINGS = '/warnings';
+export const ADMIN_HISTORY = '/admin-history';
 
 // ---------- API ROUTE CONSTANTS ----------
 
@@ -44,7 +45,7 @@ export const primaryRoutes = [
     icon: ClockIcon,
   },
   {
-    name: 'Historial',
+    name: 'Mi historial',
     href: HISTORY,
     icon: DocumentTextIcon,
   },
@@ -60,5 +61,10 @@ export const adminNavigation = [
     name: 'Blacklist',
     href: WARNINGS,
     icon: ExclamationIcon,
+  },
+  {
+    name: 'Historial',
+    href: ADMIN_HISTORY,
+    icon: DocumentTextIcon,
   },
 ];

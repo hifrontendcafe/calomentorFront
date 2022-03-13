@@ -1,6 +1,9 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import { getUserSchedule } from '@/lib/userAPI';
-import { addNewTimeslot, deleteTimeslot } from '@/lib/timeslotAPI';
+import {
+  addNewTimeslot,
+  deleteTimeslot,
+  getUserSchedule,
+} from '@/services/timeslotAPI';
 
 export default async function handler(
   req: NextApiRequest,
