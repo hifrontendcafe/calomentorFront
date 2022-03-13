@@ -1,5 +1,5 @@
 import { axiosAWSInstance } from '@/config/AxiosConfig';
-import { CONFIRMATION, FEEDBACK, MENTORSHIP, WARNING } from '@/config/Routes';
+import { CONFIRMATION, FEEDBACK, MENTORSHIP } from '@/config/Routes';
 import { IMentorship } from '@/interfaces/mentorship.interface';
 
 interface ResponseError {
@@ -72,7 +72,7 @@ export const cancelMentorship = async (
  */
 export const confirmMentorship = async (mentorship_token: string) => {
   try {
-    const { data } = await axiosAWSInstance.patch(
+    const { data } = await axiosAWSInstance.post(
       `${MENTORSHIP}${CONFIRMATION}`,
       { mentorship_token },
     );
@@ -101,7 +101,7 @@ export const sendFeedback = async (
   feedback_stars: number,
 ) => {
   try {
-    const { data } = await axiosAWSInstance.patch(`${MENTORSHIP}${FEEDBACK}`, {
+    const { data } = await axiosAWSInstance.post(`${MENTORSHIP}${FEEDBACK}`, {
       mentorship_token,
       feedback_mentee,
       feedback_mentee_private,
