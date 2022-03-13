@@ -1,22 +1,12 @@
 import { axiosAWSInstance } from '@/config/AxiosConfig';
 import { CONFIRMATION, FEEDBACK, MENTORSHIP } from '@/config/Routes';
+import { parseError, showError } from '@/helpers/showError';
 import { IMentorship } from '@/interfaces/mentorship.interface';
 import {
   cancelMentorshipBodySchema,
   getUserMentorshipsQuerySchema,
-  responseErrorSchema,
 } from '@/schemas/schemas';
 import { z } from 'zod';
-
-function showError(error: unknown) {
-  const parsedError = responseErrorSchema.safeParse(error);
-
-  if (parsedError.success) {
-    throw new Error(JSON.stringify(parsedError.data, null, 2));
-  }
-
-  throw new Error(`unknown error: ${error}`);
-}
 
 /**
  * Get all mentorships from a user
@@ -32,17 +22,26 @@ export const getUserMentorships = async ({
   filter_dates,
 }: z.infer<typeof getUserMentorshipsQuerySchema>) => {
   try {
-    const { data } = await axiosAWSInstance.get<IMentorship>(
+    const { data } = await axiosAWSInstance.get<IMentorship[]>(
       `${MENTORSHIP}/${id}?filter=${filter}&filter_dates=${filter_dates} `,
     );
+
     return data;
   } catch (error) {
-    showError(error);
+    const errorResponse = parseError(error);
+    showError(errorResponse);
+
+    if (errorResponse.status === 404) {
+      return [];
+    }
+
+    throw error;
   }
 };
 
 /**
  * Cancel a mentorship
+ *
  * @param mentorship_token Token for cancel the mentorship
  * @param cancel_cause Cause for cancellation of mentorship
  * @returns if the mentorship was cancelled or an error occurred
@@ -60,7 +59,8 @@ export const cancelMentorship = async ({
     });
     return data;
   } catch (error) {
-    showError(error);
+    const errorResponse = parseError(error);
+    console.error(errorResponse);
   }
 };
 
@@ -77,7 +77,8 @@ export const confirmMentorship = async (mentorship_token: string) => {
     );
     return data;
   } catch (error) {
-    showError(error);
+    const errorResponse = parseError(error);
+    console.error(errorResponse);
   }
 };
 
@@ -104,7 +105,8 @@ export const sendFeedback = async (
     });
     return data;
   } catch (error: any) {
-    showError(error);
+    const errorResponse = parseError(error);
+    console.error(errorResponse);
   }
 };
 
@@ -117,10 +119,7 @@ export const getAllMentorships = async () => {
     const { data } = await axiosAWSInstance.get<IMentorship>(MENTORSHIP);
     return data;
   } catch (error) {
-    if (isResponseError(error)) {
-      throw new Error(error.response.status);
-    }
-
-    throw new Error(`unknown error: ${error}`);
+    const errorResponse = parseError(error);
+    console.error(errorResponse);
   }
 };

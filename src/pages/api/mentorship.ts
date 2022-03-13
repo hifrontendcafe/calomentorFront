@@ -10,6 +10,19 @@ import {
   cancelMentorshipBodySchema,
   getUserMentorshipsQuerySchema,
 } from '@/schemas/schemas';
+import { parseError, showError } from '@/helpers/showError';
+
+function handleError(error: unknown, res: NextApiResponse) {
+  try {
+    const responseError = parseError(error);
+    showError(responseError);
+    return res
+      .status(responseError.status)
+      .json({ message: responseError.data.message });
+  } catch (error: unknown) {
+    return res.status(400).json({ message: 'An error has occurred' });
+  }
+}
 
 async function handleConfirmMentorship(
   req: NextApiRequest,
@@ -24,8 +37,8 @@ async function handleConfirmMentorship(
   try {
     const data = await confirmMentorship(parsedBody.data.mentorship_token);
     return res.status(200).json(data);
-  } catch (error) {
-    return res.status(400).json({ message: 'An error has occurred' });
+  } catch (error: unknown) {
+    handleError(error, res);
   }
 }
 
@@ -41,12 +54,9 @@ async function handleGetUserMentorships(
 
   try {
     const data = await getUserMentorships(parsedQuery.data);
-    return res.status(200).json(data);
+    return res.status(200).json({ data });
   } catch (error: any) {
-    if (error.message === '404') {
-      return res.status(200).json({ data: [] });
-    }
-    return res.status(400).json({ message: 'An error has occurred' });
+    handleError(error, res);
   }
 }
 
@@ -64,7 +74,7 @@ async function handleCancelMentorship(
     const data = await cancelMentorship(parsedBody.data);
     return res.status(200).json(data);
   } catch (error) {
-    return res.status(400).json({ message: 'An error has occurred' });
+    handleError(error, res);
   }
 }
 
