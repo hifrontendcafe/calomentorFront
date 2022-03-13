@@ -13,6 +13,7 @@ interface ISlot {
   id: string;
   date: number;
   timeslot_status: TIMESLOT_STATUS;
+  duration: 30 | 45 | 60;
   updateTimeslots: Dispatch<SetStateAction<ITimeSlot[]>>;
   handleCancelTimeslot: () => void;
 }
@@ -21,6 +22,7 @@ const Timeslot: React.FC<ISlot> = ({
   id,
   date,
   timeslot_status,
+  duration,
   updateTimeslots,
   handleCancelTimeslot,
 }) => {
@@ -75,7 +77,9 @@ const Timeslot: React.FC<ISlot> = ({
         )}
       >
         <div className="flex-1 px-4 py-2 text-sm truncate">
-          <p className="font-semibold text-mainTextColor">{formatDate(date)}</p>
+          <p className="font-semibold text-mainTextColor">
+            {formatDate(date)} - Duración: {duration} minutos
+          </p>
           <p className="text-mainTextColor">
             Estado: {isTaken ? 'agendada' : 'disponible'}
           </p>

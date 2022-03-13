@@ -29,7 +29,11 @@ export default async function handler(
       return res.status(400).json({ message: 'Date and time are required' });
     }
     try {
-      const data = await addNewTimeslot(body.user_id, body.slot_date);
+      const data = await addNewTimeslot(
+        body.user_id,
+        body.slot_date,
+        body.duration,
+      );
       return res.status(200).json(data);
     } catch (error) {
       return res.status(400).json({ message: 'An error has occurred' });
