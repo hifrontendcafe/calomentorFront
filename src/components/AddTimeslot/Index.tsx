@@ -202,7 +202,7 @@ const AddTimeslot: React.FC<IAddTimeslot> = ({
                             id={duration.id}
                             value={duration.value}
                             type="radio"
-                            defaultChecked={duration.id === '30 minutos'}
+                            defaultChecked={duration.id === '60 minutos'}
                             className="h-4 w-4 text-fecGreen focus:ring-0"
                             {...register('duration', {
                               required: true,
