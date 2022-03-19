@@ -50,7 +50,7 @@ export const createUser = async (userData: IUser) => {
  * @returns an object with the user data and the result of the operation
  */
 export const updateUserByID = async (id: string, userData: IUser) => {
-  userData.user_timezone = 'America/Buenos_Aires'; // ESTO HAY QUE BORRARLO Y ACOMODAR LO DE LOS TIMEZONES EN LA CONFIGURACIÓN DEL PERFIL
+  userData.user_timezone = 'America/Argentina/Buenos_Aires'; // TODO: ESTO HAY QUE BORRARLO Y ACOMODAR LO DE LOS TIMEZONES EN LA CONFIGURACIÓN DEL PERFIL
   try {
     const { data } = await axiosAWSInstance.put(`${USER}/${id}`, userData);
     return data;

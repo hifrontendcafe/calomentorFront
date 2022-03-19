@@ -3,10 +3,9 @@ import { Dialog, Transition } from '@headlessui/react';
 import { ExclamationIcon } from '@heroicons/react/outline';
 import CustomButton from '../CustomButton';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { axiosPost } from '@/lib/api';
-import { MENTORSHIP } from '@/config/Routes';
 import useToastContext from '@/hooks/useToastContext';
 import { ICancelForm } from '@/interfaces/mentorship.interface';
+import { cancelMentorship } from '@/services';
 
 interface IModal {
   mentee_name: string;
@@ -32,7 +31,7 @@ const CancelModal: React.FC<IModal> = ({
   } = useForm<ICancelForm>();
 
   const onSubmit: SubmitHandler<ICancelForm> = async ({ cancel_cause }) => {
-    axiosPost(MENTORSHIP, {
+    cancelMentorship({
       mentorship_token,
       cancel_cause,
       who_canceled: 'MENTOR',
