@@ -1,54 +1,56 @@
 import { axiosAWSInstance } from '@/config/AxiosConfig';
 import { CONFIRMATION, FEEDBACK, MENTORSHIP } from '@/config/Routes';
+import { parseError, showError } from '@/helpers/showError';
 import { IMentorship } from '@/interfaces/mentorship.interface';
-
-interface ResponseError {
-  response: {
-    status: string;
-  };
-}
-
-function isResponseError(error: unknown): error is ResponseError {
-  return (error as Record<string, any>)?.response?.status;
-}
+import {
+  cancelMentorshipBodySchema,
+  getUserMentorshipsQuerySchema,
+} from '@/schemas/schemas';
+import { z } from 'zod';
 
 /**
  * Get all mentorships from a user
- * @param id
+ *
+ * @param id - user id
  * @param filter
  * @param filter_dates
  * @returns An array of mentorships
  */
-export const getUserMentorships = async (
-  id: string,
-  filter: string,
-  filter_dates: string,
-) => {
+export const getUserMentorships = async ({
+  id,
+  filter,
+  filter_dates,
+}: z.infer<typeof getUserMentorshipsQuerySchema>) => {
   try {
-    const { data } = await axiosAWSInstance.get<IMentorship>(
+    const { data } = await axiosAWSInstance.get<IMentorship[]>(
       `${MENTORSHIP}/${id}?filter=${filter}&filter_dates=${filter_dates} `,
     );
+
     return data;
   } catch (error) {
-    if (isResponseError(error)) {
-      throw new Error(error.response.status);
+    const errorResponse = parseError(error);
+    showError(errorResponse);
+
+    if (errorResponse.status === 404) {
+      return [];
     }
 
-    throw new Error(`unknown error: ${error}`);
+    throw error;
   }
 };
 
 /**
  * Cancel a mentorship
+ *
  * @param mentorship_token Token for cancel the mentorship
  * @param cancel_cause Cause for cancellation of mentorship
  * @returns if the mentorship was cancelled or an error occurred
  */
-export const cancelMentorship = async (
-  mentorship_token: string,
-  cancel_cause: string,
-  who_canceled: string,
-) => {
+export const cancelMentorship = async ({
+  mentorship_token,
+  cancel_cause,
+  who_canceled,
+}: z.infer<typeof cancelMentorshipBodySchema>) => {
   try {
     const { data } = await axiosAWSInstance.post(`${MENTORSHIP}/cancel`, {
       cancel_cause,
@@ -57,11 +59,8 @@ export const cancelMentorship = async (
     });
     return data;
   } catch (error) {
-    if (isResponseError(error)) {
-      throw new Error(error.response.status);
-    }
-
-    throw new Error(`unknown error: ${error}`);
+    const errorResponse = parseError(error);
+    console.error(errorResponse);
   }
 };
 
@@ -78,11 +77,8 @@ export const confirmMentorship = async (mentorship_token: string) => {
     );
     return data;
   } catch (error) {
-    if (isResponseError(error)) {
-      throw new Error(error.response.status);
-    }
-
-    throw new Error(`unknown error: ${error}`);
+    const errorResponse = parseError(error);
+    console.error(errorResponse);
   }
 };
 
@@ -109,10 +105,8 @@ export const sendFeedback = async (
     });
     return data;
   } catch (error: any) {
-    if (error.response.data.data.responseCode === '-112') {
-      return { message: 'Feedback already sent' };
-    }
-    throw new Error(error.response.status);
+    const errorResponse = parseError(error);
+    console.error(errorResponse);
   }
 };
 
@@ -125,10 +119,7 @@ export const getAllMentorships = async () => {
     const { data } = await axiosAWSInstance.get<IMentorship>(MENTORSHIP);
     return data;
   } catch (error) {
-    if (isResponseError(error)) {
-      throw new Error(error.response.status);
-    }
-
-    throw new Error(`unknown error: ${error}`);
+    const errorResponse = parseError(error);
+    console.error(errorResponse);
   }
 };

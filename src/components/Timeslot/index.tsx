@@ -1,13 +1,13 @@
-import { TIMESLOTS } from '@/config/Routes';
 import useToastContext from '@/hooks/useToastContext';
 import { ITimeSlot, TIMESLOT_STATUS } from '@/interfaces/timeslot.interface';
-import { axiosDelete } from '@/lib/api';
 import { CalendarIcon, TrashIcon, XIcon } from '@heroicons/react/outline';
 import React, { Dispatch, SetStateAction } from 'react';
 import { useState } from 'react';
-import Modal from '../Modal';
+import Modal from '@/components/Modal';
 import { formatDate } from '@/helpers/formatDate';
 import classNames from 'classnames';
+import { deleteTimeSlot } from '@/services/index';
+import { deleteTimeSlotResponseSchema } from '@/schemas/schemas';
 
 interface ISlot {
   id: string;
@@ -31,26 +31,34 @@ const Timeslot: React.FC<ISlot> = ({
   const isTaken = timeslot_status === TIMESLOT_STATUS.OCCUPIED;
   const isFree = timeslot_status === TIMESLOT_STATUS.FREE;
 
-  const handleDelete = (timeslotId: string) => {
-    axiosDelete(`${TIMESLOTS}?timeslotId=${timeslotId}`).then(res => {
-      if (res.message === 'Time slot successfully deleted') {
-        setModalIsOpen(false);
-        updateTimeslots(prevTimeslots =>
-          prevTimeslots.filter(slot => slot.id !== id),
-        );
-        addToast({
-          title: 'Horario eliminado',
-          subText: 'El horario ha sido eliminado correctamente',
-          type: 'default',
-        });
-      } else {
-        setModalIsOpen(false);
-        addToast({
-          title: 'Horario no eliminado',
-          subText: 'Hubo un error al intentar eliminar el horario.',
-          type: 'error',
-        });
-      }
+  const handleDelete = async (timeslotId: string) => {
+    let response: unknown;
+
+    try {
+      response = await deleteTimeSlot(timeslotId);
+    } catch (err) {
+      setModalIsOpen(false);
+      addToast({
+        title: 'Horario no eliminado',
+        subText: 'Hubo un error al intentar eliminar el horario.',
+        type: 'error',
+      });
+    }
+
+    const safeResponse = deleteTimeSlotResponseSchema.safeParse(response);
+
+    if (!safeResponse.success) {
+      throw new Error(safeResponse.error.message);
+    }
+
+    setModalIsOpen(false);
+    updateTimeslots(prevTimeslots =>
+      prevTimeslots.filter(slot => slot.id !== id),
+    );
+    addToast({
+      title: 'Horario eliminado',
+      subText: 'El horario ha sido eliminado correctamente',
+      type: 'default',
     });
   };
 

@@ -1,9 +1,11 @@
-import { axiosGet, axiosPatch } from '@/lib/api';
+import { axiosDelete, axiosGet, axiosPost, axiosPatch } from '@/lib/api';
 import { MENTORSHIP, USER, TIMESLOTS, WARNING } from '@/config/Routes';
 import { IMentorship } from '@/interfaces/mentorship.interface';
 import { ITimeSlot } from '@/interfaces/timeslot.interface';
 import { IUser } from '@/interfaces/user.interface';
 import { IWarning } from '@/interfaces/warning.interface';
+import { z } from 'zod';
+import { cancelMentorshipBodySchema } from '@/schemas/schemas';
 
 async function getAllMentorshipHistory(id: string) {
   return axiosGet<IMentorship[]>(`${MENTORSHIP}?id=${id}&filter_dates=PAST`);
@@ -33,6 +35,22 @@ async function getWarnings() {
   return axiosGet<IWarning[]>(WARNING);
 }
 
+async function deleteTimeSlot(id: string) {
+  return axiosDelete(`${TIMESLOTS}?timeslotId=${id}`);
+}
+
+async function cancelMentorship({
+  mentorship_token,
+  cancel_cause,
+  who_canceled,
+}: z.infer<typeof cancelMentorshipBodySchema>) {
+  return axiosPost(MENTORSHIP, {
+    mentorship_token,
+    cancel_cause,
+    who_canceled,
+  });
+}
+
 async function removeWarning(id: string, forgive_cause: string) {
   return axiosPatch(WARNING, { id, forgive_cause });
 }
@@ -49,6 +67,8 @@ export {
   getActiveMentorships,
   getFutureMentorships,
   getWarnings,
+  deleteTimeSlot,
+  cancelMentorship,
   removeWarning,
   getAdminMentorshipHistory,
 };
