@@ -38,7 +38,7 @@ const CustomButton: React.FC<ICustomButton> = ({
           'text-black bg-secondaryBtnColor hover:bg-secondaryBtnHoverColor':
             !danger && !primary && !disabled && !isActive,
           'text-mainBtnTxt bg-gray-600 cursor-not-allowed': disabled,
-          'text-mainBtnTxt bg-red-600 hover:bg-red-700': danger,
+          'text-mainBtnTxt bg-red-500 hover:bg-red-600': danger,
         },
       )}
       onClick={() => clickAction?.()}
