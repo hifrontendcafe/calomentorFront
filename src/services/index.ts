@@ -2,7 +2,7 @@ import { axiosDelete, axiosGet, axiosPost, axiosPatch } from '@/lib/api';
 import { MENTORSHIP, USER, TIMESLOTS, WARNING } from '@/config/Routes';
 import { IMentorship } from '@/interfaces/mentorship.interface';
 import { ITimeSlot } from '@/interfaces/timeslot.interface';
-import { IUser } from '@/interfaces/user.interface';
+import { User } from '@/interfaces/user.interface';
 import { IWarning } from '@/interfaces/warning.interface';
 import { z } from 'zod';
 import { cancelMentorshipBodySchema } from '@/schemas/schemas';
@@ -20,11 +20,11 @@ async function getFutureMentorships(id: string) {
 }
 
 async function getUserData(id: string) {
-  return axiosGet<IUser>(`${USER}?id=${id}`);
+  return axiosGet<User>(`${USER}?id=${id}`);
 }
 
 async function getAllUsersData() {
-  return axiosGet<IUser[]>(USER);
+  return axiosGet<User[]>(USER);
 }
 
 async function getTimeslots(id: string) {
