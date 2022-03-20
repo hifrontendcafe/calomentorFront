@@ -41,20 +41,16 @@ export default async function handler(
     }
   } else if (req.method === 'PATCH') {
     const { body } = req;
-    if (
-      !body.id ||
-      !body.last_activate_by ||
-      typeof body.is_active !== 'boolean'
-    ) {
+    if (!body.id || !body.modified_by || !body.user_status) {
       return res
         .status(400)
-        .json({ message: 'ID, last_activate_by and is_active is required' });
+        .json({ message: 'ID, modified_by and status is required' });
     }
     try {
       const data = await updateUserStatus(
         body.id,
-        body.last_activate_by,
-        body.is_active,
+        body.modified_by,
+        body.user_status,
       );
       return res.status(200).json(data);
     } catch (error) {

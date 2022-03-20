@@ -1,6 +1,6 @@
 import { axiosAWSInstance } from '@/config/AxiosConfig';
-import { ACTIVATE, AWS_TIMESLOT, USER } from '@/config/Routes';
-import { IUser } from '@/interfaces/user.interface';
+import { ACTIVATE, USER } from '@/config/Routes';
+import { User } from '@/interfaces/user.interface';
 
 /**
  * Get all users
@@ -8,7 +8,7 @@ import { IUser } from '@/interfaces/user.interface';
  */
 export const getUsers = async () => {
   try {
-    const { data } = await axiosAWSInstance.get<IUser>(USER);
+    const { data } = await axiosAWSInstance.get<User>(USER);
     return data;
   } catch (error: any) {
     throw new Error(error.response.status);
@@ -22,7 +22,7 @@ export const getUsers = async () => {
  */
 export const getUserByID = async (id: string) => {
   try {
-    const { data } = await axiosAWSInstance.get<IUser>(`${USER}/${id}`);
+    const { data } = await axiosAWSInstance.get<User>(`${USER}/${id}`);
     return data;
   } catch (error: any) {
     throw new Error(error.response.status);
@@ -34,7 +34,7 @@ export const getUserByID = async (id: string) => {
  * @param userData Object with the data to create an user (only the id is required)
  * @returns an object with the user data and the result of the operation
  */
-export const createUser = async (userData: IUser) => {
+export const createUser = async (userData: User) => {
   try {
     const { data } = await axiosAWSInstance.post(USER, userData);
     return data;
@@ -49,7 +49,7 @@ export const createUser = async (userData: IUser) => {
  * @param userData The data the user wants to update
  * @returns an object with the user data and the result of the operation
  */
-export const updateUserByID = async (id: string, userData: IUser) => {
+export const updateUserByID = async (id: string, userData: User) => {
   userData.user_timezone = 'America/Argentina/Buenos_Aires'; // TODO: ESTO HAY QUE BORRARLO Y ACOMODAR LO DE LOS TIMEZONES EN LA CONFIGURACIÓN DEL PERFIL
   try {
     const { data } = await axiosAWSInstance.put(`${USER}/${id}`, userData);
@@ -62,19 +62,21 @@ export const updateUserByID = async (id: string, userData: IUser) => {
 /**
  *
  * @param id The id of the user to activate/deactivate
- * @param last_activate_by The id of the one who activate/deactivate a user
- * @returns If the user was activated/deactivated
+ * @param modified_by The id of the one who modified the user
+ * @param status The new status of the mentor
+ * @returns If the user status was changed
  */
 export const updateUserStatus = async (
   id: string,
-  last_activate_by: string,
-  is_active: boolean,
+  modified_by: string,
+  user_status: boolean,
 ) => {
   try {
     const { data } = await axiosAWSInstance.patch(`${USER}${ACTIVATE}/${id}`, {
-      is_active,
-      last_activate_by,
+      modified_by,
+      user_status,
     });
+    console.log('🚀 ~ file: userAPI.ts ~ line 79 ~ data', data);
     return data;
   } catch (error: any) {
     throw new Error(error.response.status);

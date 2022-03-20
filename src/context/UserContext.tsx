@@ -1,10 +1,10 @@
-import { IUser } from '@/interfaces/user.interface';
+import { User } from '@/interfaces/user.interface';
 import { userInitialState, UserReducer } from '@/reducers/UserReducer';
 import { ActionUserType } from '@/types/types';
 import { createContext, Dispatch, useReducer } from 'react';
 
 export const UserContext = createContext<{
-  state: IUser;
+  state: User;
   dispatch: Dispatch<ActionUserType>;
 }>({
   state: userInitialState,

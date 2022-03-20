@@ -1,4 +1,4 @@
-import { IUser } from '@/interfaces/user.interface';
+import { User, UserStatus } from '@/interfaces/user.interface';
 import { ActionUserType } from '@/types/types';
 
 export const userInitialState = {
@@ -15,12 +15,16 @@ export const userInitialState = {
     linkedin: '',
     github: '',
   },
-  is_active: false,
   skills: [],
+  user_status: UserStatus.INACTIVE,
+  modified_by: '',
+  user_timezone: '',
+  user_token: '',
+  accepted_coc: false,
 };
 
 export const UserReducer = (
-  state: IUser = userInitialState,
+  state: User = userInitialState,
   action: ActionUserType,
 ) => {
   switch (action.type) {

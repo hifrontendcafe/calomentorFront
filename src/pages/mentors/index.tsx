@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import CustomHead from '@/components/CustomHead';
 import DashboardLayout from '@/components/DashboardLayout';
 import { HOME } from '@/config/Routes';
-import { IUser } from '@/interfaces/user.interface';
+import { User } from '@/interfaces/user.interface';
 import { useSession } from 'next-auth/client';
 import { isAdmin } from '@/helpers/IsAdmin';
 import { useRouter } from 'next/dist/client/router';
@@ -12,7 +12,7 @@ import GenericCard from '@/components/GenericCard';
 import useToastContext from '@/hooks/useToastContext';
 
 const AdminMentors = () => {
-  const [mentors, setMentors] = useState<IUser[]>([]);
+  const [mentors, setMentors] = useState<User[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [session, loading] = useSession();
   const router = useRouter();
