@@ -8,7 +8,12 @@ import { MENTORSHIP } from '@/config/Routes';
 import { useRouter } from 'next/dist/client/router';
 import CustomHead from '@/components/CustomHead';
 import PwdByVercel from '@/components/PwdByVercel';
-import dayjs from 'dayjs';
+import {
+  toDateString,
+  toTimeString,
+  userLocale,
+  userTimezone,
+} from '@/helpers/formatDate';
 
 const ConfirmMentorship: React.FC = () => {
   const { addToast } = useToastContext();
@@ -21,10 +26,10 @@ const ConfirmMentorship: React.FC = () => {
   useEffect(() => {
     const { date } = router.query;
     if (date) {
-      const datetime = dayjs(parseInt(date as string, 10)).format(
-        "dd/MM/yyyy 'a las' HH:mm'hs.'",
-      );
-      setDatetime(datetime);
+      const newDate = new Date(Number.parseInt(date as string, 10));
+      const formattedDate = toDateString(newDate, userTimezone, userLocale);
+      const formattedTime = toTimeString(newDate, userTimezone, userLocale);
+      setDatetime(`${formattedDate}, ${formattedTime}`);
     }
   }, [router.query]);
 
