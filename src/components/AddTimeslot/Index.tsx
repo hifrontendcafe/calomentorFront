@@ -167,6 +167,8 @@ const AddTimeslot: React.FC<IAddTimeslot> = ({
                           ref={ref}
                           className="custom_input"
                           selected={value}
+                          minTime={new Date()}
+                          maxTime={new Date('01/01/2023 11:59 PM')}
                           onChange={date => onChange(date as Date)}
                           showTimeSelect
                           showTimeSelectOnly
