@@ -21,7 +21,7 @@ export const confirmMentorshipRequestBodySchema = z.object({
   mentorship_token: z.string(),
 });
 
-export const getUserMentorshipsQuerySchema = z.object({
+export const getMentorshipsQuerySchema = z.object({
   id: z.string().default(''),
   filter: z.enum(['', 'ACTIVE', 'CANCEL', 'CONFIRMED']).default(''),
   filter_dates: z.enum(['', 'PAST', 'FUTURE']).default(''),

@@ -5,7 +5,7 @@ import { IMentorship } from '@/interfaces/mentorship.interface';
 import { ServerResponse } from '@/interfaces/server.interface';
 import {
   cancelMentorshipBodySchema,
-  getUserMentorshipsQuerySchema,
+  getMentorshipsQuerySchema,
 } from '@/schemas/schemas';
 import { z } from 'zod';
 
@@ -17,15 +17,18 @@ import { z } from 'zod';
  * @param filter_dates
  * @returns An array of mentorships
  */
-export const getUserMentorships = async ({
+export const getMentorships = async ({
   id,
   filter,
   filter_dates,
-}: z.infer<typeof getUserMentorshipsQuerySchema>) => {
+}: z.infer<typeof getMentorshipsQuerySchema>) => {
   try {
+    const url = id
+      ? `${MENTORSHIP}/${id}?filter=${filter}&filter_dates=${filter_dates}`
+      : MENTORSHIP;
     const { data: response } = await axiosAWSInstance.get<
       ServerResponse<IMentorship[]>
-    >(`${MENTORSHIP}/${id}?filter=${filter}&filter_dates=${filter_dates} `);
+    >(url);
     return response.data;
   } catch (error) {
     const errorResponse = parseError(error);
@@ -106,22 +109,6 @@ export const sendFeedback = async (
     });
     return data;
   } catch (error: any) {
-    const errorResponse = parseError(error);
-    console.error(errorResponse);
-  }
-};
-
-/**
- * Get all mentorships (ADMIN)
- * @returns An array of mentorships
- */
-export const getAllMentorships = async () => {
-  try {
-    const { data: response } = await axiosAWSInstance.get<
-      ServerResponse<IMentorship>
-    >(MENTORSHIP);
-    return response.data;
-  } catch (error) {
     const errorResponse = parseError(error);
     console.error(errorResponse);
   }

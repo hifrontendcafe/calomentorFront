@@ -55,8 +55,8 @@ async function removeWarning(id: string, forgive_cause: string) {
   return axiosPatch(WARNING, { id, forgive_cause });
 }
 
-async function getAdminMentorshipHistory(admin: boolean) {
-  return axiosGet<IMentorship[]>(`${MENTORSHIP}?isAdmin=${admin}`);
+async function getAdminMentorshipHistory() {
+  return axiosGet<IMentorship[]>(MENTORSHIP);
 }
 
 export {

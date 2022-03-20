@@ -2,13 +2,12 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import {
   cancelMentorship,
   confirmMentorship,
-  getAllMentorships,
-  getUserMentorships,
+  getMentorships,
 } from '@/services/mentorshipAPI';
 import {
   confirmMentorshipRequestBodySchema,
   cancelMentorshipBodySchema,
-  getUserMentorshipsQuerySchema,
+  getMentorshipsQuerySchema,
 } from '@/schemas/schemas';
 import { parseError, showError } from '@/helpers/showError';
 
@@ -42,18 +41,15 @@ async function handleConfirmMentorship(
   }
 }
 
-async function handleGetUserMentorships(
-  req: NextApiRequest,
-  res: NextApiResponse,
-) {
-  const parsedQuery = getUserMentorshipsQuerySchema.safeParse(req.query);
+async function handleGetMentorships(req: NextApiRequest, res: NextApiResponse) {
+  const parsedQuery = getMentorshipsQuerySchema.safeParse(req.query);
 
   if (!parsedQuery.success) {
     return res.status(400).json({ message: parsedQuery.error.message });
   }
 
   try {
-    const data = await getUserMentorships(parsedQuery.data);
+    const data = await getMentorships(parsedQuery.data);
     return res.status(200).json({ data });
   } catch (error: any) {
     handleError(error, res);
@@ -84,7 +80,7 @@ export default async function handler(
 ) {
   switch (req.method) {
     case 'GET':
-      return handleGetUserMentorships(req, res);
+      return handleGetMentorships(req, res);
     case 'POST':
       return handleCancelMentorship(req, res);
     case 'PATCH':
