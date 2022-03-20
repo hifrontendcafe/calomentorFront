@@ -1,11 +1,10 @@
 const colors = require('tailwindcss/colors');
 
 module.exports = {
-  purge: [
+  content: [
     './src/pages/**/*.{js,ts,jsx,tsx}',
     './src/components/**/*.{js,ts,jsx,tsx}',
   ],
-  darkMode: false,
   theme: {
     extend: {
       colors: {
@@ -41,6 +40,18 @@ module.exports = {
         secondaryBtnColor: colors.white,
         secondaryBtnHoverColor: colors.teal[800],
         secondaryBtnActiveColor: colors.white,
+      },
+      // Colors from website
+      textColor: {
+        primary: colors.zinc[50],
+        secondary: colors.zinc[200],
+        tertiary: colors.zinc[300],
+        quaternary: colors.zinc[400],
+        accent: '#6366F1',
+        informational: '#4991DA',
+        lightBlue: '#00CCFF',
+        darkBlue: '#0066CC',
+        hover: '#2469FF',
       },
     },
   },
