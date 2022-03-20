@@ -6,7 +6,7 @@ import Select from 'react-select';
 import { fileUpload } from '@/helpers/ImageUpload';
 import useUserContext from '@/hooks/useUserContext';
 import useToastContext from '@/hooks/useToastContext';
-import { IUser } from '@/interfaces/user.interface';
+import { User } from '@/interfaces/user.interface';
 import { axiosPut } from '@/lib/api';
 import { USER } from '@/config/Routes';
 import CustomButton from '@/components/CustomButton';
@@ -16,6 +16,7 @@ import { getRoleArray } from '@/helpers/getRoleArray';
 import CustomHead from '@/components/CustomHead';
 import DashboardLayout from '@/components/DashboardLayout';
 import GenericCard from '@/components/GenericCard';
+import Link from 'next/link';
 
 const SettingsProfilePage: React.FC = () => {
   const [session, loading] = useSession();
@@ -30,9 +31,9 @@ const SettingsProfilePage: React.FC = () => {
       email,
       skills,
       url_photo,
-      is_active,
       links,
       user_timezone,
+      accepted_coc,
     },
     dispatch,
   } = useUserContext();
@@ -44,7 +45,7 @@ const SettingsProfilePage: React.FC = () => {
     reset,
     control,
     setValue,
-  } = useForm<IUser>({
+  } = useForm<User>({
     defaultValues: {
       url_photo: '',
     },
@@ -53,6 +54,10 @@ const SettingsProfilePage: React.FC = () => {
   useEffect(() => {
     if (!id && !loading && session) {
       getUserData(session.user.id.toString()).then(({ data }) => {
+        console.log(
+          '🚀 ~ file: index.tsx ~ line 82 ~ getUserData ~ data',
+          data,
+        );
         if (data.full_name) {
           const {
             full_name,
@@ -60,9 +65,9 @@ const SettingsProfilePage: React.FC = () => {
             email,
             skills,
             url_photo,
-            is_active,
             links,
             user_timezone,
+            accepted_coc,
           } = data;
           reset({
             full_name,
@@ -70,9 +75,9 @@ const SettingsProfilePage: React.FC = () => {
             email,
             skills,
             url_photo,
-            is_active,
             links,
             user_timezone: user_timezone?.toString(),
+            accepted_coc,
           });
           setUrlPhoto(url_photo ?? '');
           dispatch({ type: 'SET', payload: { ...data } });
@@ -87,9 +92,9 @@ const SettingsProfilePage: React.FC = () => {
         email,
         skills,
         url_photo,
-        is_active,
         links,
         user_timezone: timezoneString,
+        accepted_coc,
       });
       if (url_photo && url_photo !== '') {
         setUrlPhoto(url_photo);
@@ -120,8 +125,9 @@ const SettingsProfilePage: React.FC = () => {
     { value: 'Intro a la programación', label: 'Intro a la programación' },
   ];
 
-  const onSubmit: SubmitHandler<IUser> = async data => {
+  const onSubmit: SubmitHandler<User> = async data => {
     data.role = getRoleArray(session?.user.role);
+    console.log('🚀 ~ file: index.tsx ~ line 127 ~ data', data);
     axiosPut(USER, { data })
       .then(() => {
         addToast({
@@ -421,7 +427,35 @@ const SettingsProfilePage: React.FC = () => {
                 </div>
               </div>
             </div>
+            <div className="flex-col p-6">
+              <div className="flex w-full flex-row justify-between items-center">
+                <label
+                  htmlFor="accept_coc"
+                  className="font-medium text-mainTextColor"
+                >
+                  Acepto los{' '}
+                  <Link href="https://go.frontend.cafe/coc-mentorias">
+                    <a target="_blank" className="text-informational">
+                      términos y condiciones
+                    </a>
+                  </Link>{' '}
+                  del programa de mentorías.
+                </label>
+                <input
+                  id="accept_coc"
+                  type="checkbox"
+                  className="focus:ring-0 h-4 w-4 text-fecGreen rounded outline-none"
+                  {...register('accepted_coc', { required: true })}
+                />
+              </div>
 
+              {errors.accepted_coc && (
+                <p className="text-xs text-red-600">
+                  Para poder participar en el programa de mentorías de
+                  FrontendCafé es requerido aceptar los terminos y condiciones.
+                </p>
+              )}
+            </div>
             <div className="pt-6 divide-y divide-dividerColor">
               <div className="flex justify-end px-4 py-4 mt-4 sm:px-6">
                 <CustomButton
