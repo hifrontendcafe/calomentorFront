@@ -8,7 +8,9 @@ import { AWS_TIMESLOT, USER } from '@/config/Routes';
  */
 export const getUserSchedule = async (id: string) => {
   try {
-    const { data } = await axiosAWSInstance.get(`${AWS_TIMESLOT}${USER}/${id}`);
+    const { data } = await axiosAWSInstance.get(
+      `${AWS_TIMESLOT}${USER}/${id}?only_future=true`,
+    );
     return data;
   } catch (error: any) {
     throw new Error(error.response.status);
