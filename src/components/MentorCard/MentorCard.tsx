@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { IUser } from '@/interfaces/user.interface';
+import { User, UserStatus } from '@/interfaces/user.interface';
 import Image from 'next/image';
 import { axiosPatch } from '@/lib/api';
 import { USER } from '@/config/Routes';
@@ -8,56 +8,79 @@ import classNames from 'classnames';
 import GenericCard from '../GenericCard';
 import CustomButton from '../CustomButton';
 import { useSession } from 'next-auth/client';
+import ButtonSpinner from '../ButtonSpinner';
+import Modal from '../Modal';
 
 interface IMentorCard {
-  mentor: IUser;
+  mentor: User;
 }
 
 const MentorCard: React.FC<IMentorCard> = ({
-  mentor: { id, url_photo, full_name, email, is_active },
+  mentor: { id, url_photo, full_name, email, user_status },
 }) => {
-  const [isActivated, setIsActivated] = useState(is_active);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isLoading1, setIsLoading1] = useState(false);
+  const [isLoading2, setIsLoading2] = useState(false);
+  const [userOutOfProgram, setUserOutOfProgram] = useState(
+    user_status === UserStatus.OUTSIDE_THE_PROGRAM,
+  );
+  const [userIsActive, setUserIsActive] = useState(
+    user_status !== UserStatus.OUTSIDE_THE_PROGRAM &&
+      user_status === UserStatus.ACTIVE,
+  );
   const [session] = useSession();
   const { addToast } = useToastContext();
 
-  const renderButtonLabel = () => {
-    if (isLoading) {
-      return (
-        <div className="flex items-center justify-center p-5">
-          <div className="w-4 h-4 border-b-2 rounded-full border-fecGreen animate-spin"></div>
-        </div>
-      );
-    } else if (isActivated) {
+  const renderActivateButtonLabel = () => {
+    if (isLoading1) {
+      return <ButtonSpinner />;
+    } else if (userIsActive) {
       return 'Deshabilitar';
     } else {
       return 'Habilitar';
     }
   };
 
-  const handleButton = () => {
-    setIsLoading(true);
+  const renderOopButton = () => {
+    if (isLoading2) {
+      return <ButtonSpinner />;
+    } else if (userOutOfProgram) {
+      return 'Dar de Alta';
+    } else {
+      return 'Dar de Baja';
+    }
+  };
+
+  const handleButton = (newStatus: UserStatus) => {
     axiosPatch(USER, {
       id,
-      last_activate_by: session?.user.id,
-      is_active: !isActivated,
+      modified_by: session?.user.id,
+      user_status: newStatus,
     })
       .then(() => {
-        setIsLoading(false);
-        setIsActivated(!isActivated);
+        if (newStatus !== UserStatus.OUTSIDE_THE_PROGRAM) {
+          if (newStatus === UserStatus.ACTIVE) {
+            setUserIsActive(true);
+          } else {
+            setUserIsActive(false);
+          }
+          setUserOutOfProgram(false);
+        } else {
+          setUserOutOfProgram(true);
+          setUserIsActive(false);
+        }
+        setIsLoading1(false);
+        setIsLoading2(false);
         addToast({
-          title: 'El usuario se ha actualizado',
-          subText: `${full_name} ha sido ${
-            !isActivated ? 'habilitado/a' : 'deshabilitado/a'
-          }.`,
+          title: 'El usuario se ha actualizado correctamente',
           type: 'default',
         });
       })
       .catch(() => {
-        setIsLoading(false);
+        setIsLoading1(false);
+        setIsLoading2(false);
         addToast({
           title: 'El usuario no se ha actualizado',
-          subText: `Ocurrió un problema al intentar actualizar a ${full_name}`,
           type: 'error',
         });
       });
@@ -66,8 +89,9 @@ const MentorCard: React.FC<IMentorCard> = ({
   return (
     <GenericCard
       bodyClassnames={classNames('rounded border', {
-        'border-red-500 ': !isActivated,
-        'border-green-500': isActivated,
+        'border-yellow-500 ': !userOutOfProgram && !userIsActive,
+        'border-green-500': !userOutOfProgram && userIsActive,
+        'border-red-500': userOutOfProgram,
       })}
     >
       <div className="flex p-5 items-center">
@@ -88,14 +112,47 @@ const MentorCard: React.FC<IMentorCard> = ({
             <span className="text-sm text-white">{email}</span>
           </div>
         </div>
-        <CustomButton
-          primary={!isActivated}
-          danger={isActivated}
-          bntLabel={renderButtonLabel()}
-          clickAction={handleButton}
-          className="h-10"
-        />
+        <div className="flex gap-2">
+          {!userOutOfProgram && (
+            <CustomButton
+              primary={!userIsActive}
+              danger={userIsActive}
+              bntLabel={renderActivateButtonLabel()}
+              clickAction={() => {
+                setIsLoading1(true);
+                handleButton(
+                  userIsActive ? UserStatus.INACTIVE : UserStatus.ACTIVE,
+                );
+              }}
+              className="h-10"
+            />
+          )}
+          <CustomButton
+            primary
+            danger
+            bntLabel={renderOopButton()}
+            clickAction={() => setIsModalOpen(true)}
+            className="h-10"
+          />
+        </div>
       </div>
+      <Modal
+        open={isModalOpen}
+        setModal={setIsModalOpen}
+        title={`Estás por dar de ${
+          userOutOfProgram ? 'alta' : 'baja'
+        } a ${full_name}`}
+        confirmAction={() => {
+          setIsModalOpen(false);
+          setIsLoading2(true);
+          handleButton(
+            userOutOfProgram
+              ? UserStatus.INACTIVE
+              : UserStatus.OUTSIDE_THE_PROGRAM,
+          );
+        }}
+        description="Tengo que refactorizar este modal :D"
+      />
     </GenericCard>
   );
 };
