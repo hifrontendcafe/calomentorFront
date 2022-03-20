@@ -9,7 +9,7 @@ import { XIcon } from '@heroicons/react/solid';
 
 interface INotificationToast {
   title: string;
-  subtext: string;
+  subtext?: string;
   type: 'info' | 'error' | 'default';
 }
 
@@ -54,7 +54,9 @@ export const NotificationToast: React.FC<INotificationToast> = ({
             </div>
             <div className="ml-3 w-0 flex-1 pt-0.5">
               <p className="text-sm font-medium text-mainTextColor">{title}</p>
-              <p className="mt-1 text-sm text-gray-200">{subtext}</p>
+              {subtext && (
+                <p className="mt-1 text-sm text-gray-200">{subtext}</p>
+              )}
             </div>
             <div className="flex flex-shrink-0 ml-4">
               <button

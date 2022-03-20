@@ -4,7 +4,7 @@ import React, { createContext, useCallback, useEffect, useState } from 'react';
 interface IToast {
   type: 'info' | 'error' | 'default';
   title: string;
-  subText: string;
+  subText?: string;
 }
 
 export const ToastContext = createContext<{
