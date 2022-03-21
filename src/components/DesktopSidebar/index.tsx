@@ -2,8 +2,6 @@ import React from 'react';
 import { adminNavigation, primaryRoutes } from '@/config/Routes';
 import { useSession } from 'next-auth/client';
 import NavigationRoute from '../NavigationRoute';
-import Image from 'next/image';
-import PepeJedi from '@/assets/gif/pepe-jedi.gif';
 import PwdByVercel from '../PwdByVercel';
 
 export const DesktopSidebar: React.FC = () => {
@@ -19,7 +17,6 @@ export const DesktopSidebar: React.FC = () => {
           </div>
           <span className="text-sm font-bold text-center text-red-500">
             {process.env.NEXT_PUBLIC_CALOMENTOR_VERSION}
-            <Image src={PepeJedi} height="30px" width="30px" alt="Pepe" />
           </span>
           <nav
             className="flex flex-col flex-1 mt-5 overflow-y-auto divide-y divide-dividerColor"

@@ -5,7 +5,6 @@ import { XIcon } from '@heroicons/react/outline';
 import { adminNavigation, primaryRoutes } from '@/config/Routes';
 import NavigationRoute from '../NavigationRoute';
 import { useSession } from 'next-auth/client';
-import PepeJedi from '@/assets/gif/pepe-jedi.gif';
 import Image from 'next/image';
 import PwdByVercel from '../PwdByVercel';
 
@@ -73,7 +72,6 @@ export const MobileSidebar: React.FC<IMobileSidebar> = ({
               </span>
               <span className="text-sm font-bold text-center text-red-500">
                 {process.env.NEXT_PUBLIC_CALOMENTOR_VERSION}
-                <Image src={PepeJedi} height="30px" width="30px" alt="Pepe" />
               </span>
             </div>
             <nav
