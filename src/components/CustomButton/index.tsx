@@ -2,7 +2,7 @@ import classNames from 'classnames';
 import React, { ReactNode } from 'react';
 
 interface ICustomButton {
-  type?: 'button' | 'submit' | 'reset' | undefined;
+  inputType?: 'button' | 'submit' | 'reset' | undefined;
   bntLabel: string | ReactNode;
   bntIcon?: React.ReactNode;
   primary: boolean;
@@ -17,7 +17,7 @@ const CustomButton: React.FC<ICustomButton> = ({
   bntLabel,
   bntIcon,
   clickAction,
-  type = 'button',
+  inputType = 'button',
   primary = true,
   className = null,
   disabled = false,
@@ -26,7 +26,7 @@ const CustomButton: React.FC<ICustomButton> = ({
 }) => {
   return (
     <button
-      type={type}
+      type={inputType}
       className={classNames(
         'inline-flex items-center px-3 py-2 text-sm font-medium leading-4 border border-transparent rounded-md shadow-sm focus:outline-none',
         className,
@@ -35,7 +35,7 @@ const CustomButton: React.FC<ICustomButton> = ({
             primary && !disabled && !danger && !isActive,
           'text-mainBtnTxt bg-mainBtnHoverColor':
             primary && !disabled && !danger && isActive,
-          'text-black bg-secondaryBtnColor hover:bg-secondaryBtnHoverColor':
+          'text-black bg-secondaryBtnColor hover:text-gray-300 hover:bg-secondaryBtnHoverColor':
             !danger && !primary && !disabled && !isActive,
           'text-mainBtnTxt bg-gray-600 cursor-not-allowed': disabled,
           'text-mainBtnTxt bg-red-500 hover:bg-red-600': danger,

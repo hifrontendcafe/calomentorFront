@@ -8,6 +8,7 @@ import { formatDate } from '@/helpers/formatDate';
 import classNames from 'classnames';
 import { deleteTimeSlot } from '@/services/index';
 import { deleteTimeSlotResponseSchema } from '@/schemas/schemas';
+import { HiOutlineExclamation } from 'react-icons/hi';
 
 interface ISlot {
   id: string;
@@ -68,8 +69,8 @@ const Timeslot: React.FC<ISlot> = ({
         className={classNames(
           'flex-shrink-0 flex items-center justify-center w-14 text-cardContentLight text-sm font-medium rounded-l-md',
           {
-            'bg-red-500': isTaken,
-            'bg-green-500': isFree,
+            'bg-red-400': isTaken,
+            'bg-green-400': isFree,
           },
         )}
       >
@@ -79,8 +80,8 @@ const Timeslot: React.FC<ISlot> = ({
         className={classNames(
           'flex items-center justify-between flex-1 truncate border-t border-b border-r bg-cardContentLight rounded-r-md',
           {
-            'border-red-500': isTaken,
-            'border-green-500': isFree,
+            'border-red-400': isTaken,
+            'border-green-400': isFree,
           },
         )}
       >
@@ -116,11 +117,14 @@ const Timeslot: React.FC<ISlot> = ({
         </div>
       </div>
       <Modal
-        open={modalIsOpen}
-        setModal={setModalIsOpen}
+        isOpen={modalIsOpen}
+        onOpenChange={setModalIsOpen}
         confirmAction={() => handleDelete(id)}
         title="¿Seguro/a que quieres eliminar el horario?"
-        description="Esta acción es irreversible"
+        danger
+        Icon={HiOutlineExclamation}
+        iconContainerClassName="bg-red-200"
+        iconClassName="text-red-500"
       />
     </div>
   );

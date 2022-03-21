@@ -229,7 +229,7 @@ const MentorshipFeedback: React.FC = () => {
             {!feedbackSent && !alreadySent && !isLoading && (
               <div className="flex justify-center mt-5 sm:mt-6">
                 <CustomButton
-                  type="submit"
+                  inputType="submit"
                   bntLabel="Enviar"
                   disabled={!isValid || rating === 0}
                   primary

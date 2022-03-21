@@ -464,7 +464,7 @@ const SettingsProfilePage: React.FC = () => {
                   clickAction={() => reset()}
                   className="mr-2"
                 />
-                <CustomButton type="submit" bntLabel="Guardar" primary />
+                <CustomButton inputType="submit" bntLabel="Guardar" primary />
               </div>
             </div>
           </form>

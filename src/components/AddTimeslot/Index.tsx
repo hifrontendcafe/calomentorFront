@@ -223,7 +223,7 @@ const AddTimeslot: React.FC<IAddTimeslot> = ({
                 </div>
                 <CustomButton
                   bntLabel="Confirmar"
-                  type="submit"
+                  inputType="submit"
                   primary
                   className="mt-1"
                 />

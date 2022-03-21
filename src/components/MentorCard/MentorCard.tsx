@@ -10,6 +10,7 @@ import CustomButton from '../CustomButton';
 import { useSession } from 'next-auth/client';
 import ButtonSpinner from '../ButtonSpinner';
 import Modal from '../Modal';
+import { HiOutlineExclamation } from 'react-icons/hi';
 
 interface IMentorCard {
   mentor: User;
@@ -137,8 +138,8 @@ const MentorCard: React.FC<IMentorCard> = ({
         </div>
       </div>
       <Modal
-        open={isModalOpen}
-        setModal={setIsModalOpen}
+        isOpen={isModalOpen}
+        onOpenChange={setIsModalOpen}
         title={`Estás por dar de ${
           userOutOfProgram ? 'alta' : 'baja'
         } a ${full_name}`}
@@ -151,8 +152,15 @@ const MentorCard: React.FC<IMentorCard> = ({
               : UserStatus.OUTSIDE_THE_PROGRAM,
           );
         }}
-        description="Tengo que refactorizar este modal :D"
-      />
+        danger
+        Icon={HiOutlineExclamation}
+        iconContainerClassName="bg-red-200"
+        iconClassName="text-red-500"
+        childrenClassName="text-left"
+      >
+        Al hacer esto el usuario dejará de aparecer en la web. (No se van a
+        perder datos del usuario)
+      </Modal>
     </GenericCard>
   );
 };

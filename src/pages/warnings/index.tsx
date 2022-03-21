@@ -1,8 +1,8 @@
 import CustomButton from '@/components/CustomButton';
 import CustomHead from '@/components/CustomHead';
-import CustomModal from '@/components/CustomModal';
 import DashboardLayout from '@/components/DashboardLayout';
 import GenericCard from '@/components/GenericCard';
+import Modal from '@/components/Modal';
 import WarningCard from '@/components/WarningCard';
 import { HOME } from '@/config/Routes';
 import { isAdmin } from '@/helpers/IsAdmin';
@@ -94,7 +94,7 @@ const Warnings = () => {
             />
           ))}
         </GenericCard>
-        <CustomModal isOpen={isOpen} setModal={setIsOpen}>
+        <Modal isOpen={isOpen} onOpenChange={setIsOpen} renderButtons={false}>
           <form onSubmit={handleSubmit(onSubmit)}>
             <div>
               <div className="flex items-center justify-center w-12 h-12 mx-auto bg-yellow-100 rounded-full">
@@ -140,14 +140,14 @@ const Warnings = () => {
                 className="justify-center"
               />
               <CustomButton
-                type="submit"
+                inputType="submit"
                 bntLabel="Confirmar"
                 primary
                 className="justify-center"
               />
             </div>
           </form>
-        </CustomModal>
+        </Modal>
       </DashboardLayout>
     </>
   );

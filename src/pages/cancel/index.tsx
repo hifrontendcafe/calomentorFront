@@ -113,7 +113,7 @@ const CancelMentorship: React.FC = () => {
             {!isCanceled && !isLoading && (
               <div className="flex items-end justify-end mt-5 sm:mt-6">
                 <CustomButton
-                  type="submit"
+                  inputType="submit"
                   bntLabel="Confirmar"
                   primary
                   className="justify-center"

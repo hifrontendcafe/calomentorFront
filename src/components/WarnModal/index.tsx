@@ -196,7 +196,7 @@ const WarnModal: React.FC<IModal> = ({
                     className="justify-center"
                   />
                   <CustomButton
-                    type="submit"
+                    inputType="submit"
                     bntLabel="Confirmar"
                     primary={false}
                     danger

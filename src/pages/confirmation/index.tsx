@@ -113,7 +113,6 @@ const ConfirmMentorship: React.FC = () => {
           {!isConfirmed && !alreadyConfirmed && !isLoading && (
             <div className="flex justify-center mt-5 sm:mt-6">
               <CustomButton
-                type="button"
                 bntLabel="Confirmar"
                 primary
                 className="justify-center"
