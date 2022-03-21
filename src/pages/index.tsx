@@ -1,11 +1,10 @@
-import Image from 'next/image';
-import DiscordLogo from '@/assets/img/Discord-Logo-White.svg';
 import { signIn, useSession } from 'next-auth/client';
 import { useRouter } from 'next/dist/client/router';
 import { useEffect } from 'react';
 import { HOME } from '@/config/Routes';
 import CustomHead from '@/components/CustomHead';
 import PwdByVercel from '@/components/PwdByVercel';
+import { FaDiscord } from 'react-icons/fa';
 
 const Home = () => {
   const [session, loading] = useSession();
@@ -47,12 +46,7 @@ const Home = () => {
                       }
                       className="relative flex items-center justify-center px-4 py-2 text-xs font-medium text-white border border-transparent rounded-md bg-activeNavigation group hover:bg-hoverNavigation focus:outline-none"
                     >
-                      <Image
-                        src={DiscordLogo}
-                        alt="Discord logo"
-                        width="15%"
-                        height="15%"
-                      />
+                      <FaDiscord size={20} />
                       <p className="flex pl-2 my-auto text-sm font-semibold">
                         Iniciar sesión
                       </p>
