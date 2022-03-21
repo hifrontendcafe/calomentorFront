@@ -23,7 +23,7 @@ const GenericCard = ({
     <>
       {title && (
         <div className="px-4 py-5 rounded-t-lg bg-cardHeader sm:px-6">
-          <h3 className="text-lg font-medium leading-6 text-mainTextColor">
+          <h3 className="text-lg font-medium leading-6 text-secondary">
             {title}
           </h3>
         </div>
@@ -42,9 +42,7 @@ const GenericCard = ({
             }
           >
             <div className="flex-1 px-4 py-2 text-sm truncate">
-              <p className="py-2 text-center text-mainTextColor">
-                {noDataMessage}
-              </p>
+              <p className="py-2 text-center text-tertiary">{noDataMessage}</p>
             </div>
           </div>
         )}

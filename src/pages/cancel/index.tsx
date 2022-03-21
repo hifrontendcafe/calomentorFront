@@ -72,12 +72,12 @@ const CancelMentorship: React.FC = () => {
               </div>
               {isLoading && (
                 <div className="flex items-center justify-center mt-10 mb-5">
-                  <div className="w-12 h-12 border-b-2 rounded-full border-fecGreen animate-spin"></div>
+                  <div className="w-12 h-12 border-b-2 rounded-full border-greenFec animate-spin"></div>
                 </div>
               )}
               {isCanceled && (
                 <div className="flex items-center justify-center mt-10 mb-5">
-                  <p className="text-xl font-bold text-center text-mainTextColor">
+                  <p className="text-xl font-bold text-center text-primary">
                     La mentoría ha sido cancelada exitosamente
                   </p>
                 </div>
@@ -88,7 +88,7 @@ const CancelMentorship: React.FC = () => {
                     ¿Estás seguro/a que quieres cancelar la mentoría?
                   </h1>
                   <div className="my-5">
-                    <p className="text-sm text-left text-gray-300">
+                    <p className="text-sm text-left text-secondary">
                       Ésta acción es irreversible, por favor ingresá el motivo
                       por el cuál estás cancelando la mentoría.
                     </p>

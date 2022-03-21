@@ -25,7 +25,7 @@ const Home = () => {
             <div className="w-full max-w-sm space-y-8">
               {!session && loading ? (
                 <div className="flex items-center justify-center ">
-                  <div className="w-24 h-24 border-t-4 border-b-4 rounded-full border-fecGreen animate-spin" />
+                  <div className="w-24 h-24 border-t-4 border-b-4 rounded-full border-greenFec animate-spin" />
                 </div>
               ) : (
                 <>

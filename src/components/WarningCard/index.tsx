@@ -40,9 +40,9 @@ const WarningCard: React.FC<IWarningCard> = ({
   const isForgived = warning_status === WARNSTATE.FORGIVE;
   return (
     <div key={id} className="px-4 my-4 sm:px-6">
-      <div className="overflow-hidden border-2 border-gray-700 border-solid sm:rounded-lg">
+      <div className="overflow-hidden border-2 border-zinc-700 border-solid sm:rounded-lg">
         <div
-          className="flex flex-row items-center justify-between px-2 py-3 cursor-pointer sm:px-6 text-mainTextColor hover:bg-cardHeader"
+          className="flex flex-row items-center justify-between px-2 py-3 cursor-pointer sm:px-6 text-primary"
           onClick={(e: CardMouseEvent) => {
             if (e.target.id !== 'clearWarnButton') {
               setIsOpen(!isOpen);
@@ -50,7 +50,7 @@ const WarningCard: React.FC<IWarningCard> = ({
           }}
         >
           <div>
-            <h3 className="text-lg font-medium leading-6 text-gray-200">
+            <h3 className="text-lg font-medium leading-6 text-secondary">
               Autor: {warning_author_name} | Estado:{' '}
               {isForgived ? 'Perdonado' : 'Activo'}
             </h3>
@@ -61,7 +61,7 @@ const WarningCard: React.FC<IWarningCard> = ({
           <div className="flex flex-row items-center">
             {!isForgived && (
               <div className="has-tooltip">
-                <span className="px-2 py-1 -mt-8 -ml-12 text-sm text-yellow-500 bg-gray-700 rounded shadow-lg tooltip">
+                <span className="px-2 py-1 -mt-8 -ml-12 text-sm text-yellow-500 bg-zinc-700 rounded shadow-lg tooltip">
                   Quitar Advertencia
                 </span>
                 <DocumentRemoveIcon
@@ -95,22 +95,18 @@ const WarningCard: React.FC<IWarningCard> = ({
         >
           <dl className="grid grid-cols-1 gap-x-4 gap-y-4 sm:grid-cols-2">
             <div className="sm:col-span-1">
-              <dt className="text-sm font-medium text-mainTextColor">
-                Mentor:
-              </dt>
-              <dd className="mt-1 text-sm text-gray-200">{mentor_name}</dd>
+              <dt className="text-sm font-medium text-primary">Mentor:</dt>
+              <dd className="mt-1 text-sm text-secondary">{mentor_name}</dd>
             </div>
             <div className="sm:col-span-1">
-              <dt className="text-sm font-medium text-mainTextColor">
-                Mentee:
-              </dt>
-              <dd className="mt-1 text-sm text-gray-200">{mentee_name}</dd>
+              <dt className="text-sm font-medium text-primary">Mentee:</dt>
+              <dd className="mt-1 text-sm text-secondary">{mentee_name}</dd>
             </div>
             <div className="sm:col-span-1">
-              <dt className="text-sm font-medium text-mainTextColor">
+              <dt className="text-sm font-medium text-primary">
                 Tipo de warning
               </dt>
-              <dd className="mt-1 text-sm text-gray-200">
+              <dd className="mt-1 text-sm text-secondary">
                 {warn_type === WARN.COC_WARN
                   ? 'Incumplimiento del código de conducta'
                   : 'Ausencia'}
@@ -118,27 +114,25 @@ const WarningCard: React.FC<IWarningCard> = ({
             </div>
             {warn_type === WARN.COC_WARN && (
               <div className="sm:col-span-1">
-                <dt className="text-sm font-medium text-mainTextColor">
-                  Causa
-                </dt>
-                <dd className="mt-1 text-sm text-gray-200">{warn_cause}</dd>
+                <dt className="text-sm font-medium text-primary">Causa</dt>
+                <dd className="mt-1 text-sm text-secondary">{warn_cause}</dd>
               </div>
             )}
             {isForgived && (
               <>
                 <div className="sm:col-span-1">
-                  <dt className="text-sm font-medium text-mainTextColor">
+                  <dt className="text-sm font-medium text-primary">
                     Perdonado por:
                   </dt>
-                  <dd className="mt-1 text-sm text-gray-200">
+                  <dd className="mt-1 text-sm text-secondary">
                     {warning_author_id}
                   </dd>
                 </div>
                 <div className="sm:col-span-1">
-                  <dt className="text-sm font-medium text-mainTextColor">
+                  <dt className="text-sm font-medium text-primary">
                     Warn remove cause :
                   </dt>
-                  <dd className="mt-1 text-sm text-gray-200">
+                  <dd className="mt-1 text-sm text-secondary">
                     {forgive_cause}
                   </dd>
                 </div>

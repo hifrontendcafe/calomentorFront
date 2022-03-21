@@ -31,7 +31,7 @@ export const NotificationToast: React.FC<INotificationToast> = ({
       leaveFrom="opacity-100"
       leaveTo="opacity-0"
     >
-      <div className="overflow-hidden bg-gray-800 border rounded-lg shadow-lg pointer-events-auto w-96 border-cardContent">
+      <div className="overflow-hidden bg-zinc-800 border rounded-lg shadow-lg pointer-events-auto w-96 border-cardContent">
         <div className="p-4">
           <div className="flex items-start">
             <div className="flex-shrink-0">
@@ -53,14 +53,14 @@ export const NotificationToast: React.FC<INotificationToast> = ({
               )}
             </div>
             <div className="ml-3 w-0 flex-1 pt-0.5">
-              <p className="text-sm font-medium text-mainTextColor">{title}</p>
+              <p className="text-sm font-medium text-primary">{title}</p>
               {subtext && (
-                <p className="mt-1 text-sm text-gray-200">{subtext}</p>
+                <p className="mt-1 text-sm text-secondary">{subtext}</p>
               )}
             </div>
             <div className="flex flex-shrink-0 ml-4">
               <button
-                className="inline-flex text-gray-400 rounded-md hover:text-gray-500 focus:outline-none"
+                className="inline-flex text-tertiary rounded-md hover:text-quaternary focus:outline-none"
                 onClick={() => setShow(false)}
               >
                 <span className="sr-only">Cerrar</span>

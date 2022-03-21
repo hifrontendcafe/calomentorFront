@@ -28,7 +28,7 @@ const DashboardLayout: React.FC<IDashboardLayout> = ({
       <div className="flex-1">
         <TopBar setSidebarOpen={setSidebarOpen} />
         <header className="py-5 px-14 justify-between flex">
-          <h2 className="text-2xl font-bold leading-7 text-mainTextColor sm:text-3xl sm:truncate">
+          <h2 className="text-2xl font-bold leading-7 text-primary sm:text-3xl sm:truncate">
             {title}
           </h2>
           {endEnhancer}

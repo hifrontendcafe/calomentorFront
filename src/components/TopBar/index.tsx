@@ -76,7 +76,7 @@ export const TopBar: React.FC<ITopBar> = ({ setSidebarOpen }) => {
                     {({ active }) => (
                       <a
                         className={classNames(
-                          'block px-4 py-2 text-sm text-mainTextColor cursor-pointer active:bg-activeNavigation',
+                          'block px-4 py-2 text-sm text-primary cursor-pointer active:bg-activeNavigation',
                           {
                             'bg-hoverNavigation': active,
                           },
@@ -92,7 +92,7 @@ export const TopBar: React.FC<ITopBar> = ({ setSidebarOpen }) => {
                     <a
                       onClick={() => signOut({ callbackUrl: '/' })}
                       className={classNames(
-                        'block px-4 py-2 text-sm text-mainTextColor cursor-pointer active:bg-activeNavigation',
+                        'block px-4 py-2 text-sm text-primary cursor-pointer active:bg-activeNavigation',
                         {
                           'bg-hoverNavigation': active,
                         },

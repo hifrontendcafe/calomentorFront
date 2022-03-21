@@ -145,7 +145,7 @@ const WarnModal: React.FC<IModal> = ({
                           render={({ field: { onChange, ref, value } }) => (
                             <select
                               id="warn_type"
-                              className="block w-full py-2 pl-3 pr-10 mt-1 text-base border-gray-700 rounded-md custom_input focus:outline-none focus:ring-0 focus:border-fecGreen sm:text-sm"
+                              className="block w-full py-2 pl-3 pr-10 mt-1 text-base border-gray-700 rounded-md custom_input focus:outline-none focus:ring-0 focus:border-greenFec sm:text-sm"
                               value={value}
                               onChange={val => {
                                 val.target.value === 'COC_WARN'

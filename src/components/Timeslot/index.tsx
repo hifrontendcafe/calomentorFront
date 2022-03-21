@@ -85,20 +85,18 @@ const Timeslot: React.FC<ISlot> = ({
           },
         )}
       >
-        <div className="flex-1 px-4 py-2 text-sm truncate">
-          <p className="font-semibold text-mainTextColor">
+        <div className="flex-1 px-4 py-2 text-sm truncate text-primary">
+          <p className="font-semibold">
             {formatDate(date)} - Duración: {duration} minutos
           </p>
-          <p className="text-mainTextColor">
-            Estado: {isTaken ? 'agendada' : 'disponible'}
-          </p>
+          <p>Estado: {isTaken ? 'agendada' : 'disponible'}</p>
         </div>
         <div className="flex-shrink-0 pr-2">
           <span className="relative z-0 inline-flex">
             {isTaken && (
               <button
                 type="button"
-                className="relative inline-flex items-center px-2 py-2 -ml-px text-sm font-medium bg-transparent text-mainTextColor"
+                className="relative inline-flex items-center px-2 py-2 -ml-px text-sm font-medium bg-transparent text-greenFec"
                 onClick={handleCancelTimeslot}
               >
                 <XIcon className="w-4 h-4" aria-hidden="true" />
@@ -107,7 +105,7 @@ const Timeslot: React.FC<ISlot> = ({
             {isFree && (
               <button
                 type="button"
-                className="relative inline-flex items-center px-2 py-2 -ml-px text-sm font-medium bg-transparent text-mainTextColor"
+                className="relative inline-flex items-center px-2 py-2 -ml-px text-sm font-medium bg-transparent text-greenFec"
                 onClick={() => setModalIsOpen(true)}
               >
                 <TrashIcon className="w-4 h-4" aria-hidden="true" />

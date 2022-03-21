@@ -52,7 +52,7 @@ const MentorshipCard: React.FC<IMentorshipCard> = ({
         </div>
         <div className="flex justify-between w-full">
           <div className="flex flex-col justify-center p-3">
-            <p className="text-sm font-medium text-mainTextColor">
+            <p className="text-sm font-medium text-greenFec">
               {mentorship.time_slot_info &&
                 `${formatDate(
                   mentorship.time_slot_info.date,
@@ -61,42 +61,37 @@ const MentorshipCard: React.FC<IMentorshipCard> = ({
                   mentorship.time_slot_info.duration,
                 )} `}
             </p>
-            <p className="text-sm text-gray-300">
-              <span className="font-medium text-mainTextColor">Estado:</span>{' '}
+            <p className="text-sm text-tertiary">
+              <span className="font-medium text-secondary">Estado:</span>{' '}
               {getMentorshipStatus(mentorship.mentorship_status)}
             </p>
-            <p className="text-sm text-gray-300">
-              <span className="font-medium text-mainTextColor">Mentee:</span>{' '}
+            <p className="text-sm text-tertiary">
+              <span className="font-medium text-secondary">Mentee:</span>{' '}
               {mentorship.mentee_username_discord}
             </p>
-            <p className="text-sm text-gray-300">
-              <span className="font-medium text-mainTextColor">ID:</span>{' '}
+            <p className="text-sm text-tertiary">
+              <span className="font-medium text-secondary">ID:</span>{' '}
               {mentorship.mentee_id}
             </p>
-            <p className="text-sm text-gray-300">
-              <span className="font-medium text-mainTextColor">Email:</span>{' '}
+            <p className="text-sm text-tertiary">
+              <span className="font-medium text-secondary">Email:</span>{' '}
               {mentorship.mentee_email}
             </p>
           </div>
           <div className="flex max-w-2xl p-3">
-            <p className="text-sm text-left text-gray-300">
-              <span className="font-medium text-mainTextColor">
-                Información:
-              </span>{' '}
+            <p className="text-sm text-left text-tertiary">
+              <span className="font-medium text-secondary">Información:</span>{' '}
               {mentorship.info}
             </p>
           </div>
           <div className="flex p-3 ">
             <div className="flex items-center justify-center pt-1 my-auto mr-2">
               <div className="has-tooltip">
-                <span className="px-2 py-1 -mt-8 -ml-20 text-sm text-green-500 bg-gray-700 rounded shadow-lg tooltip">
+                <span className="px-2 py-1 -mt-8 -ml-20 text-sm text-greenFec bg-gray-700 rounded shadow-lg tooltip">
                   Agregar a Google Calendar
                 </span>
                 <Link href={googleCalendarURL}>
-                  <a
-                    target="_blank"
-                    className="text-mainTextColor hover:text-mainBtnColor"
-                  >
+                  <a target="_blank" className="text-greenFec">
                     <CalendarIcon className="w-6 h-6" aria-hidden="true" />
                   </a>
                 </Link>

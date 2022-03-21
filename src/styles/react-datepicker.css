@@ -13,7 +13,7 @@
 
 .react-datepicker__current-month,
 .react-datepicker__day-name {
-  @apply text-mainTextColor !important;
+  @apply text-primary !important;
 }
 
 .react-datepicker__day {
@@ -37,7 +37,7 @@
 }
 
 .react-datepicker-time__header {
-  @apply text-mainTextColor !important;
+  @apply text-primary !important;
 }
 
 .react-datepicker__time-list-item {

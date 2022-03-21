@@ -48,7 +48,7 @@ const Modal: React.FC<IModal> = ({
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
           >
-            <Dialog.Overlay className="fixed inset-0 transition-opacity bg-gray-500 bg-opacity-75" />
+            <Dialog.Overlay className="fixed inset-0 transition-opacity bg-zinc-600 bg-opacity-75" />
           </Transition.Child>
 
           {/* This element is to trick the browser into centering the modal contents. */}
@@ -86,7 +86,7 @@ const Modal: React.FC<IModal> = ({
                       className={classNames(
                         'text-lg font-medium leading-6 my-2',
                         {
-                          'text-mainTextColor': !danger,
+                          'text-primary': !danger,
                           'text-red-500': danger,
                         },
                       )}
@@ -97,7 +97,7 @@ const Modal: React.FC<IModal> = ({
                   {children && (
                     <div
                       className={classNames(
-                        'mt-2 text-gray-300',
+                        'mt-2 text-secondary',
                         childrenClassName,
                       )}
                     >

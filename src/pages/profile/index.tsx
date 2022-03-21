@@ -431,7 +431,7 @@ const SettingsProfilePage: React.FC = () => {
               <div className="flex w-full flex-row justify-between items-center">
                 <label
                   htmlFor="accept_coc"
-                  className="font-medium text-mainTextColor"
+                  className="font-medium text-primary"
                 >
                   Acepto los{' '}
                   <Link href="https://go.frontend.cafe/coc-mentorias">
@@ -444,7 +444,7 @@ const SettingsProfilePage: React.FC = () => {
                 <input
                   id="accept_coc"
                   type="checkbox"
-                  className="focus:ring-0 h-4 w-4 text-fecGreen rounded outline-none"
+                  className="focus:ring-0 h-4 w-4 text-greenFec rounded outline-none"
                   {...register('accepted_coc', { required: true })}
                 />
               </div>

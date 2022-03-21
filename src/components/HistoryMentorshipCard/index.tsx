@@ -65,15 +65,15 @@ const MentorshipCard: React.FC<IMentorshipCard> = ({
     <div key={id} className="px-4 my-4 sm:px-6">
       <div className="overflow-hidden border-2 border-gray-700 border-solid sm:rounded-lg">
         <div
-          className="flex flex-row items-center justify-between px-2 py-3 cursor-pointer sm:px-6 text-mainTextColor hover:bg-cardHeader"
+          className="flex flex-row items-center justify-between px-2 py-3 cursor-pointer sm:px-6 text-secondary hover:bg-cardHeader"
           onClick={(e: CardMouseEvent) => {
             if (e.target.id !== 'warnButton') {
               setIsOpen(!isOpen);
             }
           }}
         >
-          <div>
-            <h3 className="text-lg font-medium leading-6 text-gray-200">
+          <div className="text-primary">
+            <h3 className="text-lg font-medium leading-6 text">
               {mentee_name}
             </h3>
             <p className="max-w-2xl mt-1 text-sm">
@@ -140,49 +140,45 @@ const MentorshipCard: React.FC<IMentorshipCard> = ({
         >
           <dl className="grid grid-cols-1 gap-x-4 gap-y-4 sm:grid-cols-2">
             <div className="sm:col-span-1">
-              <dt className="text-sm font-medium text-mainTextColor">
+              <dt className="text-sm font-medium text-primary">
                 Discord ID - Usuario
               </dt>
-              <dd className="mt-1 text-sm text-gray-200">
+              <dd className="mt-1 text-sm text-secondary">
                 {mentee_id} - {mentee_username_discord}
               </dd>
             </div>
             <div className="sm:col-span-1">
-              <dt className="text-sm font-medium text-mainTextColor">Email</dt>
-              <dd className="mt-1 text-sm text-gray-200">{mentee_email}</dd>
+              <dt className="text-sm font-medium text-primary">Email</dt>
+              <dd className="mt-1 text-sm text-secondary">{mentee_email}</dd>
             </div>
             <div className="sm:col-span-2">
-              <dt className="text-sm font-medium text-mainTextColor">
-                Información
-              </dt>
-              <dd className="mt-1 text-sm text-gray-200">{info}</dd>
+              <dt className="text-sm font-medium text-primary">Información</dt>
+              <dd className="mt-1 text-sm text-secondary">{info}</dd>
             </div>
             {feedback_mentee && (
               <div className="sm:col-span-2">
-                <dt className="text-sm font-medium text-mainTextColor">
-                  Feedback
-                </dt>
-                <dd className="mt-1 text-sm text-gray-200">
+                <dt className="text-sm font-medium text-primary">Feedback</dt>
+                <dd className="mt-1 text-sm text-secondary">
                   {feedback_mentee}
                 </dd>
               </div>
             )}
             {isAdmin && feedback_mentee_private && (
               <div className="sm:col-span-2">
-                <dt className="text-sm font-medium text-mainTextColor">
+                <dt className="text-sm font-medium text-primary">
                   Feedback Privado
                 </dt>
-                <dd className="mt-1 text-sm text-gray-200">
+                <dd className="mt-1 text-sm text-secondary">
                   {feedback_mentee_private}
                 </dd>
               </div>
             )}
             {isWarned && (
               <div className="sm:col-span-2">
-                <dt className="text-sm font-medium text-mainTextColor">
+                <dt className="text-sm font-medium text-primary">
                   Causa de la advertencia
                 </dt>
-                <dd className="mt-1 text-sm text-gray-200">
+                <dd className="mt-1 text-sm text-secondary">
                   {warning_info?.warn_cause
                     ? warning_info?.warn_cause
                     : 'Ausencia'}
@@ -191,10 +187,10 @@ const MentorshipCard: React.FC<IMentorshipCard> = ({
             )}
             {isWarned && warning_info?.warning_status === 'FORGIVE' && (
               <div className="sm:col-span-2">
-                <dt className="text-sm font-medium text-mainTextColor">
+                <dt className="text-sm font-medium text-primary">
                   Perdonado por:
                 </dt>
-                <dd className="mt-1 text-sm text-gray-200">
+                <dd className="mt-1 text-sm text-secondary">
                   {warning_info?.forgive_cause}
                 </dd>
               </div>
@@ -202,16 +198,18 @@ const MentorshipCard: React.FC<IMentorshipCard> = ({
             {isCancelled && (
               <>
                 <div className="sm:col-span-1">
-                  <dt className="text-sm font-medium text-mainTextColor">
+                  <dt className="text-sm font-medium text-primary">
                     Cancelado por:
                   </dt>
-                  <dd className="mt-1 text-sm text-gray-200">{cancelledBy}</dd>
+                  <dd className="mt-1 text-sm text-secondary">{cancelledBy}</dd>
                 </div>
                 <div className="sm:col-span-1">
-                  <dt className="text-sm font-medium text-mainTextColor">
+                  <dt className="text-sm font-medium text-primary">
                     Causa de cancelación:
                   </dt>
-                  <dd className="mt-1 text-sm text-gray-200">{cancel_cause}</dd>
+                  <dd className="mt-1 text-sm text-secondary">
+                    {cancel_cause}
+                  </dd>
                 </div>
               </>
             )}

@@ -16,11 +16,11 @@
 }
 
 .filter-selector .react-select__control--is-focused {
-  @apply border-fecGreen !important;
+  @apply border-greenFec !important;
 }
 
 .filter-selector .react-select__control--is-focused:hover {
-  @apply border-fecGreen !important;
+  @apply border-greenFec !important;
 }
 
 .filter-selector .react-select__control {

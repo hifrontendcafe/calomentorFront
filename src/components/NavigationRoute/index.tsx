@@ -25,7 +25,7 @@ const NavigationRoute: React.FC<INavigationRoute> = ({ routes }) => {
               {
                 'bg-activeNavigation active:bg-hoverNavigation text-white':
                   router.pathname.includes(item.href),
-                'text-mainTextColor  hover:bg-hoverNavigation active:bg-activeNavigation':
+                'text-primary  hover:bg-hoverNavigation active:bg-activeNavigation':
                   !router.pathname.includes(item.href),
               },
             )}

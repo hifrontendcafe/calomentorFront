@@ -92,12 +92,12 @@ const MentorshipFeedback: React.FC = () => {
               </div>
               {isLoading && (
                 <div className="flex items-center justify-center mt-10 mb-5">
-                  <div className="w-12 h-12 border-b-2 rounded-full border-fecGreen animate-spin"></div>
+                  <div className="w-12 h-12 border-b-2 rounded-full border-greenFec animate-spin"></div>
                 </div>
               )}
               {(alreadySent || feedbackSent) && (
                 <div className="flex items-center justify-center mt-10 mb-5">
-                  <p className="text-xl font-bold text-center text-mainTextColor">
+                  <p className="text-xl font-bold text-center text-primary">
                     {alreadySent
                       ? 'Ya nos has comentado sobre esta mentoría.'
                       : feedbackSent
@@ -108,7 +108,7 @@ const MentorshipFeedback: React.FC = () => {
               )}
               {!feedbackSent && !alreadySent && !isLoading && (
                 <div className="mt-3 text-center sm:mt-5">
-                  <h1 className="text-lg font-medium leading-6 text-mainTextColor">
+                  <h1 className="text-lg font-medium leading-6 text-primary">
                     ¿Cómo te fue en la mentoría?
                   </h1>
                   <div className="mx-6 my-5 md:mx-28">
@@ -184,13 +184,13 @@ const MentorshipFeedback: React.FC = () => {
                         }}
                         name="enableFecFeedback"
                         type="checkbox"
-                        className="w-4 h-4 bg-gray-500 rounded outline-none text-fecGreen focus:outline-none focus:ring-0 focus:border-0"
+                        className="w-4 h-4 bg-zinc-500 rounded outline-none text-greenFec focus:outline-none focus:ring-0 focus:border-0"
                       />
                     </div>
                     <div className="ml-3 text-sm">
                       <label
                         htmlFor="enableFecFeedback"
-                        className="font-medium text-left text-gray-200"
+                        className="font-medium text-left text-primary"
                       >
                         ¿Quieres comunicar algo al staff? (Esto no será visible
                         para el mentor)
