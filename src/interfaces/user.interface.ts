@@ -23,11 +23,11 @@ export interface User {
   role?: RoleType[];
   links?: UserLinks;
   skills?: string[];
-  user_status: UserStatus;
-  modified_by: string; // discord id
-  user_timezone: string;
-  user_token: string;
-  accepted_coc: boolean;
+  user_status?: UserStatus;
+  modified_by?: string; // discord id
+  user_timezone?: string;
+  user_token?: string;
+  accepted_coc?: boolean;
 }
 
 export interface ICreateUser {
