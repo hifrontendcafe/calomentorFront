@@ -35,7 +35,8 @@ export default async function handler(
     return res.status(200).json(data);
     // Get all warnings
   } else if (req.method === 'GET') {
-    const { data } = await getWarnings();
+    const name = typeof req?.query?.name === "string" ? req?.query?.name : undefined
+    const { data } = await getWarnings(name);
     return res.status(200).json(data);
     // Remove warning
   } else if (req.method === 'PATCH') {

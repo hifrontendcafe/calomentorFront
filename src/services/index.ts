@@ -31,8 +31,8 @@ async function getTimeslots(id: string) {
   return axiosGet<ITimeSlot[]>(`${TIMESLOTS}?id=${id}`);
 }
 
-async function getWarnings() {
-  return axiosGet<IWarning[]>(WARNING);
+async function getWarnings(name?: string) {
+  return axiosGet<IWarning[]>(`${WARNING}${name ? `?name=${name}` : "" }`);
 }
 
 async function deleteTimeSlot(id: string) {
@@ -56,7 +56,13 @@ async function removeWarning(id: string, forgive_cause: string) {
 }
 
 async function getAdminMentorshipHistory() {
-  return axiosGet<IMentorship[]>(MENTORSHIP);
+  return axiosGet<IMentorship[]>(`${MENTORSHIP}?limit=20`);
+}
+
+async function getAdminMentorshipHistoryByName(name: string, lastKey?: string) {
+  return axiosGet<IMentorship[]>(
+    `${MENTORSHIP}?name=${name}&limit=20${lastKey ? `&last_key=${lastKey}` : ""}`,
+  );
 }
 
 export {
@@ -71,4 +77,5 @@ export {
   cancelMentorship,
   removeWarning,
   getAdminMentorshipHistory,
+  getAdminMentorshipHistoryByName,
 };

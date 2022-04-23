@@ -13,19 +13,20 @@ import { z } from 'zod';
  * Get all mentorships from a user
  *
  * @param id - user id
- * @param filter
- * @param filter_dates
+ * @param name - mentor or mentee name or discord username
  * @returns An array of mentorships
  */
 export const getMentorships = async ({
   id,
-  filter,
-  filter_dates,
+  name
 }: z.infer<typeof getMentorshipsQuerySchema>) => {
   try {
-    const url = id
-      ? `${MENTORSHIP}/${id}?filter=${filter}&filter_dates=${filter_dates}`
+    let url = id
+      ? `${MENTORSHIP}/${id}` 
       : MENTORSHIP;
+    if(name) {
+      url = `${url}?name=${name}`
+    }
     const { data: response } = await axiosAWSInstance.get<
       ServerResponse<IMentorship[]>
     >(url);

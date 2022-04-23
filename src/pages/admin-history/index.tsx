@@ -3,98 +3,52 @@ import { useSession } from 'next-auth/client';
 import DashboardLayout from '@/components/DashboardLayout';
 import { useRouter } from 'next/dist/client/router';
 import CustomHead from '@/components/CustomHead';
-import { HOME } from '@/config/Routes';
-import { IMentorship, STATUS } from '@/interfaces/mentorship.interface';
-import HistoryMentorshipCard from '@/components/HistoryMentorshipCard';
-import { getAdminMentorshipHistory } from '@/services/index';
-import WarnModal from '@/components/WarnModal';
+import { IMentorship } from '@/interfaces/mentorship.interface';
+import HistoryMentorshipCardFromBot from '@/components/HistoryMentorshipCardFromBot';
+import {
+  getAdminMentorshipHistory,
+  getAdminMentorshipHistoryByName,
+} from '@/services/index';
 import GenericCard from '@/components/GenericCard';
-import { isAdmin } from '@/helpers/IsAdmin';
 import useToastContext from '@/hooks/useToastContext';
 import CustomButton from '@/components/CustomButton';
+import { orderMentorshipsByDate } from '@/helpers/getOrderByDate';
 
-interface ModalData {
-  mentee_name: string;
-  menteeId: string;
-  mentorshipId: string;
-}
 const AdminHistory: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [mentorships, setMentorships] = useState<IMentorship[]>([]);
-  const [filteredMentorships, setFilteredMentorships] = useState<IMentorship[]>(
-    [],
-  );
-  const [modalIsOpen, setModalIsOpen] = useState<boolean>(false);
-  const [modalData, setModalData] = useState<ModalData>({
-    mentee_name: '',
-    menteeId: '',
-    mentorshipId: '',
-  });
-  const [activeFilter, setActiveFilter] = useState<STATUS | 'all'>('all');
   const [session, loading] = useSession();
   const noMentorships = mentorships.length === 0;
   const router = useRouter();
   const { addToast } = useToastContext();
+  const [name, setName] = useState<string>('');
 
-  const onFilterChange = (filter: STATUS | 'all') => {
-    const filterMentorships = (status: STATUS) => {
-      setFilteredMentorships(
-        mentorships.filter(
-          mentorship => mentorship.mentorship_status === status,
-        ),
-      );
-    };
-    setActiveFilter(filter);
-    if (filter === 'all') {
-      setFilteredMentorships(mentorships);
-    } else if (filter === STATUS.ACTIVE) {
-      filterMentorships(STATUS.ACTIVE);
-    } else if (filter === STATUS.CANCEL) {
-      filterMentorships(STATUS.CANCEL);
-    } else if (filter === STATUS.CONFIRMED) {
-      filterMentorships(STATUS.CONFIRMED);
-    } else {
-      filterMentorships(STATUS.WITHWARNING);
-    }
-  };
-
-  const getActiveButton = (status: STATUS | 'all') => {
-    if (status === activeFilter) {
-      return true;
-    }
-    return false;
+  const onSearchByName = async () => {
+    setIsLoading(true);
+    const { data } = await getAdminMentorshipHistoryByName(name);
+    setMentorships(orderMentorshipsByDate(data));
+    setIsLoading(false);
   };
 
   useEffect(() => {
     if (session && !loading) {
-      isAdmin(session.user.role)
-        ? getAdminMentorshipHistory()
-            .then(({ data }) => {
-              setMentorships(data);
-              setFilteredMentorships(data);
-              setIsLoading(false);
-            })
-            .catch(() => {
-              addToast({
-                title: 'Ha ocurrido un problema',
-                subText:
-                  'No se ha podido obtener el historial completo de mentorías.',
-                type: 'error',
-              });
-              setIsLoading(false);
-            })
-        : router.push(HOME);
+      getAdminMentorshipHistory()
+        .then(({ data }) => {
+          setMentorships(orderMentorshipsByDate(data));
+          setIsLoading(false);
+        })
+        .catch(() => {
+          addToast({
+            title: 'Ha ocurrido un problema',
+            subText:
+              'No se ha podido obtener el historial completo de mentorías.',
+            type: 'error',
+          });
+          setIsLoading(false);
+        });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loading, router]);
-
-  const filterButtons = [
-    { label: 'Todas', filterName: 'all' },
-    { label: 'Activas', filterName: STATUS.ACTIVE },
-    { label: 'Confirmadas', filterName: STATUS.CONFIRMED },
-    { label: 'Canceladas', filterName: STATUS.CANCEL },
-    { label: 'Con advertencia', filterName: STATUS.WITHWARNING },
-  ];
 
   return (
     <>
@@ -105,41 +59,32 @@ const AdminHistory: React.FC = () => {
           isDataEmpty={noMentorships}
           noDataMessage="No hay mentorías registradas"
         >
-          {!noMentorships && (
-            <div className="flex px-4 h-8 gap-2">
-              {filterButtons.map(button => (
-                <CustomButton
-                  key={button.label}
-                  bntLabel={button.label}
-                  primary
-                  clickAction={() =>
-                    onFilterChange(button.filterName as STATUS | 'all')
-                  }
-                  isActive={getActiveButton(
-                    button.filterName as STATUS | 'all',
-                  )}
-                />
-              ))}
+          <div className="flex flex-col px-6 h-16 gap-2">
+            <div className="flex gap-4 w-80">
+              <input
+                type="text"
+                id="name"
+                autoComplete="off"
+                placeholder="Buscar por nombre"
+                className="custom_input"
+                onChange={({ target: { value } }) => setName(value)}
+              />
+              <CustomButton
+                className="mt-1"
+                bntLabel={'Buscar'}
+                primary
+                clickAction={onSearchByName}
+                isActive={true}
+              />
             </div>
-          )}
-          {filteredMentorships.map(mentorship => (
-            <HistoryMentorshipCard
+          </div>
+          {mentorships.map(mentorship => (
+            <HistoryMentorshipCardFromBot
               key={mentorship.id}
               mentorship={mentorship}
-              setModalData={setModalData}
-              setModalIsOpen={setModalIsOpen}
-              isAdmin
             />
           ))}
         </GenericCard>
-        <WarnModal
-          open={modalIsOpen}
-          setModal={setModalIsOpen}
-          mentee_name={modalData.mentee_name}
-          menteeId={modalData.menteeId}
-          mentorshipId={modalData.mentorshipId}
-          // callback={getHistoryData}
-        />
       </DashboardLayout>
     </>
   );

@@ -4,11 +4,12 @@ import { IWarning, WARN } from '@/interfaces/warning.interface';
 
 /**
  * Get all warnings
+ * @param name - mentor or mentee name or discord username
  * @returns An array of warnings
  */
-export const getWarnings = async () => {
+export const getWarnings = async (name?: string) => {
   try {
-    const data = await axiosAWSInstance.get<IWarning[]>(WARNING);
+    const data = await axiosAWSInstance.get<IWarning[]>(`${WARNING}${name ? `?name=${name}` : "" }`);
     return data;
   } catch (error: any) {
     throw new Error(error.response.status);
