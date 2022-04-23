@@ -1,3 +1,6 @@
+import { ITimeSlot } from "./timeslot.interface";
+import { IWarning } from "./warning.interface";
+
 export enum STATUS {
   ACTIVE = 'ACTIVE',
   CANCEL = 'CANCEL',
@@ -23,7 +26,7 @@ export interface IMentorship {
   mentorship_token: string;
   mentee_id: string;
   mentorship_status: STATUS;
-  id?: string;
+  id: string;
   cancel_cause: string;
   who_canceled: WHOCANCELED;
   time_slot_id?: string;
@@ -32,7 +35,9 @@ export interface IMentorship {
   mentee_timezone: string;
   mentor_timezone?: string;
   mentorship_create_date?: string;
-  from_bot: boolean
+  from_bot: boolean;
+  time_slot_info?: ITimeSlot;
+  warning_info?: IWarning
 }
 
 export interface ICancelForm {
