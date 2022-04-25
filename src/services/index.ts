@@ -81,7 +81,7 @@ async function getAdminMentorshipHistory(
 }
 
 async function getAdminMentorshipHistoryByName(name: string) {
-  return axiosGet<IMentorship[]>(`${MENTORSHIP}?name=${name}`);
+  return axiosGet<{ data: IMentorship[] }>(`${MENTORSHIP}?name=${name}`);
 }
 
 export {

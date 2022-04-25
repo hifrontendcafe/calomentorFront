@@ -30,6 +30,7 @@ const WarningCard: React.FC<IWarningCard> = ({
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const isForgived = warning_status === WARNSTATE.FORGIVE;
+  const date = String(warning_date);
   return (
     <div key={id} className="px-4 my-4 sm:px-6">
       <div className="overflow-hidden border-2 border-gray-700 border-solid sm:rounded-lg">
@@ -47,7 +48,8 @@ const WarningCard: React.FC<IWarningCard> = ({
               {isForgived ? 'Perdonado' : 'Activo'}
             </h3>
             <p className="max-w-2xl mt-1 text-sm">
-              Fecha: {formatDate(Number(String(warning_date).slice(0, -3)))}
+              Fecha:{' '}
+              {formatDate(Number(date.length === 16 ? date.slice(0, -3) : date))}
             </p>
           </div>
           <div className="flex flex-row items-center">
@@ -69,16 +71,18 @@ const WarningCard: React.FC<IWarningCard> = ({
         >
           <dl className="grid grid-cols-1 gap-x-4 gap-y-4 sm:grid-cols-2">
             <div className="sm:col-span-1">
-              <dt className="text-sm font-medium text-mainTextColor">
-                Autor:
-              </dt>
-              <dd className="mt-1 text-sm text-gray-200">{warning_author_name} - {warning_author_id}</dd>
+              <dt className="text-sm font-medium text-mainTextColor">Autor:</dt>
+              <dd className="mt-1 text-sm text-gray-200">
+                {warning_author_name} - {warning_author_id}
+              </dd>
             </div>
             <div className="sm:col-span-1">
               <dt className="text-sm font-medium text-mainTextColor">
                 Mentee:
               </dt>
-              <dd className="mt-1 text-sm text-gray-200">{mentee_username_discord} - {mentee_id}</dd>
+              <dd className="mt-1 text-sm text-gray-200">
+                {mentee_username_discord} - {mentee_id}
+              </dd>
             </div>
             <div className="sm:col-span-1">
               <dt className="text-sm font-medium text-mainTextColor">

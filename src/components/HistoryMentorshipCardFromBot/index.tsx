@@ -27,7 +27,7 @@ const MentorshipCardFromBot: React.FC<IMentorshipCard> = ({
   },
 }) => {
   const [isOpen, setIsOpen] = useState(false);
-
+  const date = String(mentorship_create_date);
   return (
     <div key={id} className="px-4 my-4 sm:px-6">
       <div className="overflow-hidden border-2 border-gray-700 border-solid sm:rounded-lg">
@@ -46,7 +46,7 @@ const MentorshipCardFromBot: React.FC<IMentorshipCard> = ({
             <p className="max-w-2xl mt-1 text-sm">
               {mentorship_create_date &&
                 `Cargada el ${formatDate(
-                  Number(mentorship_create_date.slice(0, -3)),
+                  Number(Number(date.length === 16 ? date.slice(0, -3) : date)),
                 )}`}
             </p>
           </div>
