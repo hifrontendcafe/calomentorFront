@@ -69,7 +69,7 @@ const AdminHistory: React.FC = () => {
     if (session && !loading) {
       isAdmin(session.user.role)
         ? getAdminMentorshipHistory()
-            .then(({ data }) => {
+            .then(({ data: { data } }) => {
               setMentorships(data);
               setFilteredMentorships(data);
               setIsLoading(false);
