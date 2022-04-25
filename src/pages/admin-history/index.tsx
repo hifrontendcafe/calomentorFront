@@ -104,13 +104,15 @@ const AdminHistory: React.FC = () => {
             />
           ))}
           {lastKey && (
-            <CustomButton
-              className="mt-1"
-              bntLabel={'Buscar más'}
-              primary
-              clickAction={onSearchMore}
-              isActive={true}
-            />
+            <div className="flex justify-center w-full">
+              <CustomButton
+                className="mt-1 w-48 flex justify-center"
+                bntLabel={'Buscar más'}
+                primary
+                clickAction={onSearchMore}
+                isActive={true}
+              />
+            </div>
           )}
         </GenericCard>
       </DashboardLayout>

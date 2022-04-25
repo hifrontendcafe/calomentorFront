@@ -23,13 +23,10 @@ const Warnings = () => {
   const emptyWarnings = warnings.length === 0;
 
   const [name, setName] = useState<string>('');
-  const [lastKey, setLastKey] = useState<
-    | {
-        id: string;
-        warning_date?: string;
-      }
-    | null
-  >(null);
+  const [lastKey, setLastKey] = useState<{
+    id: string;
+    warning_date?: string;
+  } | null>(null);
 
   const onSearchByName = async () => {
     setIsLoading(true);
@@ -98,13 +95,15 @@ const Warnings = () => {
             <WarningCardFromBot key={warn.id} warning={warn} />
           ))}
           {lastKey && (
-            <CustomButton
-              className="mt-1"
-              bntLabel={'Buscar más'}
-              primary
-              clickAction={onSearchMore}
-              isActive={true}
-            />
+            <div className="flex justify-center w-full">
+              <CustomButton
+                className="mt-1 w-48 flex justify-center"
+                bntLabel={'Buscar más'}
+                primary
+                clickAction={onSearchMore}
+                isActive={true}
+              />
+            </div>
           )}
         </GenericCard>
       </DashboardLayout>
