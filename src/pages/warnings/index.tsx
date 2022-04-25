@@ -23,6 +23,13 @@ const Warnings = () => {
   const emptyWarnings = warnings.length === 0;
 
   const [name, setName] = useState<string>('');
+  const [lastKey, setLastKey] = useState<
+    | {
+        id: string;
+        warning_date?: string;
+      }
+    | null
+  >(null);
 
   const onSearchByName = async () => {
     setIsLoading(true);
@@ -31,10 +38,26 @@ const Warnings = () => {
     setIsLoading(false);
   };
 
+  const onSearchMore = async () => {
+    setIsLoading(true);
+    const { data, lastKey: lastKeyResponse } = await getWarnings(
+      null,
+      lastKey?.id,
+      lastKey?.warning_date,
+      '20',
+    );
+    setLastKey(lastKeyResponse || null);
+    setWarnings(orderWarningsByDate([...data, ...warnings]));
+    setIsLoading(false);
+  };
+
   useEffect(() => {
     if (session && !loading) {
       getWarnings()
-        .then(({ data }) => {
+        .then(({ data, lastKey }) => {
+          if (lastKey) {
+            setLastKey(lastKey);
+          }
           setWarnings(orderWarningsByDate(data));
           setIsLoading(false);
         })
@@ -52,7 +75,7 @@ const Warnings = () => {
           isDataEmpty={emptyWarnings}
           noDataMessage="Actualmente no hay usuarios con advertencias 🥳"
         >
-                    <div className="flex flex-col px-6 h-16 gap-2">
+          <div className="flex flex-col px-6 h-16 gap-2">
             <div className="flex gap-4 w-80">
               <input
                 type="text"
@@ -72,11 +95,17 @@ const Warnings = () => {
             </div>
           </div>
           {warnings.map(warn => (
-            <WarningCardFromBot
-              key={warn.id}
-              warning={warn}
-            />
+            <WarningCardFromBot key={warn.id} warning={warn} />
           ))}
+          {lastKey && (
+            <CustomButton
+              className="mt-1"
+              bntLabel={'Buscar más'}
+              primary
+              clickAction={onSearchMore}
+              isActive={true}
+            />
+          )}
         </GenericCard>
       </DashboardLayout>
     </>

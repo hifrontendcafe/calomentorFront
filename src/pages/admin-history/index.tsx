@@ -22,6 +22,10 @@ const AdminHistory: React.FC = () => {
   const router = useRouter();
   const { addToast } = useToastContext();
   const [name, setName] = useState<string>('');
+  const [lastKey, setLastKey] = useState<{
+    id: string;
+    mentorship_create_date?: string;
+  } | null>(null);
 
   const onSearchByName = async () => {
     setIsLoading(true);
@@ -30,10 +34,25 @@ const AdminHistory: React.FC = () => {
     setIsLoading(false);
   };
 
+  const onSearchMore = async () => {
+    setIsLoading(true);
+    const {
+      data: { data, lastKey: lastKeyResponse },
+    } = await getAdminMentorshipHistory(
+      lastKey?.id,
+      lastKey?.mentorship_create_date,
+      '20',
+    );
+    setLastKey(lastKeyResponse || null);
+    setMentorships(orderMentorshipsByDate([...data, ...mentorships]));
+    setIsLoading(false);
+  };
+
   useEffect(() => {
     if (session && !loading) {
       getAdminMentorshipHistory()
-        .then(({ data }) => {
+        .then(({ data: { data, lastKey } }) => {
+          setLastKey(lastKey || null);
           setMentorships(orderMentorshipsByDate(data));
           setIsLoading(false);
         })
@@ -84,6 +103,15 @@ const AdminHistory: React.FC = () => {
               mentorship={mentorship}
             />
           ))}
+          {lastKey && (
+            <CustomButton
+              className="mt-1"
+              bntLabel={'Buscar más'}
+              primary
+              clickAction={onSearchMore}
+              isActive={true}
+            />
+          )}
         </GenericCard>
       </DashboardLayout>
     </>

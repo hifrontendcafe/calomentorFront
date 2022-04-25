@@ -31,8 +31,18 @@ async function getTimeslots(id: string) {
   return axiosGet<ITimeSlot[]>(`${TIMESLOTS}?id=${id}`);
 }
 
-async function getWarnings(name?: string) {
-  return axiosGet<IWarning[]>(`${WARNING}${name ? `?name=${name}` : "" }`);
+async function getWarnings(
+  name?: string | null,
+  lastKeyId?: string | null,
+  lastKeyDate?: string | null,
+  limit?: string,
+) {
+  const url = name
+    ? `${WARNING}${name ? `?name=${name}` : ''}`
+    : `${WARNING}?limit=${limit || '20'}${
+        lastKeyId ? `&lastKeyId=${lastKeyId}` : ''
+      }${lastKeyDate ? `&lastKeyDate=${lastKeyDate}` : ''}`;
+  return axiosGet<IWarning[]>(url);
 }
 
 async function deleteTimeSlot(id: string) {
@@ -55,14 +65,23 @@ async function removeWarning(id: string, forgive_cause: string) {
   return axiosPatch(WARNING, { id, forgive_cause });
 }
 
-async function getAdminMentorshipHistory() {
-  return axiosGet<IMentorship[]>(`${MENTORSHIP}?limit=20`);
+async function getAdminMentorshipHistory(
+  lastKeyId?: string | null,
+  lastKeyDate?: string | null,
+  limit?: string,
+) {
+  return axiosGet<{
+    data: IMentorship[];
+    lastKey: { id: string; mentorship_create_date: string };
+  }>(
+    `${MENTORSHIP}?limit=${limit ?? '20'}${
+      lastKeyId ? `&lastKeyId=${lastKeyId}` : ''
+    }${lastKeyDate ? `&lastKeyDate=${lastKeyDate}` : ''}`,
+  );
 }
 
-async function getAdminMentorshipHistoryByName(name: string, lastKey?: string) {
-  return axiosGet<IMentorship[]>(
-    `${MENTORSHIP}?name=${name}&limit=20${lastKey ? `&last_key=${lastKey}` : ""}`,
-  );
+async function getAdminMentorshipHistoryByName(name: string) {
+  return axiosGet<IMentorship[]>(`${MENTORSHIP}?name=${name}`);
 }
 
 export {
