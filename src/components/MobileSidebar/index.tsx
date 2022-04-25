@@ -78,13 +78,12 @@ export const MobileSidebar: React.FC<IMobileSidebar> = ({
               className="flex-shrink-0 h-full mt-5 overflow-y-auto divide-y divide-dividerColor"
               aria-label="Sidebar"
             >
+            {!loading &&
+            (session?.user.role === '0' || session?.user.role === '2') ? (
+              <NavigationRoute routes={adminNavigation} />
+            ) : (
               <NavigationRoute routes={primaryRoutes} />
-              {!loading &&
-                (session?.user.role === '0' || session?.user.role === '2') && (
-                  <div className="pt-6 mt-6">
-                    <NavigationRoute routes={adminNavigation} />
-                  </div>
-                )}
+            )}
             </nav>
             <PwdByVercel />
           </div>

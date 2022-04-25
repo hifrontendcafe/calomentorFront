@@ -13,6 +13,7 @@ export interface IWarning {
   warning_date: number;
   mentee_id: string;
   mentee_name?: string;
+  mentee_username_discord?: string;
   mentor_name?: string;
   warn_type: WARN;
   warn_cause: string;
@@ -21,6 +22,11 @@ export interface IWarning {
   forgive_cause?: string;
   warning_author_id: string;
   warning_author_name: string;
+  warning_author_username_discord: string;
+  forgive_author_id: string;
+  forgive_author_name: string;
+  forgive_author_username_discord: string;
+  from_bot?: boolean;
 }
 
 export interface RemoveWarningForm {

@@ -71,7 +71,7 @@ export const TopBar: React.FC<ITopBar> = ({ setSidebarOpen }) => {
               leaveTo="transform opacity-0 scale-95"
             >
               <Menu.Items className="absolute right-0 w-48 py-1 mt-2 origin-top-right rounded-md shadow-lg bg-mainContent focus:outline-none">
-                <Link href={PROFILE} passHref>
+                {/* <Link href={PROFILE} passHref>
                   <Menu.Item>
                     {({ active }) => (
                       <a
@@ -86,7 +86,7 @@ export const TopBar: React.FC<ITopBar> = ({ setSidebarOpen }) => {
                       </a>
                     )}
                   </Menu.Item>
-                </Link>
+                </Link> */}
                 <Menu.Item>
                   {({ active }) => (
                     <a

@@ -52,11 +52,11 @@ export const primaryRoutes = [
 ];
 
 export const adminNavigation = [
-  {
-    name: 'Mentores',
-    href: MENTORS,
-    icon: UserGroupIcon,
-  },
+  // {
+  //   name: 'Mentores',
+  //   href: MENTORS,
+  //   icon: UserGroupIcon,
+  // },
   {
     name: 'Blacklist',
     href: WARNINGS,

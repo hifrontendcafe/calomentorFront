@@ -25,10 +25,21 @@ export const getMentorshipsQuerySchema = z.object({
   id: z.string().default(''),
   filter: z.enum(['', 'ACTIVE', 'CANCEL', 'CONFIRMED']).default(''),
   filter_dates: z.enum(['', 'PAST', 'FUTURE']).default(''),
+  name: z.string().default('').optional(),
+  limit: z.string().default('20'),
+  lastKeyId: z.string().optional(),
+  lastKeyDate: z.string().optional(),
 });
 
 export const cancelMentorshipBodySchema = z.object({
   mentorship_token: z.string(),
   cancel_cause: z.string(),
   who_canceled: z.enum(['MENTOR', 'MENTEE']),
+});
+
+export const getWarningQuerySchema = z.object({
+  name: z.string().default('').optional(),
+  limit: z.string().default('20'),
+  lastKeyId: z.string().optional(),
+  lastKeyDate: z.string().optional(),
 });

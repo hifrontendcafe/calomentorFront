@@ -22,13 +22,12 @@ export const DesktopSidebar: React.FC = () => {
             className="flex flex-col flex-1 mt-5 overflow-y-auto divide-y divide-dividerColor"
             aria-label="Sidebar"
           >
-            <NavigationRoute routes={primaryRoutes} />
             {!loading &&
-              (session?.user.role === '0' || session?.user.role === '2') && (
-                <div className="pt-6 mt-6">
-                  <NavigationRoute routes={adminNavigation} />
-                </div>
-              )}
+            (session?.user.role === '0' || session?.user.role === '2') ? (
+              <NavigationRoute routes={adminNavigation} />
+            ) : (
+              <NavigationRoute routes={primaryRoutes} />
+            )}
           </nav>
           <PwdByVercel />
         </div>

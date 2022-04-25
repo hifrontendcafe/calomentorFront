@@ -1,14 +1,27 @@
 import { axiosAWSInstance } from '@/config/AxiosConfig';
 import { WARNING } from '@/config/Routes';
 import { IWarning, WARN } from '@/interfaces/warning.interface';
+import { getWarningQuerySchema } from '@/schemas/schemas';
+import { z } from 'zod';
 
 /**
  * Get all warnings
+ * @param name - mentor or mentee name or discord username
  * @returns An array of warnings
  */
-export const getWarnings = async () => {
+export const getWarnings = async ({
+  name,
+  limit,
+  lastKeyId,
+  lastKeyDate,
+}: z.infer<typeof getWarningQuerySchema>) => {
   try {
-    const data = await axiosAWSInstance.get<IWarning[]>(WARNING);
+    const url = name
+      ? `${WARNING}${name ? `?name=${name}` : ''}`
+      : `${WARNING}?limit=${limit || '20'}${
+          lastKeyId ? `&last_key_id=${lastKeyId}` : ''
+        }${lastKeyDate ? `&last_key_date=${lastKeyDate}` : ''}`;
+    const data = await axiosAWSInstance.get<IWarning[]>(url);
     return data;
   } catch (error: any) {
     throw new Error(error.response.status);

@@ -1,3 +1,4 @@
+import { getWarningQuerySchema } from '@/schemas/schemas';
 import { addWarning, getWarnings, removeWarning } from '@/services/warningAPI';
 import { NextApiRequest, NextApiResponse } from 'next';
 
@@ -35,7 +36,12 @@ export default async function handler(
     return res.status(200).json(data);
     // Get all warnings
   } else if (req.method === 'GET') {
-    const { data } = await getWarnings();
+    const parsedQuery = getWarningQuerySchema.safeParse(req.query);
+    if (!parsedQuery.success) {
+      return res.status(400).json({ message: parsedQuery.error.format() });
+    }
+
+    const { data } = await getWarnings(parsedQuery.data);
     return res.status(200).json(data);
     // Remove warning
   } else if (req.method === 'PATCH') {
