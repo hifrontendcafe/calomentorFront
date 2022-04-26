@@ -21,14 +21,13 @@ export const getMentorships = async ({
   name,
   limit,
   lastKeyId,
-  lastKeyDate,
 }: z.infer<typeof getMentorshipsQuerySchema>) => {
   try {
     let url = id
       ? `${MENTORSHIP}/${id}`
       : `${MENTORSHIP}?limit=${limit || '20'}${
           lastKeyId ? `&last_key_id=${lastKeyId}` : ''
-        }${lastKeyDate ? `&last_key_date=${lastKeyDate}` : ''}`;
+        }`;
     if (name) {
       url = `${MENTORSHIP}?name=${name}`;
     }

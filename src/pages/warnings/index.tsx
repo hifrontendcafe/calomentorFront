@@ -25,7 +25,6 @@ const Warnings = () => {
   const [name, setName] = useState<string>('');
   const [lastKey, setLastKey] = useState<{
     id: string;
-    warning_date?: string;
   } | null>(null);
 
   const onSearchByName = async () => {
@@ -41,7 +40,6 @@ const Warnings = () => {
     const { data, lastKey: lastKeyResponse } = await getWarnings(
       null,
       lastKey?.id,
-      lastKey?.warning_date,
       '20',
     );
     setLastKey(lastKeyResponse || null);
@@ -53,6 +51,7 @@ const Warnings = () => {
     setIsLoading(true)
     getWarnings()
       .then(({ data, lastKey }) => {
+        console.log("data",data)
         if (lastKey) {
           setLastKey(lastKey);
         }

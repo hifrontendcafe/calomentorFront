@@ -28,7 +28,6 @@ export const getMentorshipsQuerySchema = z.object({
   name: z.string().default('').optional(),
   limit: z.string().default('20'),
   lastKeyId: z.string().optional(),
-  lastKeyDate: z.string().optional(),
 });
 
 export const cancelMentorshipBodySchema = z.object({
@@ -41,5 +40,4 @@ export const getWarningQuerySchema = z.object({
   name: z.string().default('').optional(),
   limit: z.string().default('20'),
   lastKeyId: z.string().optional(),
-  lastKeyDate: z.string().optional(),
 });

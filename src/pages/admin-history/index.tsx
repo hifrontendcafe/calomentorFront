@@ -24,7 +24,6 @@ const AdminHistory: React.FC = () => {
   const [name, setName] = useState<string>('');
   const [lastKey, setLastKey] = useState<{
     id: string;
-    mentorship_create_date?: string;
   } | null>(null);
 
   const onSearchByName = async () => {
@@ -43,7 +42,6 @@ const AdminHistory: React.FC = () => {
       data: { data, lastKey: lastKeyResponse },
     } = await getAdminMentorshipHistory(
       lastKey?.id,
-      lastKey?.mentorship_create_date,
       '20',
     );
     setLastKey(lastKeyResponse || null);

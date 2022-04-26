@@ -26,6 +26,9 @@ const WarningCard: React.FC<IWarningCard> = ({
     warn_type,
     warning_author_id,
     warning_date,
+    forgive_author_id,
+    forgive_author_name,
+    forgive_cause,
   },
 }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -49,7 +52,9 @@ const WarningCard: React.FC<IWarningCard> = ({
             </h3>
             <p className="max-w-2xl mt-1 text-sm">
               Fecha:{' '}
-              {formatDate(Number(date.length === 16 ? date.slice(0, -3) : date))}
+              {formatDate(
+                Number(date.length === 16 ? date.slice(0, -3) : date),
+              )}
             </p>
           </div>
           <div className="flex flex-row items-center">
@@ -101,6 +106,27 @@ const WarningCard: React.FC<IWarningCard> = ({
                 </dt>
                 <dd className="mt-1 text-sm text-gray-200">{warn_cause}</dd>
               </div>
+            )}
+            {warning_status === WARNSTATE.FORGIVE && (
+              <>
+                <hr className='sm:col-span-2 border-gray-700' />
+                <div className="sm:col-span-1">
+                  <dt className="text-sm font-medium text-mainTextColor">
+                    Perdonado por
+                  </dt>
+                  <dd className="mt-1 text-sm text-gray-200">
+                    {forgive_author_name} - {forgive_author_id}
+                  </dd>
+                </div>
+                <div className="sm:col-span-1">
+                  <dt className="text-sm font-medium text-mainTextColor">
+                    Motivo
+                  </dt>
+                  <dd className="mt-1 text-sm text-gray-200">
+                    {forgive_cause}
+                  </dd>
+                </div>
+              </>
             )}
           </dl>
         </div>
