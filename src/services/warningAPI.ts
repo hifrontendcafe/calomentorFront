@@ -13,14 +13,13 @@ export const getWarnings = async ({
   name,
   limit,
   lastKeyId,
-  lastKeyDate,
 }: z.infer<typeof getWarningQuerySchema>) => {
   try {
     const url = name
       ? `${WARNING}${name ? `?name=${name}` : ''}`
       : `${WARNING}?limit=${limit || '20'}${
           lastKeyId ? `&last_key_id=${lastKeyId}` : ''
-        }${lastKeyDate ? `&last_key_date=${lastKeyDate}` : ''}`;
+        }`;
     const data = await axiosAWSInstance.get<IWarning[]>(url);
     return data;
   } catch (error: any) {

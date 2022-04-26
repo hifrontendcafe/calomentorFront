@@ -34,14 +34,13 @@ async function getTimeslots(id: string) {
 async function getWarnings(
   name?: string | null,
   lastKeyId?: string | null,
-  lastKeyDate?: string | null,
   limit?: string,
 ) {
   const url = name
     ? `${WARNING}${name ? `?name=${name}` : ''}`
     : `${WARNING}?limit=${limit || '20'}${
         lastKeyId ? `&lastKeyId=${lastKeyId}` : ''
-      }${lastKeyDate ? `&lastKeyDate=${lastKeyDate}` : ''}`;
+      }`;
   return axiosGet<IWarning[]>(url);
 }
 
@@ -67,7 +66,6 @@ async function removeWarning(id: string, forgive_cause: string) {
 
 async function getAdminMentorshipHistory(
   lastKeyId?: string | null,
-  lastKeyDate?: string | null,
   limit?: string,
 ) {
   return axiosGet<{
@@ -76,12 +74,12 @@ async function getAdminMentorshipHistory(
   }>(
     `${MENTORSHIP}?limit=${limit ?? '20'}${
       lastKeyId ? `&lastKeyId=${lastKeyId}` : ''
-    }${lastKeyDate ? `&lastKeyDate=${lastKeyDate}` : ''}`,
+    }`,
   );
 }
 
 async function getAdminMentorshipHistoryByName(name: string) {
-  return axiosGet<IMentorship[]>(`${MENTORSHIP}?name=${name}`);
+  return axiosGet<{ data: IMentorship[] }>(`${MENTORSHIP}?name=${name}`);
 }
 
 export {

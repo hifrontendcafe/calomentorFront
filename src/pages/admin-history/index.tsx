@@ -24,12 +24,14 @@ const AdminHistory: React.FC = () => {
   const [name, setName] = useState<string>('');
   const [lastKey, setLastKey] = useState<{
     id: string;
-    mentorship_create_date?: string;
   } | null>(null);
 
   const onSearchByName = async () => {
     setIsLoading(true);
-    const { data } = await getAdminMentorshipHistoryByName(name);
+    const {
+      data: { data },
+    } = await getAdminMentorshipHistoryByName(name);
+    setLastKey(null);
     setMentorships(orderMentorshipsByDate(data));
     setIsLoading(false);
   };
@@ -40,7 +42,6 @@ const AdminHistory: React.FC = () => {
       data: { data, lastKey: lastKeyResponse },
     } = await getAdminMentorshipHistory(
       lastKey?.id,
-      lastKey?.mentorship_create_date,
       '20',
     );
     setLastKey(lastKeyResponse || null);
@@ -48,23 +49,28 @@ const AdminHistory: React.FC = () => {
     setIsLoading(false);
   };
 
+  const getAllMentorships = () => {
+    setIsLoading(true);
+    getAdminMentorshipHistory()
+      .then(({ data: { data, lastKey } }) => {
+        setLastKey(lastKey || null);
+        setMentorships(orderMentorshipsByDate(data));
+        setIsLoading(false);
+      })
+      .catch(() => {
+        addToast({
+          title: 'Ha ocurrido un problema',
+          subText:
+            'No se ha podido obtener el historial completo de mentorías.',
+          type: 'error',
+        });
+        setIsLoading(false);
+      });
+  };
+
   useEffect(() => {
     if (session && !loading) {
-      getAdminMentorshipHistory()
-        .then(({ data: { data, lastKey } }) => {
-          setLastKey(lastKey || null);
-          setMentorships(orderMentorshipsByDate(data));
-          setIsLoading(false);
-        })
-        .catch(() => {
-          addToast({
-            title: 'Ha ocurrido un problema',
-            subText:
-              'No se ha podido obtener el historial completo de mentorías.',
-            type: 'error',
-          });
-          setIsLoading(false);
-        });
+      getAllMentorships();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loading, router]);
@@ -93,6 +99,13 @@ const AdminHistory: React.FC = () => {
                 bntLabel={'Buscar'}
                 primary
                 clickAction={onSearchByName}
+                isActive={true}
+              />
+              <CustomButton
+                className="mt-1"
+                bntLabel={'Todos'}
+                primary
+                clickAction={getAllMentorships}
                 isActive={true}
               />
             </div>
