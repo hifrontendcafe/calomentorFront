@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { useSession } from 'next-auth/client';
 import DashboardLayout from '@/components/DashboardLayout';
 import { useRouter } from 'next/dist/client/router';
 import CustomHead from '@/components/CustomHead';
@@ -13,11 +12,12 @@ import GenericCard from '@/components/GenericCard';
 import useToastContext from '@/hooks/useToastContext';
 import CustomButton from '@/components/CustomButton';
 import { orderMentorshipsByDate } from '@/helpers/getOrderByDate';
+import { useNextAuthSession } from '@/hooks/useNextAuthSession';
 
 const AdminHistory: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [mentorships, setMentorships] = useState<IMentorship[]>([]);
-  const [session, loading] = useSession();
+  const [session, loading] = useNextAuthSession();
   const noMentorships = mentorships.length === 0;
   const router = useRouter();
   const { addToast } = useToastContext();
@@ -40,10 +40,7 @@ const AdminHistory: React.FC = () => {
     setIsLoading(true);
     const {
       data: { data, lastKey: lastKeyResponse },
-    } = await getAdminMentorshipHistory(
-      lastKey?.id,
-      '20',
-    );
+    } = await getAdminMentorshipHistory(lastKey?.id, '20');
     setLastKey(lastKeyResponse || null);
     setMentorships(orderMentorshipsByDate([...data, ...mentorships]));
     setIsLoading(false);

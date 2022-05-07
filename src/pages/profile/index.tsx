@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
-import { useSession } from 'next-auth/client';
 import Select from 'react-select';
 import { fileUpload } from '@/helpers/ImageUpload';
 import useUserContext from '@/hooks/useUserContext';
@@ -17,9 +16,10 @@ import CustomHead from '@/components/CustomHead';
 import DashboardLayout from '@/components/DashboardLayout';
 import GenericCard from '@/components/GenericCard';
 import Link from 'next/link';
+import { useNextAuthSession } from '@/hooks/useNextAuthSession';
 
 const SettingsProfilePage: React.FC = () => {
-  const [session, loading] = useSession();
+  const [session, loading] = useNextAuthSession();
   const [urlPhoto, setUrlPhoto] = useState(
     'https://res.cloudinary.com/frontendcafe/image/upload/v1631388475/defaultUserImage_advu4k.svg',
   );
@@ -54,10 +54,6 @@ const SettingsProfilePage: React.FC = () => {
   useEffect(() => {
     if (!id && !loading && session) {
       getUserData(session.user.id.toString()).then(({ data }) => {
-        console.log(
-          '🚀 ~ file: index.tsx ~ line 82 ~ getUserData ~ data',
-          data,
-        );
         if (data.full_name) {
           const {
             full_name,
@@ -127,7 +123,6 @@ const SettingsProfilePage: React.FC = () => {
 
   const onSubmit: SubmitHandler<User> = async data => {
     data.role = getRoleArray(session?.user.role);
-    console.log('🚀 ~ file: index.tsx ~ line 127 ~ data', data);
     axiosPut(USER, { data })
       .then(() => {
         addToast({

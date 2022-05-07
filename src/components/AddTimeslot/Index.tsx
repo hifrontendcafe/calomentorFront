@@ -3,12 +3,12 @@ import React, { useState } from 'react';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import CustomButton from '../CustomButton';
 import { axiosPost } from '@/lib/api';
-import { useSession } from 'next-auth/client';
 import { TIMESLOTS } from '@/config/Routes';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import dayjs from 'dayjs';
 import { ITimeSlot } from '@/interfaces/timeslot.interface';
+import { useNextAuthSession } from '@/hooks/useNextAuthSession';
 
 interface IAddTimeslot {
   getSchedule: () => void;
@@ -30,7 +30,7 @@ const AddTimeslot: React.FC<IAddTimeslot> = ({
   timeslots,
 }) => {
   const [excludedTimes, setExcludedTimes] = useState<Date[]>([]);
-  const [session, loading] = useSession();
+  const [session, isLoading] = useNextAuthSession();
   const { addToast } = useToastContext();
   const {
     formState: { errors },
@@ -48,7 +48,7 @@ const AddTimeslot: React.FC<IAddTimeslot> = ({
   };
 
   const handleConfirmBtn: SubmitHandler<ITimeForm> = data => {
-    if (!loading && session) {
+    if (!isLoading && session) {
       axiosPost(TIMESLOTS, {
         user_id: session.user.id.toString(),
         slot_date: unifyDates(data.date, data.time).toDate().getTime(),

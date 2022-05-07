@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { signOut, useSession } from 'next-auth/client';
 import DashboardLayout from '@/components/DashboardLayout';
 import { useRouter } from 'next/dist/client/router';
 import CustomHead from '@/components/CustomHead';
@@ -11,6 +10,8 @@ import Link from 'next/link';
 import { getUserData, getFutureMentorships } from '@/services';
 import GenericCard from '@/components/GenericCard';
 import useUserContext from '@/hooks/useUserContext';
+import { useNextAuthSession } from '@/hooks/useNextAuthSession';
+import { signOut } from 'next-auth/react';
 
 const Home: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -21,7 +22,7 @@ const Home: React.FC = () => {
     mentee_name: string;
   }>({ mentorship_token: '', mentee_name: '' });
 
-  const [session, loading] = useSession();
+  const [session, loading] = useNextAuthSession();
   const { dispatch } = useUserContext();
   const router = useRouter();
   const mentorshipsEmpty = mentorships.length === 0;

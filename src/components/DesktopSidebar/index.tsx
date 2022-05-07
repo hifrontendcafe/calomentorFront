@@ -1,11 +1,11 @@
 import React from 'react';
 import { adminNavigation, primaryRoutes } from '@/config/Routes';
-import { useSession } from 'next-auth/client';
 import NavigationRoute from '../NavigationRoute';
 import PwdByVercel from '../PwdByVercel';
+import { useNextAuthSession } from '@/hooks/useNextAuthSession';
 
 export const DesktopSidebar: React.FC = () => {
-  const [session, loading] = useSession();
+  const [session, loading] = useNextAuthSession();
   return (
     <div className="hidden lg:flex lg:flex-shrink-0">
       <div className="flex flex-col w-64">

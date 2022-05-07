@@ -1,5 +1,4 @@
-import { useCallback, useContext, useEffect, useState } from 'react';
-import { signOut, useSession } from 'next-auth/client';
+import { useCallback, useEffect, useState } from 'react';
 import DashboardLayout from '@/components/DashboardLayout';
 import { useRouter } from 'next/dist/client/router';
 import CustomHead from '@/components/CustomHead';
@@ -11,6 +10,8 @@ import WarnModal from '@/components/WarnModal';
 import GenericCard from '@/components/GenericCard';
 import Link from 'next/link';
 import useUserContext from '@/hooks/useUserContext';
+import { useNextAuthSession } from '@/hooks/useNextAuthSession';
+import { signOut } from 'next-auth/react';
 
 const History: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -21,7 +22,7 @@ const History: React.FC = () => {
     menteeId: '',
     mentorshipId: '',
   });
-  const [session, loadingUser] = useSession();
+  const [session, loadingUser] = useNextAuthSession();
   const noMentorships = mentorships.length === 0;
 
   const { dispatch } = useUserContext();

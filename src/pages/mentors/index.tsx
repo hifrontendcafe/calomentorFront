@@ -3,18 +3,18 @@ import CustomHead from '@/components/CustomHead';
 import DashboardLayout from '@/components/DashboardLayout';
 import { HOME } from '@/config/Routes';
 import { User } from '@/interfaces/user.interface';
-import { useSession } from 'next-auth/client';
 import { isAdmin } from '@/helpers/IsAdmin';
 import { useRouter } from 'next/dist/client/router';
 import MentorCard from '@/components/MentorCard/MentorCard';
 import { getAllUsersData } from '@/services';
 import GenericCard from '@/components/GenericCard';
 import useToastContext from '@/hooks/useToastContext';
+import { useNextAuthSession } from '@/hooks/useNextAuthSession';
 
 const AdminMentors = () => {
   const [mentors, setMentors] = useState<User[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [session, loading] = useSession();
+  const [session, loading] = useNextAuthSession();
   const router = useRouter();
   const emptyMentors = mentors.length === 0;
   const { addToast } = useToastContext();

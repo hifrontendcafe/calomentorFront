@@ -7,7 +7,7 @@ import { axiosPost } from '@/lib/api';
 import { WARNING } from '@/config/Routes';
 import useToastContext from '@/hooks/useToastContext';
 import { IWarnForm } from '@/interfaces/mentorship.interface';
-import { useSession } from 'next-auth/client';
+import { useNextAuthSession } from '@/hooks/useNextAuthSession';
 
 interface IModal {
   mentee_name: string;
@@ -27,7 +27,7 @@ const WarnModal: React.FC<IModal> = ({
   mentorshipId,
 }) => {
   const [causeEnabled, setCauseEnabled] = useState(false);
-  const [session, loading] = useSession();
+  const [session, isLoading] = useNextAuthSession();
   const { addToast } = useToastContext();
   const {
     register,
@@ -46,7 +46,7 @@ const WarnModal: React.FC<IModal> = ({
       warn_type,
       warn_cause,
       mentorship_id: mentorshipId,
-      warning_author_id: !loading && session?.user.id,
+      warning_author_id: !isLoading && session?.user.id,
     })
       .then(() => {
         addToast({

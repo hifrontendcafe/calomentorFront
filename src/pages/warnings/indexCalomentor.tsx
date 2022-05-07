@@ -6,12 +6,12 @@ import Modal from '@/components/Modal';
 import WarningCard from '@/components/WarningCard';
 import { HOME } from '@/config/Routes';
 import { isAdmin } from '@/helpers/IsAdmin';
+import { useNextAuthSession } from '@/hooks/useNextAuthSession';
 import useToastContext from '@/hooks/useToastContext';
 import { IWarning, RemoveWarningForm } from '@/interfaces/warning.interface';
 import { getWarnings, removeWarning } from '@/services';
 import { Dialog } from '@headlessui/react';
 import { DocumentRemoveIcon } from '@heroicons/react/outline';
-import { useSession } from 'next-auth/client';
 import { useRouter } from 'next/dist/client/router';
 import React, { useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
@@ -29,7 +29,7 @@ const Warnings = () => {
     mentee_name: '',
   });
   const [isLoading, setIsLoading] = useState(true);
-  const [session, loading] = useSession();
+  const [session, loading] = useNextAuthSession();
   const router = useRouter();
   const { addToast } = useToastContext();
   const emptyWarnings = warnings.length === 0;
