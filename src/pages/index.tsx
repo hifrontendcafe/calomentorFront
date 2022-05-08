@@ -1,13 +1,14 @@
-import { signIn, useSession } from 'next-auth/client';
 import { useRouter } from 'next/dist/client/router';
 import { useEffect } from 'react';
 import { HOME } from '@/config/Routes';
 import CustomHead from '@/components/CustomHead';
 import PwdByVercel from '@/components/PwdByVercel';
 import { FaDiscord } from 'react-icons/fa';
+import { useNextAuthSession } from '@/hooks/useNextAuthSession';
+import { signIn } from 'next-auth/react';
 
 const Home = () => {
-  const [session, loading] = useSession();
+  const [session, loading] = useNextAuthSession();
   const router = useRouter();
 
   useEffect(() => {

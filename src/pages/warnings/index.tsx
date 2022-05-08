@@ -4,9 +4,9 @@ import DashboardLayout from '@/components/DashboardLayout';
 import GenericCard from '@/components/GenericCard';
 import WarningCardFromBot from '@/components/WarningCardFromBot';
 import { orderWarningsByDate } from '@/helpers/getOrderByDate';
+import { useNextAuthSession } from '@/hooks/useNextAuthSession';
 import { IWarning } from '@/interfaces/warning.interface';
 import { getWarnings } from '@/services';
-import { useSession } from 'next-auth/client';
 import { useRouter } from 'next/dist/client/router';
 import React, { useEffect, useState } from 'react';
 
@@ -18,7 +18,7 @@ export type WarningModalData = {
 const Warnings = () => {
   const [warnings, setWarnings] = useState<IWarning[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [session, loading] = useSession();
+  const [session, loading] = useNextAuthSession();
   const router = useRouter();
   const emptyWarnings = warnings.length === 0;
 
@@ -48,10 +48,9 @@ const Warnings = () => {
   };
 
   const getAllWarnings = () => {
-    setIsLoading(true)
+    setIsLoading(true);
     getWarnings()
       .then(({ data, lastKey }) => {
-        console.log("data",data)
         if (lastKey) {
           setLastKey(lastKey);
         }
@@ -70,8 +69,8 @@ const Warnings = () => {
 
   return (
     <>
-      <CustomHead title="Blacklist" />
-      <DashboardLayout title="Blacklist">
+      <CustomHead title="Advertencias" />
+      <DashboardLayout title="Advertencias">
         <GenericCard
           isLoading={isLoading}
           isDataEmpty={emptyWarnings}

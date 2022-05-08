@@ -1,18 +1,21 @@
 import '@/styles/globals.css';
-import type { AppProps } from 'next/app';
-import { Provider } from 'next-auth/client';
+import { SessionProvider } from 'next-auth/react';
 import { UserProvider } from '@/context/UserContext';
 import { ToastProvider } from '@/context/ToastContext';
+import { AppProps } from 'next/app';
 
-const CalomentorApp = ({ Component, pageProps }: AppProps) => {
+const CalomentorApp = ({
+  Component,
+  pageProps: { session, ...pageProps },
+}: AppProps) => {
   return (
-    <Provider session={pageProps.session}>
+    <SessionProvider session={session}>
       <UserProvider>
         <ToastProvider>
           <Component {...pageProps} />
         </ToastProvider>
       </UserProvider>
-    </Provider>
+    </SessionProvider>
   );
 };
 

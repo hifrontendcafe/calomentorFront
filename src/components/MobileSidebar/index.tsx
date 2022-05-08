@@ -4,9 +4,8 @@ import { Dialog, Transition } from '@headlessui/react';
 import { XIcon } from '@heroicons/react/outline';
 import { adminNavigation, primaryRoutes } from '@/config/Routes';
 import NavigationRoute from '../NavigationRoute';
-import { useSession } from 'next-auth/client';
-import Image from 'next/image';
 import PwdByVercel from '../PwdByVercel';
+import { useNextAuthSession } from '@/hooks/useNextAuthSession';
 
 interface IMobileSidebar {
   sidebarOpen: boolean;
@@ -16,7 +15,7 @@ export const MobileSidebar: React.FC<IMobileSidebar> = ({
   sidebarOpen,
   setSidebarOpen,
 }) => {
-  const [session, loading] = useSession();
+  const [session, loading] = useNextAuthSession();
   return (
     <Transition.Root show={sidebarOpen} as={Fragment}>
       <Dialog
@@ -75,15 +74,14 @@ export const MobileSidebar: React.FC<IMobileSidebar> = ({
               </span>
             </div>
             <nav
-              className="flex-shrink-0 h-full mt-5 overflow-y-auto divide-y divide-dividerColor"
+              className="flex-shrink-0 h-full mt-5 overflow-y-auto"
               aria-label="Sidebar"
             >
-            {!loading &&
-            (session?.user.role === '0' || session?.user.role === '2') ? (
-              <NavigationRoute routes={adminNavigation} />
-            ) : (
               <NavigationRoute routes={primaryRoutes} />
-            )}
+              {!loading &&
+                (session?.user.role === '0' || session?.user.role === '2') && (
+                  <NavigationRoute routes={adminNavigation} />
+                )}
             </nav>
             <PwdByVercel />
           </div>

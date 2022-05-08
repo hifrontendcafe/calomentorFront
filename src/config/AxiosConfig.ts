@@ -9,6 +9,6 @@ export const axiosAWSInstance = axios.create({
   baseURL: process.env.AWS_BASE_URL,
   timeout: 7000,
   headers: {
-    'x-api-key': process.env.AWS_API_KEY,
+    'x-api-key': process.env.AWS_API_KEY || '',
   },
 });

@@ -7,10 +7,11 @@ import useToastContext from '@/hooks/useToastContext';
 import classNames from 'classnames';
 import GenericCard from '../GenericCard';
 import CustomButton from '../CustomButton';
-import { useSession } from 'next-auth/client';
+
 import ButtonSpinner from '../ButtonSpinner';
 import Modal from '../Modal';
 import { HiOutlineExclamation } from 'react-icons/hi';
+import { useNextAuthSession } from '@/hooks/useNextAuthSession';
 
 interface IMentorCard {
   mentor: User;
@@ -29,7 +30,7 @@ const MentorCard: React.FC<IMentorCard> = ({
     user_status !== UserStatus.OUTSIDE_THE_PROGRAM &&
       user_status === UserStatus.ACTIVE,
   );
-  const [session] = useSession();
+  const [session] = useNextAuthSession();
   const { addToast } = useToastContext();
 
   const renderActivateButtonLabel = () => {

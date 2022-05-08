@@ -1,5 +1,4 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { useSession } from 'next-auth/client';
 import CustomButton from '@/components/CustomButton';
 import Timeslot from '@/components/Timeslot';
 import { PlusIcon, XIcon } from '@heroicons/react/outline';
@@ -10,9 +9,10 @@ import { getTimeslots } from '@/services';
 import CustomHead from '@/components/CustomHead';
 import DashboardLayout from '@/components/DashboardLayout';
 import GenericCard from '@/components/GenericCard';
+import { useNextAuthSession } from '@/hooks/useNextAuthSession';
 
 const SettingsSchedulePage: React.FC = () => {
-  const [session, loading] = useSession();
+  const [session, loading] = useNextAuthSession();
   const [isOpen, setIsOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [timeslots, setTimeslots] = useState<ITimeSlot[]>([]);

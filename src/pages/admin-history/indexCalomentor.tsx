@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { useSession } from 'next-auth/client';
 import DashboardLayout from '@/components/DashboardLayout';
 import { useRouter } from 'next/dist/client/router';
 import CustomHead from '@/components/CustomHead';
@@ -12,6 +11,7 @@ import GenericCard from '@/components/GenericCard';
 import { isAdmin } from '@/helpers/IsAdmin';
 import useToastContext from '@/hooks/useToastContext';
 import CustomButton from '@/components/CustomButton';
+import { useNextAuthSession } from '@/hooks/useNextAuthSession';
 
 interface ModalData {
   mentee_name: string;
@@ -31,7 +31,7 @@ const AdminHistory: React.FC = () => {
     mentorshipId: '',
   });
   const [activeFilter, setActiveFilter] = useState<STATUS | 'all'>('all');
-  const [session, loading] = useSession();
+  const [session, loading] = useNextAuthSession();
   const noMentorships = mentorships.length === 0;
   const router = useRouter();
   const { addToast } = useToastContext();

@@ -1,5 +1,11 @@
 import { NotificationToast } from '@/components/NotificationToast';
-import React, { createContext, useCallback, useEffect, useState } from 'react';
+import React, {
+  createContext,
+  ReactNode,
+  useCallback,
+  useEffect,
+  useState,
+} from 'react';
 
 interface IToast {
   type: 'info' | 'error' | 'default';
@@ -13,7 +19,9 @@ export const ToastContext = createContext<{
   addToast: () => {},
 });
 
-export const ToastProvider: React.FC = ({ children }) => {
+export const ToastProvider: React.FC<{ children: ReactNode }> = ({
+  children,
+}) => {
   const [toasts, setToasts] = useState<IToast[]>([]);
 
   const addToast = useCallback(

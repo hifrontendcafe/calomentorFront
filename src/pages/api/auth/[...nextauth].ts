@@ -1,5 +1,5 @@
 import NextAuth from 'next-auth';
-import Providers from 'next-auth/providers';
+import DiscordProvider from 'next-auth/providers/discord';
 import {
   CalomentorAdminID,
   CalomentorMentorID,
@@ -12,27 +12,23 @@ import { RoleType } from '@/interfaces/user.interface';
 
 export default NextAuth({
   providers: [
-    Providers.Discord({
-      clientId: process.env.DISCORD_CLIENT_ID,
-      clientSecret: process.env.DISCORD_CLIENT_SECRET,
-      scope: 'identify email guilds',
+    DiscordProvider({
+      clientId: process.env.DISCORD_CLIENT_ID || '',
+      clientSecret: process.env.DISCORD_CLIENT_SECRET || '',
     }),
   ],
   secret: process.env.SECRET,
-  session: {
-    jwt: true,
-  },
   jwt: {
-    signingKey: process.env.JWT_SIGNING_PRIVATE_KEY,
+    secret: process.env.JWT_SIGNING_PRIVATE_KEY,
   },
   // Callbacks | https://next-auth.js.org/configuration/callbacks
   callbacks: {
-    async signIn(user, account, profile) {
+    async signIn({ user, account: { access_token } }) {
       const guildResp = await fetch(
         'https://discord.com/api/users/@me/guilds',
         {
           headers: {
-            Authorization: `Bearer ${account.accessToken}`,
+            Authorization: `Bearer ${access_token}`,
           },
         },
       );
@@ -81,15 +77,15 @@ export default NextAuth({
         return UNAUTHORIZED;
       }
     },
-    jwt: async (token, user) => {
+    jwt: async ({ user, token }) => {
       if (user) {
         token.role = user.role;
       }
       return token;
     },
-    session: async (session, user) => {
-      session.user.id = user.sub as number;
-      session.user.role = user.role as string;
+    session: async ({ session, token }) => {
+      session.user.id = Number.parseInt(token.sub as string);
+      session.user.role = token.role as string;
       return session;
     },
   },

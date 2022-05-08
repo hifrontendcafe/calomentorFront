@@ -1,17 +1,8 @@
-import React, { ComponentType } from 'react';
+import React from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/dist/client/router';
 import classNames from 'classnames';
-
-interface IRoute {
-  name: string;
-  href: string;
-  icon: ComponentType<{ className: string }>;
-}
-
-interface INavigationRoute {
-  routes: IRoute[];
-}
+import { INavigationRoute } from '@/interfaces/router.interface';
 
 const NavigationRoute: React.FC<INavigationRoute> = ({ routes }) => {
   const router = useRouter();
@@ -30,6 +21,7 @@ const NavigationRoute: React.FC<INavigationRoute> = ({ routes }) => {
               },
             )}
           >
+            {/*  @ts-ignore */}
             <item.icon
               className="flex-shrink-0 w-6 h-6 mr-4 text-teal-200"
               aria-hidden="true"

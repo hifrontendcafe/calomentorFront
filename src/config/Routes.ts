@@ -1,9 +1,7 @@
+import { INavigationRoute, IRoute } from '@/interfaces/router.interface';
 import {
-  ClockIcon,
   DocumentTextIcon,
   HomeIcon,
-  UserCircleIcon,
-  UserGroupIcon,
   ExclamationIcon,
 } from '@heroicons/react/outline';
 
@@ -34,31 +32,31 @@ export const WARNING = '/warning';
 
 export const primaryRoutes = [
   { name: 'Inicio', href: HOME, icon: HomeIcon },
-  {
-    name: 'Perfil',
-    href: PROFILE,
-    icon: UserCircleIcon,
-  },
-  {
-    name: 'Horarios',
-    href: SCHEDULE,
-    icon: ClockIcon,
-  },
-  {
-    name: 'Mi historial',
-    href: HISTORY,
-    icon: DocumentTextIcon,
-  },
+  // {
+  //   name: 'Perfil',
+  //   href: PROFILE,
+  //   icon: UserCircleIcon,
+  // },
+  // {
+  //   name: 'Horarios',
+  //   href: SCHEDULE,
+  //   icon: ClockIcon,
+  // },
+  // {
+  //   name: 'Mi historial',
+  //   href: HISTORY,
+  //   icon: DocumentTextIcon,
+  // },
 ];
 
-export const adminNavigation = [
+export const adminNavigation: IRoute[] = [
   // {
   //   name: 'Mentores',
   //   href: MENTORS,
   //   icon: UserGroupIcon,
   // },
   {
-    name: 'Blacklist',
+    name: 'Warnings',
     href: WARNINGS,
     icon: ExclamationIcon,
   },

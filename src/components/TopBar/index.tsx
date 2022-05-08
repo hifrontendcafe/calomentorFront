@@ -6,17 +6,16 @@ import {
 } from '@heroicons/react/outline';
 import Image from 'next/image';
 import { Menu, Transition } from '@headlessui/react';
-import { signOut, useSession } from 'next-auth/client';
-import Link from 'next/link';
-import { PROFILE } from '@/config/Routes';
 import classNames from 'classnames';
+import { useNextAuthSession } from '@/hooks/useNextAuthSession';
+import { signOut } from 'next-auth/react';
 
 interface ITopBar {
   setSidebarOpen: Dispatch<boolean>;
 }
 
 export const TopBar: React.FC<ITopBar> = ({ setSidebarOpen }) => {
-  const [session, loading] = useSession();
+  const [session, loading] = useNextAuthSession();
 
   return (
     <div className="relative z-10 flex flex-shrink-0 h-16 border-b border-gray-200 bg-topbar lg:border-none">
