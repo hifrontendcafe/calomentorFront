@@ -1,9 +1,9 @@
-import { ReactNode } from 'react';
+import { IconType } from 'react-icons/lib';
 
 export interface IRoute {
   name: string;
   href: string;
-  icon: ReactNode;
+  icon: IconType;
 }
 
 export interface INavigationRoute {

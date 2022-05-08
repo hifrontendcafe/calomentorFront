@@ -77,10 +77,16 @@ export default NextAuth({
         return UNAUTHORIZED;
       }
     },
-    session: async props => {
-      props.session.user.id = Number.parseInt(props.token.sub as string);
-      props.session.user.role = props.token.role as string;
-      return props.session;
+    jwt: async ({ user, token }) => {
+      if (user) {
+        token.role = user.role;
+      }
+      return token;
+    },
+    session: async ({ session, token }) => {
+      session.user.id = Number.parseInt(token.sub as string);
+      session.user.role = token.role as string;
+      return session;
     },
   },
   pages: {

@@ -78,8 +78,8 @@ const Warnings = () => {
   }, [loading, router]);
   return (
     <>
-      <CustomHead title="Blacklist" />
-      <DashboardLayout title="Blacklist">
+      <CustomHead title="Advertencias" />
+      <DashboardLayout title="Advertencias">
         <GenericCard
           isLoading={isLoading}
           isDataEmpty={emptyWarnings}
