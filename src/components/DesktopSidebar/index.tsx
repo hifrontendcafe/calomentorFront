@@ -6,7 +6,6 @@ import { useNextAuthSession } from '@/hooks/useNextAuthSession';
 
 export const DesktopSidebar: React.FC = () => {
   const [session, loading] = useNextAuthSession();
-  console.log('🚀 ~ file: index.tsx ~ line 9 ~ session', session);
   return (
     <div className="hidden lg:flex lg:flex-shrink-0">
       <div className="flex flex-col w-64">

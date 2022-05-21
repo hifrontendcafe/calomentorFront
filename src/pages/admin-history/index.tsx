@@ -18,7 +18,7 @@ const AdminHistory: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [mentorships, setMentorships] = useState<IMentorship[]>([]);
   const [session, loading] = useNextAuthSession();
-  const noMentorships = mentorships.length === 0;
+  const noMentorships = mentorships?.length === 0;
   const router = useRouter();
   const { addToast } = useToastContext();
   const [name, setName] = useState<string>('');
@@ -107,7 +107,7 @@ const AdminHistory: React.FC = () => {
               />
             </div>
           </div>
-          {mentorships.map(mentorship => (
+          {mentorships?.map(mentorship => (
             <HistoryMentorshipCardFromBot
               key={mentorship.id}
               mentorship={mentorship}

@@ -76,7 +76,6 @@ export const updateUserStatus = async (
       modified_by,
       user_status,
     });
-    console.log('🚀 ~ file: userAPI.ts ~ line 79 ~ data', data);
     return data;
   } catch (error: any) {
     throw new Error(error.response.status);
