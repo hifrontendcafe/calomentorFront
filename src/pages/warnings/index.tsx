@@ -69,14 +69,14 @@ const Warnings = () => {
 
   return (
     <>
-      <CustomHead title="Advertencias" />
-      <DashboardLayout title="Advertencias">
+      <CustomHead title="Penalizaciones" />
+      <DashboardLayout title="Penalizaciones">
         <GenericCard
           isLoading={isLoading}
           isDataEmpty={emptyWarnings}
-          noDataMessage="Actualmente no hay usuarios con advertencias 🥳"
+          noDataMessage="Actualmente no hay usuarios con penalizaciones 🥳"
         >
-          <div className="flex flex-col px-6 h-16 gap-2">
+          <div className="flex flex-col h-16 gap-2 px-6">
             <div className="flex gap-4 w-80">
               <input
                 type="text"
@@ -108,7 +108,7 @@ const Warnings = () => {
           {lastKey && (
             <div className="flex justify-center w-full">
               <CustomButton
-                className="mt-1 w-48 flex justify-center"
+                className="flex justify-center w-48 mt-1"
                 bntLabel={'Buscar más'}
                 primary
                 clickAction={onSearchMore}

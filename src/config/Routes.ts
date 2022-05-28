@@ -56,7 +56,7 @@ export const adminNavigation: IRoute[] = [
   //   icon: UserGroupIcon,
   // },
   {
-    name: 'Warnings',
+    name: 'Penalizaciones',
     href: WARNINGS,
     icon: ExclamationIcon,
   },
