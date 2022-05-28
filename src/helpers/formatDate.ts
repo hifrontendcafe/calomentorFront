@@ -15,7 +15,7 @@ export const userLocale = Intl.DateTimeFormat().resolvedOptions().locale;
 export const formatDate = (date: number) => {
   return dayjs(date)
     .tz(userTimezone)
-    .locale(userLocale)
+    .locale('es-mx')
     .format('MMMM D, YYYY h:mm A');
 };
 
