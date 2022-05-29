@@ -4,6 +4,7 @@ import {
   HomeIcon,
   ExclamationIcon,
 } from '@heroicons/react/outline';
+import UserGroupIcon from '@heroicons/react/solid/UserGroupIcon';
 
 // ---------- ROUTE CONSTANTS ----------
 
@@ -27,6 +28,7 @@ export const ACTIVATE = '/activate';
 export const CONFIRMATION = '/confirmation';
 export const FEEDBACK = '/feedback';
 export const WARNING = '/warning';
+export const MENTORSAPI = '/mentor';
 
 // ---------- NAVIGATION ROUTES ----------
 
@@ -47,6 +49,11 @@ export const primaryRoutes = [
   //   href: HISTORY,
   //   icon: DocumentTextIcon,
   // },
+  {
+    name: 'Mentores',
+    href: MENTORS,
+    icon: UserGroupIcon,
+  },
 ];
 
 export const adminNavigation: IRoute[] = [

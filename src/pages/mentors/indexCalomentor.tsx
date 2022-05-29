@@ -1,16 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import CustomHead from '@/components/CustomHead';
 import DashboardLayout from '@/components/DashboardLayout';
-import { Mentor, UserStatus } from '@/interfaces/user.interface';
+import { HOME } from '@/config/Routes';
+import { User } from '@/interfaces/user.interface';
+import { isAdmin } from '@/helpers/IsAdmin';
 import { useRouter } from 'next/dist/client/router';
-import MentorCardSanity from '@/components/MentorCardSanity/MentorCardSanity';
-import { getAllMentors } from '@/services';
+import MentorCard from '@/components/MentorCard/MentorCard';
+import { getAllUsersData } from '@/services';
 import GenericCard from '@/components/GenericCard';
 import useToastContext from '@/hooks/useToastContext';
 import { useNextAuthSession } from '@/hooks/useNextAuthSession';
 
-const Mentors = () => {
-  const [mentors, setMentors] = useState<Mentor[]>([]);
+const AdminMentors = () => {
+  const [mentors, setMentors] = useState<User[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [session, loading] = useNextAuthSession();
   const router = useRouter();
@@ -19,30 +21,21 @@ const Mentors = () => {
 
   useEffect(() => {
     if (session && !loading) {
-      getAllMentors()
-        .then(({ data }) => {
-          const mentorsSorted = data.sort(mentor => {
-            if (
-              mentor.status &&
-              [UserStatus.ACTIVE, UserStatus.NOT_AVAILABLE].includes(
-                mentor.status,
-              )
-            ) {
-              return -1;
-            }
-            return 1;
-          });
-          setMentors(mentorsSorted);
-          setIsLoading(false);
-        })
-        .catch(() => {
-          addToast({
-            title: 'Ha ocurrido un problema',
-            subText: 'No se ha podido obtener la lista de warnings',
-            type: 'error',
-          });
-          setIsLoading(false);
-        });
+      isAdmin(session.user.role)
+        ? getAllUsersData()
+            .then(({ data }) => {
+              setMentors(data);
+              setIsLoading(false);
+            })
+            .catch(() => {
+              addToast({
+                title: 'Ha ocurrido un problema',
+                subText: 'No se ha podido obtener la lista de warnings',
+                type: 'error',
+              });
+              setIsLoading(false);
+            })
+        : router.push(HOME);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loading, router]);
@@ -57,7 +50,7 @@ const Mentors = () => {
           noDataMessage="Aún no se han registrado mentores"
         >
           {mentors.map(mentor => (
-            <MentorCardSanity key={mentor._id} mentor={mentor} />
+            <MentorCard key={mentor.id} mentor={mentor} />
           ))}
         </GenericCard>
       </DashboardLayout>
@@ -65,4 +58,4 @@ const Mentors = () => {
   );
 };
 
-export default Mentors;
+export default AdminMentors;
