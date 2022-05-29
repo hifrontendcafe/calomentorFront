@@ -24,9 +24,7 @@ export default NextAuth({
   },
   // Callbacks | https://next-auth.js.org/configuration/callbacks
   callbacks: {
-    async signIn({ user, account: { access_token, ...rest } }) {
-      console.log(user, access_token, rest);
-
+    async signIn({ user, account: { access_token } }) {
       const guildResp = await fetch(
         'https://discord.com/api/users/@me/guilds',
         {
