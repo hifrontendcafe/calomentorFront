@@ -15,6 +15,7 @@ export default NextAuth({
     DiscordProvider({
       clientId: process.env.DISCORD_CLIENT_ID || '',
       clientSecret: process.env.DISCORD_CLIENT_SECRET || '',
+      authorization: { params: { scope: 'email identify guilds' } },
     }),
   ],
   secret: process.env.SECRET,
@@ -23,7 +24,9 @@ export default NextAuth({
   },
   // Callbacks | https://next-auth.js.org/configuration/callbacks
   callbacks: {
-    async signIn({ user, account: { access_token } }) {
+    async signIn({ user, account: { access_token, ...rest } }) {
+      console.log(user, access_token, rest);
+
       const guildResp = await fetch(
         'https://discord.com/api/users/@me/guilds',
         {
@@ -33,6 +36,11 @@ export default NextAuth({
         },
       );
       const guilds = await guildResp.json();
+
+      if (guildResp.status === 401) {
+        return UNAUTHORIZED;
+      }
+
       // Check if the user is a member of the discord server.
       if (guilds.find((guild: { id: string }) => guild.id === FrontendCafeID)) {
         const { data: userInfo } = await axios.get(
