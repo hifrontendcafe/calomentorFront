@@ -47,14 +47,6 @@ export const primaryRoutes = [
   //   href: HISTORY,
   //   icon: DocumentTextIcon,
   // },
-];
-
-export const adminNavigation: IRoute[] = [
-  // {
-  //   name: 'Mentores',
-  //   href: MENTORS,
-  //   icon: UserGroupIcon,
-  // },
   {
     name: 'Penalizaciones',
     href: WARNINGS,
@@ -65,4 +57,22 @@ export const adminNavigation: IRoute[] = [
     href: ADMIN_HISTORY,
     icon: DocumentTextIcon,
   },
+];
+
+export const adminNavigation: IRoute[] = [
+  // {
+  //   name: 'Mentores',
+  //   href: MENTORS,
+  //   icon: UserGroupIcon,
+  // },
+  // {
+  //   name: 'Penalizaciones',
+  //   href: WARNINGS,
+  //   icon: ExclamationIcon,
+  // },
+  // {
+  //   name: 'Historial',
+  //   href: ADMIN_HISTORY,
+  //   icon: DocumentTextIcon,
+  // },
 ];
