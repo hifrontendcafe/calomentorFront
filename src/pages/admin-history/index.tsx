@@ -82,14 +82,19 @@ const AdminHistory: React.FC = () => {
           noDataMessage="No hay mentorías registradas"
         >
           <div className="flex flex-col h-16 gap-2 px-6">
-            <div className="flex gap-4 w-80">
+            <div className="flex gap-4 w-1/2">
               <input
                 type="text"
                 id="name"
                 autoComplete="off"
-                placeholder="Buscar por nombre"
+                placeholder="Buscar por nombre de mentee o mentor"
                 className="custom_input"
                 onChange={({ target: { value } }) => setName(value)}
+                onKeyDown={e => {
+                  if (e.key === 'Enter') {
+                    onSearchByName();
+                  }
+                }}
               />
               <CustomButton
                 className="mt-1"
