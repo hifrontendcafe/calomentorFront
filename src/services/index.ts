@@ -1,5 +1,5 @@
 import { axiosDelete, axiosGet, axiosPost, axiosPatch } from '@/lib/api';
-import { MENTORSHIP, USER, TIMESLOTS, WARNING, MENTORSAPI } from '@/config/Routes';
+import { MENTORSHIP, USER, TIMESLOTS, WARNING, MENTORS_API } from '@/config/Routes';
 import { IMentorship } from '@/interfaces/mentorship.interface';
 import { ITimeSlot } from '@/interfaces/timeslot.interface';
 import { Mentor, User } from '@/interfaces/user.interface';
@@ -28,7 +28,7 @@ async function getAllUsersData() {
 }
 
 async function getAllMentors() {
-  return axiosGet<Mentor[]>(MENTORSAPI);
+  return axiosGet<Mentor[]>(MENTORS_API);
 }
 
 async function getTimeslots(id: string) {

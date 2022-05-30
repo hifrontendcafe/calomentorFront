@@ -1,5 +1,5 @@
 import { axiosAWSInstance } from '@/config/AxiosConfig';
-import { ACTIVATE, MENTORSAPI, USER } from '@/config/Routes';
+import { ACTIVATE, MENTORS_API, USER } from '@/config/Routes';
 import { Mentor, User } from '@/interfaces/user.interface';
 
 /**
@@ -21,7 +21,7 @@ export const getUsers = async () => {
  */
  export const getMentors = async () => {
   try {
-    const { data } = await axiosAWSInstance.get<Mentor>(MENTORSAPI);
+    const { data } = await axiosAWSInstance.get<Mentor>(MENTORS_API);
     return data;
   } catch (error: any) {
     throw new Error(error.response.status);

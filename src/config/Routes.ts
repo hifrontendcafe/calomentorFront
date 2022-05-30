@@ -28,7 +28,7 @@ export const ACTIVATE = '/activate';
 export const CONFIRMATION = '/confirmation';
 export const FEEDBACK = '/feedback';
 export const WARNING = '/warning';
-export const MENTORSAPI = '/mentor';
+export const MENTORS_API = '/mentor';
 
 // ---------- NAVIGATION ROUTES ----------
 
