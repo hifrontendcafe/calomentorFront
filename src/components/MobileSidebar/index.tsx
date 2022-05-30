@@ -2,7 +2,7 @@ import React, { Dispatch } from 'react';
 import { Fragment } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import { XIcon } from '@heroicons/react/outline';
-import { adminNavigation, primaryRoutes } from '@/config/Routes';
+import { primaryRoutes } from '@/config/Routes';
 import NavigationRoute from '../NavigationRoute';
 import PwdByVercel from '../PwdByVercel';
 import { useNextAuthSession } from '@/hooks/useNextAuthSession';

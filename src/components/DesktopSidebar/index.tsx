@@ -1,5 +1,5 @@
 import React from 'react';
-import { adminNavigation, primaryRoutes } from '@/config/Routes';
+import { primaryRoutes } from '@/config/Routes';
 import NavigationRoute from '../NavigationRoute';
 import PwdByVercel from '../PwdByVercel';
 import { useNextAuthSession } from '@/hooks/useNextAuthSession';
