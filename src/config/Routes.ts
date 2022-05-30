@@ -1,4 +1,3 @@
-import { INavigationRoute, IRoute } from '@/interfaces/router.interface';
 import {
   DocumentTextIcon,
   HomeIcon,
@@ -47,9 +46,6 @@ export const primaryRoutes = [
   //   href: HISTORY,
   //   icon: DocumentTextIcon,
   // },
-];
-
-export const adminNavigation: IRoute[] = [
   // {
   //   name: 'Mentores',
   //   href: MENTORS,
