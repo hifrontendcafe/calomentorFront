@@ -94,7 +94,7 @@ const Mentors = () => {
           isDataEmpty={emptyMentors}
           noDataMessage="Aún no se han registrado mentores"
         >
-          <div className="flex px-4 h-8 gap-2">
+          <div className="flex px-4 mb-4 h-8 gap-2">
             {filterButtons.map(button => (
               <CustomButton
                 key={button.label}
