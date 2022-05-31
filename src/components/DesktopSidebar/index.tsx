@@ -1,5 +1,5 @@
 import React from 'react';
-import { adminNavigation, primaryRoutes } from '@/config/Routes';
+import { primaryRoutes } from '@/config/Routes';
 import NavigationRoute from '../NavigationRoute';
 import PwdByVercel from '../PwdByVercel';
 import { useNextAuthSession } from '@/hooks/useNextAuthSession';
@@ -22,11 +22,7 @@ export const DesktopSidebar: React.FC = () => {
             className="flex flex-col flex-1 mt-5 overflow-y-auto"
             aria-label="Sidebar"
           >
-            <NavigationRoute routes={primaryRoutes} />
-            {!loading &&
-              (session?.user.role === '0' || session?.user.role === '2') && (
-                <NavigationRoute routes={adminNavigation} />
-              )}
+            {!loading && <NavigationRoute routes={primaryRoutes} />}
           </nav>
           <PwdByVercel />
         </div>
