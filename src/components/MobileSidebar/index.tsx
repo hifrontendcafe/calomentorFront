@@ -2,7 +2,7 @@ import React, { Dispatch } from 'react';
 import { Fragment } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import { XIcon } from '@heroicons/react/outline';
-import { adminNavigation, primaryRoutes } from '@/config/Routes';
+import { primaryRoutes } from '@/config/Routes';
 import NavigationRoute from '../NavigationRoute';
 import PwdByVercel from '../PwdByVercel';
 import { useNextAuthSession } from '@/hooks/useNextAuthSession';
@@ -77,11 +77,7 @@ export const MobileSidebar: React.FC<IMobileSidebar> = ({
               className="flex-shrink-0 h-full mt-5 overflow-y-auto"
               aria-label="Sidebar"
             >
-              <NavigationRoute routes={primaryRoutes} />
-              {!loading &&
-                (session?.user.role === '0' || session?.user.role === '2') && (
-                  <NavigationRoute routes={adminNavigation} />
-                )}
+              {!loading && <NavigationRoute routes={primaryRoutes} />}
             </nav>
             <PwdByVercel />
           </div>

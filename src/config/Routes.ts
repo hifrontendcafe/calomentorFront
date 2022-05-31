@@ -1,4 +1,3 @@
-import { INavigationRoute, IRoute } from '@/interfaces/router.interface';
 import {
   DocumentTextIcon,
   HomeIcon,
@@ -54,14 +53,6 @@ export const primaryRoutes = [
     href: MENTORS,
     icon: UserGroupIcon,
   },
-];
-
-export const adminNavigation: IRoute[] = [
-  // {
-  //   name: 'Mentores',
-  //   href: MENTORS,
-  //   icon: UserGroupIcon,
-  // },
   {
     name: 'Penalizaciones',
     href: WARNINGS,
