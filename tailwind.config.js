@@ -13,7 +13,7 @@ module.exports = {
         // Dashboard
         sidebar: '#171D24',
         topbar: '#171D24',
-        mainContent: '#010409',
+        mainContent: '#0F1318',
         // Text Colors
         mainTextColor: colors.teal[200],
         logoTextColor: colors.white,

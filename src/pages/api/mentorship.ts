@@ -50,6 +50,7 @@ async function handleGetMentorships(req: NextApiRequest, res: NextApiResponse) {
 
   try {
     const data = await getMentorships(parsedQuery.data);
+
     return res.status(200).json({ data });
   } catch (error: any) {
     handleError(error, res);
