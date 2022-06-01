@@ -1,6 +1,6 @@
 import { axiosAWSInstance } from '@/config/AxiosConfig';
-import { ACTIVATE, USER } from '@/config/Routes';
-import { User } from '@/interfaces/user.interface';
+import { ACTIVATE, MENTORS_API, USER } from '@/config/Routes';
+import { Mentor, User } from '@/interfaces/user.interface';
 
 /**
  * Get all users
@@ -9,6 +9,19 @@ import { User } from '@/interfaces/user.interface';
 export const getUsers = async () => {
   try {
     const { data } = await axiosAWSInstance.get<User>(USER);
+    return data;
+  } catch (error: any) {
+    throw new Error(error.response.status);
+  }
+};
+
+/**
+ * Get all mentors from sanity
+ * @returns An array of mentors
+ */
+ export const getMentors = async () => {
+  try {
+    const { data } = await axiosAWSInstance.get<Mentor>(MENTORS_API);
     return data;
   } catch (error: any) {
     throw new Error(error.response.status);

@@ -1,8 +1,8 @@
 import { axiosDelete, axiosGet, axiosPost, axiosPatch } from '@/lib/api';
-import { MENTORSHIP, USER, TIMESLOTS, WARNING } from '@/config/Routes';
+import { MENTORSHIP, USER, TIMESLOTS, WARNING, MENTORS_API } from '@/config/Routes';
 import { IMentorship } from '@/interfaces/mentorship.interface';
 import { ITimeSlot } from '@/interfaces/timeslot.interface';
-import { User } from '@/interfaces/user.interface';
+import { Mentor, User } from '@/interfaces/user.interface';
 import { IWarning } from '@/interfaces/warning.interface';
 import { z } from 'zod';
 import { cancelMentorshipBodySchema } from '@/schemas/schemas';
@@ -25,6 +25,10 @@ async function getUserData(id: string) {
 
 async function getAllUsersData() {
   return axiosGet<User[]>(USER);
+}
+
+async function getAllMentors() {
+  return axiosGet<Mentor[]>(MENTORS_API);
 }
 
 async function getTimeslots(id: string) {
@@ -95,4 +99,5 @@ export {
   removeWarning,
   getAdminMentorshipHistory,
   getAdminMentorshipHistoryByName,
+  getAllMentors
 };

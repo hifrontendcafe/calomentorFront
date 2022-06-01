@@ -24,10 +24,10 @@ const MentorCard: React.FC<IMentorCard> = ({
   const [isLoading1, setIsLoading1] = useState(false);
   const [isLoading2, setIsLoading2] = useState(false);
   const [userOutOfProgram, setUserOutOfProgram] = useState(
-    user_status === UserStatus.OUTSIDE_THE_PROGRAM,
+    user_status === UserStatus.OUT,
   );
   const [userIsActive, setUserIsActive] = useState(
-    user_status !== UserStatus.OUTSIDE_THE_PROGRAM &&
+    user_status !== UserStatus.OUT &&
       user_status === UserStatus.ACTIVE,
   );
   const [session] = useNextAuthSession();
@@ -60,7 +60,7 @@ const MentorCard: React.FC<IMentorCard> = ({
       user_status: newStatus,
     })
       .then(() => {
-        if (newStatus !== UserStatus.OUTSIDE_THE_PROGRAM) {
+        if (newStatus !== UserStatus.OUT) {
           if (newStatus === UserStatus.ACTIVE) {
             setUserIsActive(true);
           } else {
@@ -150,7 +150,7 @@ const MentorCard: React.FC<IMentorCard> = ({
           handleButton(
             userOutOfProgram
               ? UserStatus.INACTIVE
-              : UserStatus.OUTSIDE_THE_PROGRAM,
+              : UserStatus.OUT,
           );
         }}
         danger

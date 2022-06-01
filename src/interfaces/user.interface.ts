@@ -8,9 +8,10 @@ interface UserLinks {
 export type RoleType = 'admin' | 'mentor';
 
 export enum UserStatus {
-  ACTIVE = 'ACTIVE',
-  INACTIVE = 'INACTIVE',
-  OUTSIDE_THE_PROGRAM = 'OUTSIDE_THE_PROGRAM',
+  ACTIVE = "ACTIVE",
+  INACTIVE = "INACTIVE",
+  OUT = "OUT",
+  NOT_AVAILABLE = "NOT_AVAILABLE",
 }
 
 export interface User {
@@ -28,6 +29,58 @@ export interface User {
   user_timezone?: string;
   user_token?: string;
   accepted_coc?: boolean;
+}
+
+interface SanityPersonaInterface {
+  _createdAt: string;
+  _id: string;
+  _rev: string;
+  _type: string;
+  _updatedAt: string;
+  discordID: {
+    _type: string;
+    current: string;
+  };
+  email: string;
+  firstName: string;
+  github: string;
+  lastName: string;
+  linkedin: string;
+  photo: {
+    _type: string;
+    asset: {
+      _ref: string;
+      _type: string;
+    };
+  };
+  timezone: string;
+  twitter: string;
+  username: string;
+}
+
+interface Topics {
+  _key: string;
+  _ref: string;
+  _type: string;
+}
+
+export interface Mentor {
+  _id: string;
+  calendly: string;
+  description: string;
+  github?: string;
+  isActive: boolean;
+  linkedin: string;
+  name: string;
+  persona: SanityPersonaInterface;
+  photo?: {
+    alt?: string;
+    src: string;
+  };
+  topics: Topics[];
+  web?: string;
+  status: UserStatus | null;
+  feedback: 1 | 2 | 3 | 4 | 5;
 }
 
 export interface ICreateUser {
