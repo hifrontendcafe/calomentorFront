@@ -18,8 +18,8 @@ interface IStatusLabelCard {
 }
 
 const StatusLabelCard = ({ title, bgColor }: IStatusLabelCard) => (
-  <div className={`w-24 h-5 mt-2 rounded flex items-center justify-center ${bgColor}`}>
-    <span className='text-[0.5rem]'>{title}</span>
+  <div className={`w-[6.5rem] h-5 mt-2 rounded flex items-center justify-center ${bgColor}`}>
+    <span className='text-[0.6rem]'>{title}</span>
   </div>
 );
 
