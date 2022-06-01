@@ -52,7 +52,6 @@ const AdminHistory: React.FC = () => {
         setLastKey(lastKey || null);
         setMentorships(orderMentorshipsByDate(data || []));
         setIsLoading(false);
-        console.log('mentor', data);
       })
 
       .catch(() => {
