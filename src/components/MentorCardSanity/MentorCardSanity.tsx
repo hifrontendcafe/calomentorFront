@@ -1,8 +1,8 @@
 import React from 'react';
 import { Mentor, UserStatus } from '@/interfaces/user.interface';
 import Image from 'next/image';
-import classNames from 'classnames';
 import GenericCard from '../GenericCard';
+import StatusLabelCard from '../StatusLabelCard';
 import Star from '@/assets/img/Star.svg';
 import Calendly from '@/assets/img/calendly.svg';
 import { FiMail } from 'react-icons/fi';
@@ -11,17 +11,6 @@ import Link from 'next/link';
 interface IMentorCardSanity {
   mentor: Mentor;
 }
-
-interface IStatusLabelCard {
-  title: string;
-  bgColor: string;
-}
-
-const StatusLabelCard = ({ title, bgColor }: IStatusLabelCard) => (
-  <div className={`w-[6.5rem] h-5 mt-2 rounded flex items-center justify-center ${bgColor}`}>
-    <span className='text-[0.6rem]'>{title}</span>
-  </div>
-);
 
 const MentorCardSanity: React.FC<IMentorCardSanity> = ({
   mentor: {

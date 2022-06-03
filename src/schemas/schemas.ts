@@ -37,6 +37,7 @@ export const cancelMentorshipBodySchema = z.object({
 });
 
 export const getWarningQuerySchema = z.object({
+  id: z.string().default(''),
   name: z.string().default('').optional(),
   limit: z.string().default('20'),
   lastKeyId: z.string().optional(),
