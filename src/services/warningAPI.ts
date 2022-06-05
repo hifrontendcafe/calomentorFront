@@ -73,3 +73,11 @@ export const removeWarning = async (id: string, forgive_cause: string) => {
     throw new Error(error.response.status);
   }
 };
+
+export const deleteWarning = async (id: string) => {
+  try {
+    return await axiosAWSInstance.delete(`${WARNING}/${id}`);
+  } catch (error: any) {
+    throw new Error(error.response.status);
+  }
+};

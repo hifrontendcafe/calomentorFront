@@ -5,6 +5,7 @@ import { IMentorship } from '@/interfaces/mentorship.interface';
 import { ServerResponse } from '@/interfaces/server.interface';
 import {
   cancelMentorshipBodySchema,
+  deleteMentorshipQuerySchema,
   getMentorshipsQuerySchema,
 } from '@/schemas/schemas';
 import { z } from 'zod';
@@ -117,6 +118,17 @@ export const sendFeedback = async (
       feedback_stars,
     });
     return data;
+  } catch (error: any) {
+    const errorResponse = parseError(error);
+    console.error(errorResponse);
+  }
+};
+
+export const deleteMentorship = async ({
+  id,
+}: z.infer<typeof deleteMentorshipQuerySchema>) => {
+  try {
+    return await axiosAWSInstance.delete(`${MENTORSHIP}/${id}`);
   } catch (error: any) {
     const errorResponse = parseError(error);
     console.error(errorResponse);

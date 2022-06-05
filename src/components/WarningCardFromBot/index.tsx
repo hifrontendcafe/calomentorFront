@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { Dispatch, SetStateAction, useState } from 'react';
 import { IWarning, WARN, WARNSTATE } from '@/interfaces/warning.interface';
 import { formatDate } from '@/helpers/formatDate';
 import { SELF_HISTORY } from '@/config/Routes';
@@ -7,12 +7,12 @@ import Modal from '../Modal';
 import StatusLabelCard from '../StatusLabelCard';
 import { useNextAuthSession } from '@/hooks/useNextAuthSession';
 import { isAdmin } from '@/helpers/IsAdmin';
+import { deleteWarning } from '@/services';
 
 interface IWarningCard {
   warning: IWarning;
-}
-interface CardEventTarget extends EventTarget {
-  id?: string;
+  setLoading: Dispatch<SetStateAction<boolean>>;
+  setWarnings: (id: string) => void;
 }
 
 const WarningCard: React.FC<IWarningCard> = ({
@@ -30,6 +30,8 @@ const WarningCard: React.FC<IWarningCard> = ({
     forgive_author_name,
     forgive_cause,
   },
+  setLoading,
+  setWarnings,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [session, loading] = useNextAuthSession();
@@ -40,9 +42,14 @@ const WarningCard: React.FC<IWarningCard> = ({
     [WARNSTATE.FORGIVE]: (
       <StatusLabelCard title="Perdonada" bgColor="bg-green-500" />
     ),
-    [WARNSTATE.ACTIVE]: (
-      <StatusLabelCard title="Activa" bgColor="bg-red-500" />
-    ),
+    [WARNSTATE.ACTIVE]: <StatusLabelCard title="Activa" bgColor="bg-red-500" />,
+  };
+
+  const onDeleteWarning = async () => {
+    setLoading(true);
+    await deleteWarning(id);
+    setWarnings(id);
+    setLoading(false);
   };
 
   return (
@@ -84,12 +91,17 @@ const WarningCard: React.FC<IWarningCard> = ({
             Mas info
             <span className="sr-only"></span>
           </div>
-         {session && !loading && isAdmin(session.user.role) && <div>
-            <a href="#" className="text-mainTextColor hover:text-teal-600">
-              Remover registro
-              <span className="sr-only"></span>
-            </a>
-          </div>}
+          {session && !loading && isAdmin(session.user.role) && (
+            <div>
+              <div
+                className="text-mainTextColor hover:text-teal-600 cursor-pointer"
+                onClick={onDeleteWarning}
+              >
+                Remover registro
+                <span className="sr-only"></span>
+              </div>
+            </div>
+          )}
         </td>
       </tr>
 
@@ -103,7 +115,7 @@ const WarningCard: React.FC<IWarningCard> = ({
       >
         <div className="flex flex-col">
           <div>
-            <p className='text-sm font-light'>
+            <p className="text-sm font-light">
               Fecha:{' '}
               {formatDate(
                 Number(date.length === 16 ? date.slice(0, -3) : date),
@@ -121,9 +133,7 @@ const WarningCard: React.FC<IWarningCard> = ({
                 </dd>
               </div>
               <div className="sm:col-span-1">
-                <dt className="font-medium text-mainTextColor">
-                  Motivo
-                </dt>
+                <dt className="font-medium text-mainTextColor">Motivo</dt>
                 <dd className="mt-1 text-sm text-gray-200">{forgive_cause}</dd>
               </div>
             </>
@@ -141,9 +151,7 @@ const WarningCard: React.FC<IWarningCard> = ({
               </div>
               {warn_type === WARN.COC_WARN && (
                 <div className="sm:col-span-1">
-                  <dt className="font-medium text-mainTextColor">
-                    Causa
-                  </dt>
+                  <dt className="font-medium text-mainTextColor">Causa</dt>
                   <dd className="mt-1 text-sm text-gray-200">{warn_cause}</dd>
                 </div>
               )}

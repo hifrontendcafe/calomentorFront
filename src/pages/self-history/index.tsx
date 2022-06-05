@@ -109,6 +109,14 @@ const SelfHistory = () => {
                     <HistoryMentorshipCardFromBot
                       key={mentorship.id}
                       mentorship={mentorship}
+                      setMentorships={(id: string) =>
+                        setMentorships(
+                          mentorships.filter(
+                            mentorship => mentorship.id !== id,
+                          ),
+                        )
+                      }
+                      setLoading={setIsLoading}
                     />
                   ))}
                 </tbody>
@@ -166,7 +174,14 @@ const SelfHistory = () => {
                   </thead>
                   <tbody className="border-b border-gray-700">
                     {warnings.map(warn => (
-                      <WarningCardFromBot key={warn.id} warning={warn} />
+                      <WarningCardFromBot
+                        key={warn.id}
+                        warning={warn}
+                        setWarnings={(id: string) =>
+                          setWarnings(warnings.filter(warn => warn.id !== id))
+                        }
+                        setLoading={setIsLoading}
+                      />
                     ))}
                   </tbody>
                 </table>

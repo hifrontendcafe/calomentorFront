@@ -36,6 +36,10 @@ export const cancelMentorshipBodySchema = z.object({
   who_canceled: z.enum(['MENTOR', 'MENTEE']),
 });
 
+export const deleteMentorshipQuerySchema = z.object({
+  id: z.string(),
+});
+
 export const getWarningQuerySchema = z.object({
   id: z.string().default(''),
   name: z.string().default('').optional(),

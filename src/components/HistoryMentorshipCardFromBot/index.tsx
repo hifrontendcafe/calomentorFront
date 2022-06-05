@@ -1,21 +1,16 @@
 import { formatDate } from '@/helpers/formatDate';
 import { IMentorship } from '@/interfaces/mentorship.interface';
-import React from 'react';
+import React, { Dispatch, SetStateAction } from 'react';
 import { SELF_HISTORY } from '@/config/Routes';
 import Link from 'next/link';
 import { isAdmin } from '@/helpers/IsAdmin';
 import { useNextAuthSession } from '@/hooks/useNextAuthSession';
+import { deleteMentorship } from '@/services';
 
 interface IMentorshipCard {
   mentorship: IMentorship;
-}
-
-interface CardEventTarget extends EventTarget {
-  id?: string;
-}
-
-interface CardMouseEvent extends React.MouseEvent<HTMLElement> {
-  target: CardEventTarget;
+  setLoading: Dispatch<SetStateAction<boolean>>;
+  setMentorships: (id: string) => void;
 }
 
 const MentorshipCardFromBot: React.FC<IMentorshipCard> = ({
@@ -27,8 +22,18 @@ const MentorshipCardFromBot: React.FC<IMentorshipCard> = ({
     mentorship_create_date,
     mentor_id,
   },
+  setLoading,
+  setMentorships,
 }) => {
   const [session, loading] = useNextAuthSession();
+
+  const onDeleteMentorship = async () => {
+    setLoading(true);
+    await deleteMentorship(id);
+    setMentorships(id);
+    setLoading(false);
+  };
+
   return (
     <tr className="border-b border-gray-700" key={id}>
       <td className="py-4 pl-4 pr-3 text-sm font-medium text-gray-300 whitespace-nowrap sm:pl-6 md:pl-0">
@@ -60,10 +65,13 @@ const MentorshipCardFromBot: React.FC<IMentorshipCard> = ({
       </td>
       {session && !loading && isAdmin(session.user.role) && (
         <td className="relative py-4 pl-3 pr-4 text-sm font-medium text-right whitespace-nowrap sm:pr-6 md:pr-0">
-          <a href="#" className="text-mainTextColor hover:text-teal-600">
+          <div
+            className="text-mainTextColor hover:text-teal-600 cursor-pointer"
+            onClick={onDeleteMentorship}
+          >
             Remover registro
             <span className="sr-only"></span>
-          </a>
+          </div>
         </td>
       )}
     </tr>

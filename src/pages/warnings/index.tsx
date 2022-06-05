@@ -156,7 +156,14 @@ const Warnings = () => {
                 </thead>
                 <tbody className="border-b border-gray-700">
                   {warnings.map(warn => (
-                    <WarningCardFromBot key={warn.id} warning={warn} />
+                    <WarningCardFromBot
+                      key={warn.id}
+                      warning={warn}
+                      setWarnings={(id: string) =>
+                        setWarnings(warnings.filter(warn => warn.id !== id))
+                      }
+                      setLoading={setIsLoading}
+                    />
                   ))}
                 </tbody>
               </table>

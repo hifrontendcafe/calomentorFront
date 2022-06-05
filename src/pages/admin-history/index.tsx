@@ -161,6 +161,14 @@ const AdminHistory: React.FC = () => {
                       <HistoryMentorshipCardFromBot
                         key={mentorship.id}
                         mentorship={mentorship}
+                        setMentorships={(id: string) =>
+                          setMentorships(
+                            mentorships.filter(
+                              mentorship => mentorship.id !== id,
+                            ),
+                          )
+                        }
+                        setLoading={setIsLoading}
                       />
                     ))}
                   </tbody>
