@@ -1,8 +1,5 @@
 import React, { Dispatch, Fragment } from 'react';
-import {
-  ChevronDownIcon,
-  MenuAlt1Icon,
-} from '@heroicons/react/outline';
+import { ChevronDownIcon, MenuAlt1Icon } from '@heroicons/react/outline';
 import Image from 'next/image';
 import { Menu, Transition } from '@headlessui/react';
 import classNames from 'classnames';
@@ -10,6 +7,7 @@ import { useNextAuthSession } from '@/hooks/useNextAuthSession';
 import { signOut } from 'next-auth/react';
 import { SELF_HISTORY } from '@/config/Routes';
 import Link from 'next/link';
+import { isMentor } from '@/helpers/hasRole';
 
 interface ITopBar {
   setSidebarOpen: Dispatch<boolean>;
@@ -24,13 +22,12 @@ export const TopBar: React.FC<ITopBar> = ({ setSidebarOpen }) => {
         className="px-4 text-gray-400 border-r border-gray-200 focus:outline-none lg:hidden"
         onClick={() => setSidebarOpen(true)}
       >
-        <span className="sr-onxwly">Open sidebar</span>
+        <span className="sr-only">Open sidebar</span>
         <MenuAlt1Icon className="w-6 h-6" aria-hidden="true" />
       </button>
       {/* Search bar */}
       <div className="flex justify-end flex-1 px-4 sm:px-6 lg:max-w-6xl lg:mx-auto lg:px-8">
         <div className="flex items-center ml-4 md:ml-6">
-
           {/* Profile dropdown */}
           <Menu as="div" className="relative ml-3">
             <div>
@@ -80,22 +77,27 @@ export const TopBar: React.FC<ITopBar> = ({ setSidebarOpen }) => {
                     )}
                   </Menu.Item>
                 </Link> */}
-                <Link href={`${SELF_HISTORY}?name=${session?.user?.name}&userId=${session?.user?.id}&isMentor=true`} passHref>
-                  <Menu.Item>
-                    {({ active }) => (
-                      <a
-                        className={classNames(
-                          'block px-4 py-2 text-sm text-mainTextColor cursor-pointer active:bg-activeNavigation',
-                          {
-                            'bg-hoverNavigation': active,
-                          },
-                        )}
-                      >
-                        Mi historial
-                      </a>
-                    )}
-                  </Menu.Item>
-                </Link>
+                {isMentor(session?.user?.role!) && (
+                  <Link
+                    href={`${SELF_HISTORY}?name=${session?.user?.name}&userId=${session?.user?.id}&isMentor=true`}
+                    passHref
+                  >
+                    <Menu.Item>
+                      {({ active }) => (
+                        <a
+                          className={classNames(
+                            'block px-4 py-2 text-sm text-mainTextColor cursor-pointer active:bg-activeNavigation',
+                            {
+                              'bg-hoverNavigation': active,
+                            },
+                          )}
+                        >
+                          Mi historial
+                        </a>
+                      )}
+                    </Menu.Item>
+                  </Link>
+                )}
                 <Menu.Item>
                   {({ active }) => (
                     <a

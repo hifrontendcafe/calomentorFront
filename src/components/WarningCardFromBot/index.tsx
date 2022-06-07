@@ -6,7 +6,7 @@ import Link from 'next/link';
 import Modal from '../Modal';
 import StatusLabelCard from '../StatusLabelCard';
 import { useNextAuthSession } from '@/hooks/useNextAuthSession';
-import { isAdmin } from '@/helpers/IsAdmin';
+import { isAdmin } from '@/helpers/hasRole';
 import { deleteWarning } from '@/services';
 
 interface IWarningCard {
@@ -33,7 +33,9 @@ const WarningCard: React.FC<IWarningCard> = ({
   setLoading,
   setWarnings,
 }) => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [isOpenDeleteWarningConfirmation, setIsOpenDeleteWarningConfirmation] =
+    useState<boolean>(false);
   const [session, loading] = useNextAuthSession();
   const isForgived = warning_status === WARNSTATE.FORGIVE;
   const date = String(warning_date);
@@ -95,7 +97,7 @@ const WarningCard: React.FC<IWarningCard> = ({
             <div>
               <div
                 className="text-mainTextColor hover:text-teal-600 cursor-pointer"
-                onClick={onDeleteWarning}
+                onClick={() => setIsOpenDeleteWarningConfirmation(true)}
               >
                 Remover registro
                 <span className="sr-only"></span>
@@ -104,6 +106,13 @@ const WarningCard: React.FC<IWarningCard> = ({
           )}
         </td>
       </tr>
+
+      <Modal
+        isOpen={isOpenDeleteWarningConfirmation}
+        onOpenChange={setIsOpenDeleteWarningConfirmation}
+        confirmAction={onDeleteWarning}
+        title={'Deseas eliminar la penalización de la base de datos?'}
+      />
 
       <Modal
         isOpen={isOpen}

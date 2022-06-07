@@ -3,7 +3,7 @@ import CustomHead from '@/components/CustomHead';
 import DashboardLayout from '@/components/DashboardLayout';
 import { HOME } from '@/config/Routes';
 import { User } from '@/interfaces/user.interface';
-import { isAdmin } from '@/helpers/IsAdmin';
+import { isAdmin } from '@/helpers/hasRole';
 import { useRouter } from 'next/dist/client/router';
 import MentorCard from '@/components/MentorCard/MentorCard';
 import { getAllUsersData } from '@/services';
