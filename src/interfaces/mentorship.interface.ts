@@ -1,5 +1,5 @@
-import { ITimeSlot } from "./timeslot.interface";
-import { IWarning } from "./warning.interface";
+import { ITimeSlot } from './timeslot.interface';
+import { IWarning } from './warning.interface';
 
 export enum STATUS {
   ACTIVE = 'ACTIVE',
@@ -37,7 +37,7 @@ export interface IMentorship {
   mentorship_create_date?: string;
   from_bot: boolean;
   time_slot_info?: ITimeSlot;
-  warning_info?: IWarning
+  warning_info?: IWarning;
 }
 
 export interface ICancelForm {

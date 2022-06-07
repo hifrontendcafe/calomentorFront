@@ -28,6 +28,7 @@ export const CONFIRMATION = '/confirmation';
 export const FEEDBACK = '/feedback';
 export const WARNING = '/warning';
 export const MENTORS_API = '/mentor';
+export const METRICS = '/metrics';
 
 // ---------- NAVIGATION ROUTES ----------
 

@@ -1,11 +1,19 @@
 import { axiosDelete, axiosGet, axiosPost, axiosPatch } from '@/lib/api';
-import { MENTORSHIP, USER, TIMESLOTS, WARNING, MENTORS_API } from '@/config/Routes';
+import {
+  MENTORSHIP,
+  USER,
+  TIMESLOTS,
+  WARNING,
+  MENTORS_API,
+  METRICS,
+} from '@/config/Routes';
 import { IMentorship } from '@/interfaces/mentorship.interface';
 import { ITimeSlot } from '@/interfaces/timeslot.interface';
 import { Mentor, User } from '@/interfaces/user.interface';
 import { IWarning } from '@/interfaces/warning.interface';
 import { z } from 'zod';
 import { cancelMentorshipBodySchema } from '@/schemas/schemas';
+import { Metrics } from '../interfaces/metrics.interface';
 
 async function getAllMentorshipHistory(id: string) {
   return axiosGet<IMentorship[]>(`${MENTORSHIP}?id=${id}&filter_dates=PAST`);
@@ -34,6 +42,8 @@ async function getAllMentors() {
 async function getTimeslots(id: string) {
   return axiosGet<ITimeSlot[]>(`${TIMESLOTS}?id=${id}`);
 }
+
+export const getMetrics = () => axiosGet<Metrics>(METRICS);
 
 async function getWarnings(
   name?: string | null,
@@ -99,5 +109,5 @@ export {
   removeWarning,
   getAdminMentorshipHistory,
   getAdminMentorshipHistoryByName,
-  getAllMentors
+  getAllMentors,
 };
