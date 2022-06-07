@@ -1,5 +1,10 @@
 import { getWarningQuerySchema } from '@/schemas/schemas';
-import { addWarning, getWarnings, removeWarning } from '@/services/warningAPI';
+import {
+  addWarning,
+  deleteWarning,
+  getWarnings,
+  removeWarning,
+} from '@/services/warningAPI';
 import { NextApiRequest, NextApiResponse } from 'next';
 
 export default async function handler(
@@ -53,6 +58,15 @@ export default async function handler(
     }
     const data = await removeWarning(id, forgive_cause);
     return res.status(200).json(data);
+  } else if (req.method === 'DELETE') {
+    const { id } = req.query;
+    if (!id) {
+      return res
+        .status(400)
+        .json({ message: 'A required parameter is missing' });
+    }
+    await deleteWarning(String(id));
+    return res.status(200).json({});
   }
   return res.status(400).json({ message: 'Invalid method' });
 }

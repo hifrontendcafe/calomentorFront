@@ -5,7 +5,7 @@ import GenericCard from '@/components/GenericCard';
 import Modal from '@/components/Modal';
 import WarningCard from '@/components/WarningCard';
 import { HOME } from '@/config/Routes';
-import { isAdmin } from '@/helpers/IsAdmin';
+import { isAdmin } from '@/helpers/hasRole';
 import { useNextAuthSession } from '@/hooks/useNextAuthSession';
 import useToastContext from '@/hooks/useToastContext';
 import { IWarning, RemoveWarningForm } from '@/interfaces/warning.interface';

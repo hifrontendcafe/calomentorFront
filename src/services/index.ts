@@ -86,6 +86,22 @@ async function getAdminMentorshipHistoryByName(name: string) {
   return axiosGet<{ data: IMentorship[] }>(`${MENTORSHIP}?name=${name}`);
 }
 
+async function getWarningsById(id: string) {
+  return axiosGet<{warnings_data: IWarning[]}>(`${WARNING}?id=${id}`);
+}
+
+async function getMentorshipsById(id: string) {
+  return axiosGet<{data: IMentorship[]}>(`${MENTORSHIP}?id=${id}`);
+}
+
+async function deleteWarning(id: string) {
+  return axiosDelete(`${WARNING}?id=${id}`);
+}
+
+async function deleteMentorship(id: string) {
+  return axiosDelete(`${MENTORSHIP}?id=${id}`);
+}
+
 export {
   getAllMentorshipHistory,
   getUserData,
@@ -99,5 +115,9 @@ export {
   removeWarning,
   getAdminMentorshipHistory,
   getAdminMentorshipHistoryByName,
-  getAllMentors
+  getAllMentors,
+  getWarningsById,
+  getMentorshipsById,
+  deleteMentorship,
+  deleteWarning
 };

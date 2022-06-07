@@ -10,16 +10,17 @@ import { z } from 'zod';
  * @returns An array of warnings
  */
 export const getWarnings = async ({
+  id,
   name,
-  limit,
-  lastKeyId,
 }: z.infer<typeof getWarningQuerySchema>) => {
   try {
-    const url = name
-      ? `${WARNING}${name ? `?name=${name}` : ''}`
-      : `${WARNING}?limit=${limit || '20'}${
-          lastKeyId ? `&last_key_id=${lastKeyId}` : ''
-        }`;
+    let url = `${WARNING}`;
+    if (id) {
+      url = `${url}/${id}?all_warnings=true`;
+    }
+    if (name) {
+      url = `${url}?name=${name}`;
+    }
     const data = await axiosAWSInstance.get<IWarning[]>(url);
     return data;
   } catch (error: any) {
@@ -68,6 +69,14 @@ export const removeWarning = async (id: string, forgive_cause: string) => {
       forgive_cause,
     });
     return data;
+  } catch (error: any) {
+    throw new Error(error.response.status);
+  }
+};
+
+export const deleteWarning = async (id: string) => {
+  try {
+    return await axiosAWSInstance.delete(`${WARNING}/${id}`);
   } catch (error: any) {
     throw new Error(error.response.status);
   }

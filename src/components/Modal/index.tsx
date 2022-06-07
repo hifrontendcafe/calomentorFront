@@ -79,7 +79,7 @@ const Modal: React.FC<IModal> = ({
                     <Icon size={30} className={iconClassName} />
                   </div>
                 )}
-                <div className="mt-3 text-center">
+                <div className={classNames({ 'mt-3': Icon })}>
                   {title && (
                     <Dialog.Title
                       as="h3"
