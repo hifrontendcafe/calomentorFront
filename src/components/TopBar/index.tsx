@@ -27,6 +27,17 @@ export const TopBar: React.FC<ITopBar> = ({ setSidebarOpen }) => {
       </button>
       {/* Search bar */}
       <div className="flex justify-end flex-1 px-4 sm:px-6 lg:max-w-6xl lg:mx-auto lg:px-8">
+        <div className='self-center'>
+          <Link
+            href={
+              'https://www.notion.so/hifrontendcafe/Documentos-tiles-para-mentors-93a91b6d702e46b8bdd1062b6722a052'
+            }
+          >
+            <a>
+              <p className="text-sm font-bold text-zinc-200">Docs</p>
+            </a>
+          </Link>
+        </div>
         <div className="flex items-center ml-4 md:ml-6">
           {/* Profile dropdown */}
           <Menu as="div" className="relative ml-3">

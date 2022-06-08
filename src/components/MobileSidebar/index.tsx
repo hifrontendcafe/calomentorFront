@@ -1,11 +1,12 @@
 import React, { Dispatch } from 'react';
 import { Fragment } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
-import { XIcon } from '@heroicons/react/outline';
-import { primaryRoutes } from '@/config/Routes';
+import { FingerPrintIcon, XIcon } from '@heroicons/react/outline';
+import { primaryRoutes, SELF_HISTORY } from '@/config/Routes';
 import NavigationRoute from '../NavigationRoute';
 import PwdByVercel from '../PwdByVercel';
 import { useNextAuthSession } from '@/hooks/useNextAuthSession';
+import { isMentor } from '@/helpers/hasRole';
 
 interface IMobileSidebar {
   sidebarOpen: boolean;
@@ -16,6 +17,16 @@ export const MobileSidebar: React.FC<IMobileSidebar> = ({
   setSidebarOpen,
 }) => {
   const [session, loading] = useNextAuthSession();
+  const routes =
+    isMentor(session?.user?.role!) &&
+    !primaryRoutes.find(route => route.name === 'Mi historial')
+      ? primaryRoutes.splice(1, 0, {
+          name: 'Mi historial',
+          icon: FingerPrintIcon,
+          href: `${SELF_HISTORY}?name=${session?.user?.name}&userId=${session?.user?.id}$isMentor=true`,
+        })
+      : primaryRoutes;
+
   return (
     <Transition.Root show={sidebarOpen} as={Fragment}>
       <Dialog
@@ -77,7 +88,7 @@ export const MobileSidebar: React.FC<IMobileSidebar> = ({
               className="flex-shrink-0 h-full mt-5 overflow-y-auto"
               aria-label="Sidebar"
             >
-              {!loading && <NavigationRoute routes={primaryRoutes} />}
+              {!loading && <NavigationRoute routes={routes} />}
             </nav>
             <PwdByVercel />
           </div>
