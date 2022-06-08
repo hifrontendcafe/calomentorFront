@@ -101,7 +101,7 @@ const AdminHistory: React.FC = () => {
             />
             <CustomButton
               className="mt-1"
-              bntLabel={'Todos'}
+              bntLabel={'Últimas 20 mentorías'}
               primary
               clickAction={getAllMentorships}
               isActive={true}

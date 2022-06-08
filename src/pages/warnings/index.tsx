@@ -108,7 +108,7 @@ const Warnings = () => {
             />
             <CustomButton
               className="mt-1"
-              bntLabel={'Todos'}
+              bntLabel={'Últimas 20 penalizaciones'}
               primary
               clickAction={getAllWarnings}
               isActive={true}

@@ -87,12 +87,12 @@ const Mentors = () => {
 
   return (
     <>
-      <CustomHead title="Mentores" />
-      <DashboardLayout title="Mentores">
+      <CustomHead title="Mentors" />
+      <DashboardLayout title="Mentors">
         <GenericCard
           isLoading={isLoading}
           isDataEmpty={emptyMentors}
-          noDataMessage="Aún no se han registrado mentores"
+          noDataMessage="Aún no se han registrado mentors"
         >
           <div className="flex px-4 mb-4 h-8 gap-2">
             {filterButtons.map(button => (
