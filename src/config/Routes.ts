@@ -50,7 +50,7 @@ export const primaryRoutes = [
   //   icon: DocumentTextIcon,
   // },
   {
-    name: 'Mentores',
+    name: 'Mentors',
     href: MENTORS,
     icon: UserGroupIcon,
   },

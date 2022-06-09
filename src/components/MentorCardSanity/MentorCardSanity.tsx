@@ -8,6 +8,7 @@ import Calendly from '@/assets/img/calendly.svg';
 import { FiMail } from 'react-icons/fi';
 import { FaGithub, FaGlobe, FaLinkedin } from 'react-icons/fa';
 import Link from 'next/link';
+import { SELF_HISTORY } from '@/config/Routes';
 interface IMentorCardSanity {
   mentor: Mentor;
 }
@@ -17,7 +18,10 @@ const MentorCardSanity: React.FC<IMentorCardSanity> = ({
     name,
     status,
     feedback,
-    persona: { email },
+    persona: {
+      email,
+      discordID: { current },
+    },
     photo,
     web,
     calendly,
@@ -39,6 +43,9 @@ const MentorCardSanity: React.FC<IMentorCardSanity> = ({
       <StatusLabelCard title="Fuera del programa" bgColor="bg-red-500" />
     ),
   };
+
+  const selfhistoryUrl = `${SELF_HISTORY}?name=${name}&userId=${current}&isMentor=true`;
+
   return (
     <GenericCard>
       <div className="flex pb-5 items-center border-b border-zinc-800">
@@ -57,17 +64,31 @@ const MentorCardSanity: React.FC<IMentorCardSanity> = ({
               blurDataURL={photo?.src ? `${photo.src}?h=50` : undefined}
             />
             <div className="flex flex-col justify-center ml-4">
-              <h3 className="text-sm font-medium text-white">{name}</h3>
+              <Link href={selfhistoryUrl}>
+                <a>
+                  <h3 className="text-sm font-medium text-white cursor-pointer hover:text-teal-500">
+                    {name}
+                  </h3>
+                </a>
+              </Link>
               {statusLabel[status ?? UserStatus.OUT]}
             </div>
           </div>
           <div className="flex">
             <div className="flex justify-between items-center">
+              <Link href={selfhistoryUrl}>
+                <a
+                  target="_blank"
+                  className="flex items-center justify-center w-8 h-8 ml-2 rounded-full text-primary bg-zinc-700 hover:bg-zinc-600"
+                >
+                  🔥
+                </a>
+              </Link>
               {calendly && (
                 <Link href={calendly}>
                   <a
                     target="_blank"
-                    className="flex items-center justify-center w-8 h-8 ml-2 rounded-full text-primary bg-zinc-700"
+                    className="flex items-center justify-center w-8 h-8 ml-2 rounded-full text-primary bg-zinc-700 hover:bg-zinc-600"
                   >
                     <Image
                       src={Calendly}
@@ -82,7 +103,7 @@ const MentorCardSanity: React.FC<IMentorCardSanity> = ({
                 <Link href={email}>
                   <a
                     target="_blank"
-                    className="flex items-center justify-center w-8 h-8 ml-2 rounded-full text-primary bg-zinc-700"
+                    className="flex items-center justify-center w-8 h-8 ml-2 rounded-full text-primary bg-zinc-700 hover:bg-zinc-600"
                   >
                     <FiMail width="20px" height="20px" />
                   </a>
@@ -92,7 +113,7 @@ const MentorCardSanity: React.FC<IMentorCardSanity> = ({
                 <Link href={web}>
                   <a
                     target="_blank"
-                    className="flex items-center justify-center w-8 h-8 ml-2 rounded-full text-primary bg-zinc-700"
+                    className="flex items-center justify-center w-8 h-8 ml-2 rounded-full text-primary bg-zinc-700 hover:bg-zinc-600"
                   >
                     <FaGlobe width="20px" height="20px" />
                   </a>
@@ -102,7 +123,7 @@ const MentorCardSanity: React.FC<IMentorCardSanity> = ({
                 <Link href={linkedin}>
                   <a
                     target="_blank"
-                    className="flex items-center justify-center w-8 h-8 ml-2 rounded-full text-primary bg-zinc-700"
+                    className="flex items-center justify-center w-8 h-8 ml-2 rounded-full text-primary bg-zinc-700 hover:bg-zinc-600"
                   >
                     <FaLinkedin width="20px" height="20px" />
                   </a>
@@ -112,7 +133,7 @@ const MentorCardSanity: React.FC<IMentorCardSanity> = ({
                 <Link href={github}>
                   <a
                     target="_blank"
-                    className="flex items-center justify-center w-8 h-8 ml-2 rounded-full text-primary bg-zinc-700"
+                    className="flex items-center justify-center w-8 h-8 ml-2 rounded-full text-primary bg-zinc-700 hover:bg-zinc-600"
                   >
                     <FaGithub width="20px" height="20px" />
                   </a>

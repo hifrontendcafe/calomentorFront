@@ -42,12 +42,12 @@ const AdminMentors = () => {
 
   return (
     <>
-      <CustomHead title="Mentores" />
-      <DashboardLayout title="Mentores">
+      <CustomHead title="Mentors" />
+      <DashboardLayout title="Mentors">
         <GenericCard
           isLoading={isLoading}
           isDataEmpty={emptyMentors}
-          noDataMessage="Aún no se han registrado mentores"
+          noDataMessage="Aún no se han registrado mentors"
         >
           {mentors.map(mentor => (
             <MentorCard key={mentor.id} mentor={mentor} />
