@@ -93,22 +93,21 @@ const Mentors = () => {
           isLoading={isLoading}
           isDataEmpty={emptyMentors}
           noDataMessage="Aún no se han registrado mentors"
+          bodyClassnames="flex flex-wrap px-4 mb-4 min-h-fit gap-2"
         >
-          <div className="flex px-4 mb-4 h-8 gap-2">
-            {filterButtons.map(button => (
-              <CustomButton
-                key={button.label}
-                bntLabel={button.label}
-                primary
-                clickAction={() =>
-                  onFilterChange(button.filterName as UserStatus | 'all')
-                }
-                isActive={getActiveButton(
-                  button.filterName as UserStatus | 'all',
-                )}
-              />
-            ))}
-          </div>
+          {filterButtons.map(button => (
+            <CustomButton
+              key={button.label}
+              bntLabel={button.label}
+              primary
+              clickAction={() =>
+                onFilterChange(button.filterName as UserStatus | 'all')
+              }
+              isActive={getActiveButton(
+                button.filterName as UserStatus | 'all',
+              )}
+            />
+          ))}
           {filteredMentors.map(mentor => (
             <MentorCardSanity key={mentor._id} mentor={mentor} />
           ))}
