@@ -1,11 +1,23 @@
 import React from 'react';
-import { primaryRoutes } from '@/config/Routes';
+import { primaryRoutes, SELF_HISTORY } from '@/config/Routes';
 import NavigationRoute from '../NavigationRoute';
 import PwdByVercel from '../PwdByVercel';
 import { useNextAuthSession } from '@/hooks/useNextAuthSession';
+import { isMentor } from '@/helpers/hasRole';
+import { FingerPrintIcon } from '@heroicons/react/outline';
 
 export const DesktopSidebar: React.FC = () => {
   const [session, loading] = useNextAuthSession();
+  const routes =
+    isMentor(session?.user?.role!) &&
+    !primaryRoutes.find(route => route.name === 'Mi historial')
+      ? primaryRoutes.splice(1, 0, {
+          name: 'Mi historial',
+          icon: FingerPrintIcon,
+          href: `${SELF_HISTORY}?name=${session?.user?.name}&userId=${session?.user?.id}$isMentor=true`,
+        })
+      : primaryRoutes;
+
   return (
     <div className="hidden lg:flex lg:flex-shrink-0">
       <div className="flex flex-col w-64">
@@ -22,7 +34,7 @@ export const DesktopSidebar: React.FC = () => {
             className="flex flex-col flex-1 mt-5 overflow-y-auto"
             aria-label="Sidebar"
           >
-            {!loading && <NavigationRoute routes={primaryRoutes} />}
+            {!loading && <NavigationRoute routes={routes} />}
           </nav>
           <PwdByVercel />
         </div>
