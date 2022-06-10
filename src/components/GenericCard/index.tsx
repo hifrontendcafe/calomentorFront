@@ -29,7 +29,7 @@ const GenericCard = ({
         </div>
       )}
       <div
-        className={classNames('p-5 rounded-b-lg bg-cardContent', {
+        className={classNames('p-5 rounded-b-lg bg-cardContent min-h-fit', {
           'rounded-b-lg': title,
           'rounded-lg': !title,
         })}
@@ -41,7 +41,7 @@ const GenericCard = ({
               'border-green-500 mx-4 flex items-center justify-between my-5 border bg-cardContentLight rounded-md'
             }
           >
-            <div className="flex-1 px-4 py-2 text-sm truncate">
+            <div className="flex-1 px-4 py-2 text-sm">
               <p className="py-2 text-center text-mainTextColor">
                 {noDataMessage}
               </p>

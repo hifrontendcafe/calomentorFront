@@ -31,7 +31,7 @@ export const NotificationToast: React.FC<INotificationToast> = ({
       leaveFrom="opacity-100"
       leaveTo="opacity-0"
     >
-      <div className="overflow-hidden bg-gray-800 border rounded-lg shadow-lg pointer-events-auto w-96 border-cardContent">
+      <div className="overflow-hidden bg-gray-800 border rounded-lg shadow-lg pointer-events-auto w-72 lg:w-96 border-cardContent">
         <div className="p-4">
           <div className="flex items-start">
             <div className="flex-shrink-0">

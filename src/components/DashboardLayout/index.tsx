@@ -31,16 +31,16 @@ const DashboardLayout: React.FC<IDashboardLayout> = ({
         <TopBar setSidebarOpen={setSidebarOpen} />
         <header className="py-5 px-14 flex flex-col">
           <div className="justify-between flex">
-            <h2 className="text-2xl font-bold leading-7 text-mainTextColor sm:text-3xl sm:truncate">
+            <h2 className="text-2xl font-bold leading-7 text-mainTextColor sm:text-3xl">
               {title}
             </h2>
             {endEnhancer}
           </div>
-          {subtitle && <h3 className="text-xl text-white sm:truncate mt-4">{subtitle}</h3>}
+          {subtitle && <h3 className="text-xl text-white mt-4">{subtitle}</h3>}
         </header>
         <main
           className={classNames(
-            'relative z-0 flex-1 px-5 pb-5 bg-mainContent overflow-y-auto',
+            'max-w-xs sm:max-w-none relative z-0 flex-1 px-5 pb-5 bg-mainContent overflow-y-auto',
             styles.mainHeight,
           )}
         >

@@ -76,7 +76,7 @@ export const MobileSidebar: React.FC<IMobileSidebar> = ({
                 </button>
               </div>
             </Transition.Child>
-            <div className="flex items-center flex-shrink-0 px-4">
+            <div className="flex flex-col items-center flex-shrink-0 px-4">
               <span className="text-3xl font-semibold text-gray-200">
                 🔥 Calomentor
               </span>
