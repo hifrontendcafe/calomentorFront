@@ -42,7 +42,7 @@ const Mentors = () => {
         .catch(() => {
           addToast({
             title: 'Ha ocurrido un problema',
-            subText: 'No se ha podido obtener la lista de warnings',
+            subText: 'No se ha podido obtener la lista de mentors',
             type: 'error',
           });
           setIsLoading(false);
