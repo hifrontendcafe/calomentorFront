@@ -14,7 +14,7 @@ export const DesktopSidebar: React.FC = () => {
       ? primaryRoutes.splice(1, 0, {
           name: 'Mi historial',
           icon: FingerPrintIcon,
-          href: `${SELF_HISTORY}?name=${session?.user?.name}&userId=${session?.user?.id}$isMentor=true`,
+          href: `${SELF_HISTORY}?name=${session?.user?.name}&userId=${session?.user?.id}&isMentor=true`,
         })
       : primaryRoutes;
 
