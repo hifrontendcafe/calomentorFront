@@ -1,12 +1,11 @@
 import React, { Dispatch } from 'react';
 import { Fragment } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
-import { FingerPrintIcon, XIcon } from '@heroicons/react/outline';
-import { primaryRoutes, SELF_HISTORY } from '@/config/Routes';
+import { XIcon } from '@heroicons/react/outline';
 import NavigationRoute from '../NavigationRoute';
 import PwdByVercel from '../PwdByVercel';
 import { useNextAuthSession } from '@/hooks/useNextAuthSession';
-import { isMentor } from '@/helpers/hasRole';
+import { useGetRoutes } from '@/hooks/useGetRoutes';
 
 interface IMobileSidebar {
   sidebarOpen: boolean;
@@ -16,16 +15,8 @@ export const MobileSidebar: React.FC<IMobileSidebar> = ({
   sidebarOpen,
   setSidebarOpen,
 }) => {
-  const [session, loading] = useNextAuthSession();
-  const routes =
-    isMentor(session?.user?.role!) &&
-    !primaryRoutes.find(route => route.name === 'Mi historial')
-      ? primaryRoutes.splice(1, 0, {
-          name: 'Mi historial',
-          icon: FingerPrintIcon,
-          href: `${SELF_HISTORY}?name=${session?.user?.name}&userId=${session?.user?.id}$isMentor=true`,
-        })
-      : primaryRoutes;
+  const [, loading] = useNextAuthSession();
+  const routes = useGetRoutes();
 
   return (
     <Transition.Root show={sidebarOpen} as={Fragment}>
