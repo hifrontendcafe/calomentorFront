@@ -164,7 +164,7 @@ const SettingsProfilePage: React.FC = () => {
   return (
     <>
       <CustomHead title="Perfil" />
-      <DashboardLayout title="Perfil">
+      <DashboardLayout>
         <GenericCard isLoading={loading}>
           <form
             onSubmit={handleSubmit(onSubmit)}

@@ -63,21 +63,6 @@ const SettingsSchedulePage: React.FC = () => {
     <>
       <CustomHead title="Horarios" />
       <DashboardLayout
-        title="Horarios"
-        endEnhancer={
-          <CustomButton
-            bntIcon={
-              !addNew ? (
-                <PlusIcon className="-ml-0.5 mr-2 h-4 w-4" aria-hidden="true" />
-              ) : (
-                <XIcon className="-ml-0.5 mr-2 h-4 w-4" aria-hidden="true" />
-              )
-            }
-            bntLabel={addNew ? 'Cancelar' : 'Agregar'}
-            primary
-            clickAction={() => setAddNew(!addNew)}
-          />
-        }
       >
         <GenericCard
           isLoading={isLoading}

@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { Menu, Transition } from '@headlessui/react';
 import classNames from 'classnames';
 import { useNextAuthSession } from '@/hooks/useNextAuthSession';
+import { useNavTitle } from '@/hooks/useNavTitle';
 import { signOut } from 'next-auth/react';
 import { SELF_HISTORY } from '@/config/Routes';
 import Link from 'next/link';
@@ -15,6 +16,7 @@ interface ITopBar {
 
 export const TopBar: React.FC<ITopBar> = ({ setSidebarOpen }) => {
   const [session, loading] = useNextAuthSession();
+  const [title] = useNavTitle()
 
   return (
     <div className="relative z-10 flex flex-shrink-0 h-16 border-b border-gray-200 bg-topbar lg:border-none">
@@ -25,6 +27,11 @@ export const TopBar: React.FC<ITopBar> = ({ setSidebarOpen }) => {
         <span className="sr-only">Open sidebar</span>
         <MenuAlt1Icon className="w-6 h-6" aria-hidden="true" />
       </button>
+      <div className='flex my-auto ml-4 flex-1 max-w-[12rem] sm:max-w-none'>
+        <span className='truncate text-xl font-bold text-zinc-100 sm:text-2xl'>
+          {title}
+        </span>
+      </div>
       {/* Search bar */}
       <div className="flex justify-end flex-1 px-4 sm:px-6 lg:max-w-6xl lg:mx-auto lg:px-8">
         <div className='self-center'>
