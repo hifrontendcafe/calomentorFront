@@ -74,7 +74,7 @@ const Home: React.FC = () => {
   return (
     <>
       <CustomHead title="Inicio" />
-      <DashboardLayout title="Inicio">
+      <DashboardLayout>
         <GenericCard
           title="Próximas Mentorías"
           isDataEmpty={mentorshipsEmpty}

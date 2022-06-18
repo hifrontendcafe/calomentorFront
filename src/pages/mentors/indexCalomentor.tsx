@@ -43,7 +43,7 @@ const AdminMentors = () => {
   return (
     <>
       <CustomHead title="Mentors" />
-      <DashboardLayout title="Mentors">
+      <DashboardLayout>
         <GenericCard
           isLoading={isLoading}
           isDataEmpty={emptyMentors}

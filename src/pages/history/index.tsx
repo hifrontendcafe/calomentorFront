@@ -64,7 +64,7 @@ const History: React.FC = () => {
   return (
     <>
       <CustomHead title="Historial" />
-      <DashboardLayout title="Historial">
+      <DashboardLayout>
         <GenericCard
           isLoading={isLoading}
           isDataEmpty={noMentorships}

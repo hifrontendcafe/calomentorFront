@@ -79,7 +79,7 @@ const Warnings = () => {
   return (
     <>
       <CustomHead title="Advertencias" />
-      <DashboardLayout title="Advertencias">
+      <DashboardLayout>
         <GenericCard
           isLoading={isLoading}
           isDataEmpty={emptyWarnings}

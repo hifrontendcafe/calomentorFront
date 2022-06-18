@@ -6,17 +6,13 @@ import { TopBar } from '../TopBar';
 import styles from './styles.module.css';
 
 interface IDashboardLayout {
-  title: string;
   subtitle?: string;
   children: ReactNode;
-  endEnhancer?: ReactNode;
 }
 
 const DashboardLayout: React.FC<IDashboardLayout> = ({
-  title,
   subtitle,
   children,
-  endEnhancer,
 }) => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
@@ -30,21 +26,15 @@ const DashboardLayout: React.FC<IDashboardLayout> = ({
       <div className="flex-1">
         <TopBar setSidebarOpen={setSidebarOpen} />
         <header className="py-5 px-14 flex flex-col">
-          <div className="justify-between flex">
-            <h2 className="text-2xl font-bold leading-7 text-mainTextColor sm:text-3xl">
-              {title}
-            </h2>
-            {endEnhancer}
-          </div>
           {subtitle && <h3 className="text-xl text-white mt-4">{subtitle}</h3>}
         </header>
         <main
           className={classNames(
-            'max-w-xs sm:max-w-none relative z-0 flex-1 px-5 pb-5 bg-mainContent overflow-y-auto',
+            'max-w-sm sm:max-w-none relative z-0 flex-1 px-5 pb-5 bg-mainContent overflow-y-auto place-content-center',
             styles.mainHeight,
           )}
         >
-          <div className="px-4 pb-6 mx-auto sm:px-6 lg:pb-16 lg:px-8">
+          <div className="px-2 pb-6 mx-auto w-full sm:px-6 lg:pb-16 lg:px-8">
             {children}
           </div>
         </main>
