@@ -99,7 +99,7 @@ const AdminHistory: React.FC = () => {
   return (
     <>
       <CustomHead title="Historial Mentorías" />
-      <DashboardLayout title="Historial Mentorías">
+      <DashboardLayout>
         <GenericCard
           isLoading={isLoading}
           isDataEmpty={noMentorships}

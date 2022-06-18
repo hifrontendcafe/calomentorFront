@@ -75,7 +75,7 @@ const AdminHistory: React.FC = () => {
   return (
     <>
       <CustomHead title="Historial Mentorías" />
-      <DashboardLayout title="Historial Mentorías">
+      <DashboardLayout>
         <div className="flex flex-col h-16 gap-2 mt-4">
           <div className="flex w-1/2 gap-4">
             <input

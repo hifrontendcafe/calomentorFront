@@ -8,7 +8,7 @@ const Home: React.FC = () => {
   return (
     <>
       <CustomHead title="Inicio" />
-      <DashboardLayout title="Inicio">
+      <DashboardLayout>
         <GenericCard
           title="Próximamente Estadisticas"
           isDataEmpty={false}

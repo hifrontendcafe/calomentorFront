@@ -70,7 +70,7 @@ const Warnings = () => {
   return (
     <>
       <CustomHead title="Penalizaciones" />
-      <DashboardLayout title="Penalizaciones">
+      <DashboardLayout>
         {!isLoading && warnings.length === 0 && (
           <div
             className={

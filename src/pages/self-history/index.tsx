@@ -47,7 +47,6 @@ const SelfHistory = () => {
     <>
       <CustomHead title={String(name)} />
       <DashboardLayout
-        title={String(name)}
         subtitle={
           isLoading || !mentorships
             ? undefined
