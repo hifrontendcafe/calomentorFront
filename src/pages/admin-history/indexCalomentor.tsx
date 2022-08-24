@@ -8,7 +8,7 @@ import HistoryMentorshipCard from '@/components/HistoryMentorshipCard';
 import { getAdminMentorshipHistory } from '@/services/index';
 import WarnModal from '@/components/WarnModal';
 import GenericCard from '@/components/GenericCard';
-import { isAdmin } from '@/helpers/IsAdmin';
+import { isAdmin } from '@/helpers/hasRole';
 import useToastContext from '@/hooks/useToastContext';
 import CustomButton from '@/components/CustomButton';
 import { useNextAuthSession } from '@/hooks/useNextAuthSession';
@@ -99,7 +99,7 @@ const AdminHistory: React.FC = () => {
   return (
     <>
       <CustomHead title="Historial Mentorías" />
-      <DashboardLayout title="Historial Mentorías">
+      <DashboardLayout>
         <GenericCard
           isLoading={isLoading}
           isDataEmpty={noMentorships}

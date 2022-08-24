@@ -1,14 +1,14 @@
 import React, { Dispatch, Fragment } from 'react';
-import {
-  BellIcon,
-  ChevronDownIcon,
-  MenuAlt1Icon,
-} from '@heroicons/react/outline';
+import { ChevronDownIcon, MenuAlt1Icon } from '@heroicons/react/outline';
 import Image from 'next/image';
 import { Menu, Transition } from '@headlessui/react';
 import classNames from 'classnames';
 import { useNextAuthSession } from '@/hooks/useNextAuthSession';
+import { useNavTitle } from '@/hooks/useNavTitle';
 import { signOut } from 'next-auth/react';
+import { SELF_HISTORY } from '@/config/Routes';
+import Link from 'next/link';
+import { isMentor } from '@/helpers/hasRole';
 
 interface ITopBar {
   setSidebarOpen: Dispatch<boolean>;
@@ -16,6 +16,7 @@ interface ITopBar {
 
 export const TopBar: React.FC<ITopBar> = ({ setSidebarOpen }) => {
   const [session, loading] = useNextAuthSession();
+  const [title] = useNavTitle()
 
   return (
     <div className="relative z-10 flex flex-shrink-0 h-16 border-b border-gray-200 bg-topbar lg:border-none">
@@ -26,17 +27,25 @@ export const TopBar: React.FC<ITopBar> = ({ setSidebarOpen }) => {
         <span className="sr-only">Open sidebar</span>
         <MenuAlt1Icon className="w-6 h-6" aria-hidden="true" />
       </button>
+      <div className='flex my-auto ml-4 flex-1 max-w-[12rem] sm:max-w-none'>
+        <span className='truncate text-xl font-bold text-zinc-100 sm:text-2xl'>
+          {title}
+        </span>
+      </div>
       {/* Search bar */}
       <div className="flex justify-end flex-1 px-4 sm:px-6 lg:max-w-6xl lg:mx-auto lg:px-8">
-        <div className="flex items-center ml-4 md:ml-6">
-          {/* <button
-            type="button"
-            className="p-1 text-gray-400 bg-white rounded-full hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-500"
+        <div className='self-center'>
+          <Link
+            href={
+              'https://www.notion.so/hifrontendcafe/Documentos-tiles-para-mentors-93a91b6d702e46b8bdd1062b6722a052'
+            }
           >
-            <span className="sr-only">View notifications</span>
-            <BellIcon className="w-6 h-6" aria-hidden="true" />
-          </button> */}
-
+            <a>
+              <p className="text-sm font-bold text-zinc-200">Docs</p>
+            </a>
+          </Link>
+        </div>
+        <div className="flex items-center ml-4 md:ml-6">
           {/* Profile dropdown */}
           <Menu as="div" className="relative ml-3">
             <div>
@@ -86,6 +95,27 @@ export const TopBar: React.FC<ITopBar> = ({ setSidebarOpen }) => {
                     )}
                   </Menu.Item>
                 </Link> */}
+                {isMentor(session?.user?.role!) && (
+                  <Link
+                    href={`${SELF_HISTORY}?name=${session?.user?.name}&userId=${session?.user?.id}&isMentor=true`}
+                    passHref
+                  >
+                    <Menu.Item>
+                      {({ active }) => (
+                        <a
+                          className={classNames(
+                            'block px-4 py-2 text-sm text-mainTextColor cursor-pointer active:bg-activeNavigation',
+                            {
+                              'bg-hoverNavigation': active,
+                            },
+                          )}
+                        >
+                          Mi historial
+                        </a>
+                      )}
+                    </Menu.Item>
+                  </Link>
+                )}
                 <Menu.Item>
                   {({ active }) => (
                     <a

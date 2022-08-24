@@ -1,93 +1,93 @@
 import { formatDate } from '@/helpers/formatDate';
 import { IMentorship } from '@/interfaces/mentorship.interface';
-import { ChevronRightIcon } from '@heroicons/react/outline';
-import React, { useState } from 'react';
-import classNames from 'classnames';
+import React, { Dispatch, SetStateAction, useState } from 'react';
+import { SELF_HISTORY } from '@/config/Routes';
+import Link from 'next/link';
+import { isAdmin } from '@/helpers/hasRole';
+import { useNextAuthSession } from '@/hooks/useNextAuthSession';
+import { deleteMentorship } from '@/services';
+import Modal from '../Modal';
 
 interface IMentorshipCard {
   mentorship: IMentorship;
-}
-
-interface CardEventTarget extends EventTarget {
-  id?: string;
-}
-
-interface CardMouseEvent extends React.MouseEvent<HTMLElement> {
-  target: CardEventTarget;
+  setLoading: Dispatch<SetStateAction<boolean>>;
+  setMentorships: (id: string) => void;
 }
 
 const MentorshipCardFromBot: React.FC<IMentorshipCard> = ({
   mentorship: {
     id,
     mentee_id,
-    mentee_username_discord,
-    mentor_username_discord,
+    mentee_name,
+    mentor_name,
     mentorship_create_date,
     mentor_id,
   },
+  setLoading,
+  setMentorships,
 }) => {
-  const [isOpen, setIsOpen] = useState(false);
-  const date = String(mentorship_create_date);
+  const [session, loading] = useNextAuthSession();
+  const [isOpenDeleteMentorshipConfirmation, setIsOpenDeleteMentorshipConfirmation] =
+    useState<boolean>(false);
+
+  const onDeleteMentorship = async () => {
+    setLoading(true);
+    await deleteMentorship(id);
+    setMentorships(id);
+    setLoading(false);
+  };
+
   return (
-    <div key={id} className="px-4 my-4 sm:px-6">
-      <div className="overflow-hidden border-2 border-gray-700 border-solid sm:rounded-lg">
-        <div
-          className="flex flex-row items-center justify-between px-2 py-3 cursor-pointer sm:px-6 text-mainTextColor hover:bg-cardHeader"
-          onClick={(e: CardMouseEvent) => {
-            if (e.target.id !== 'warnButton') {
-              setIsOpen(!isOpen);
-            }
-          }}
-        >
-          <div>
-            <h3 className="text-lg font-medium leading-6 text-gray-200">
-              {mentee_username_discord}
-            </h3>
-            <p className="max-w-2xl mt-1 text-sm">
-              {mentorship_create_date &&
-                `Cargada el ${formatDate(
-                  Number(Number(date.length === 16 ? date.slice(0, -3) : date)),
-                )}`}
-            </p>
-          </div>
-          <div className="flex flex-row items-center">
-            <ChevronRightIcon
-              className={classNames('w-5 h-5 transform transition-transform', {
-                'rotate-90': isOpen,
-              })}
-            />
-          </div>
-        </div>
-        <div
-          className={classNames(
-            'px-4 py-5 transition-all transform ease-in-out origin-top border-t border-gray-700 xm:px-6',
-            {
-              block: isOpen,
-              hidden: !isOpen,
-            },
-          )}
-        >
-          <dl className="grid grid-cols-1 gap-x-4 gap-y-4 sm:grid-cols-2">
-            <div className="sm:col-span-1">
-              <dt className="text-sm font-medium text-mainTextColor">
-                Mentee: Discord ID - Usuario
-              </dt>
-              <dd className="mt-1 text-sm text-gray-200">
-                {mentee_id} - {mentee_username_discord}
-              </dd>
+    <>
+      <tr className="border-b border-gray-700" key={id}>
+        <td className="py-4 pl-4 pr-3 text-sm font-medium text-gray-300 whitespace-nowrap sm:pl-6 md:pl-0">
+          {formatDate(+mentorship_create_date!)}
+        </td>
+        <td className="px-3 py-4 text-sm text-gray-300 whitespace-nowrap">
+          <Link
+            href={`${SELF_HISTORY}?name=${mentor_name}&userId=${mentor_id}&isMentor=true`}
+          >
+            <a>
+              <div className="font-bold cursor-pointer hover:text-teal-500">
+                {mentor_name}
+              </div>
+              <div className="text-gray-400 hover:text-teal-500">
+                ID {mentor_id}
+              </div>
+            </a>
+          </Link>
+        </td>
+        <td className="px-3 py-4 text-sm text-gray-300 whitespace-nowrap">
+          <Link
+            href={`${SELF_HISTORY}?name=${mentee_name}&userId=${mentee_id}`}
+          >
+            <a>
+              <div className="font-bold hover:text-teal-500">{mentee_name}</div>
+              <div className="text-gray-400 hover:text-teal-500">
+                ID {mentee_id}
+              </div>
+            </a>
+          </Link>
+        </td>
+        {session && !loading && isAdmin(session?.user?.role) && (
+          <td className="relative py-4 pl-3 pr-4 text-sm font-medium text-right whitespace-nowrap sm:pr-6 md:pr-0">
+            <div
+              className="text-mainTextColor hover:text-teal-600 cursor-pointer"
+              onClick={() => setIsOpenDeleteMentorshipConfirmation(true)}
+            >
+              Remover registro
+              <span className="sr-only"></span>
             </div>
-            <div className="sm:col-span-1">
-              <dt className="text-sm font-medium text-mainTextColor">
-                Mentor: Discord ID - Usuario
-              </dt>
-              <dd className="mt-1 text-sm text-gray-200">
-                {mentor_id} - {mentor_username_discord}
-              </dd>
-            </div>
-          </dl>
-        </div>
-      </div>
-    </div>
+          </td>
+        )}
+      </tr>
+      <Modal
+        isOpen={isOpenDeleteMentorshipConfirmation}
+        onOpenChange={setIsOpenDeleteMentorshipConfirmation}
+        confirmAction={onDeleteMentorship}
+        title={'Deseas eliminar la mentoría de la base de datos?'}
+      />
+    </>
   );
 };
 

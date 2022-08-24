@@ -8,13 +8,30 @@ import { getAllMentors } from '@/services';
 import GenericCard from '@/components/GenericCard';
 import useToastContext from '@/hooks/useToastContext';
 import { useNextAuthSession } from '@/hooks/useNextAuthSession';
-import CustomButton from '@/components/CustomButton';
+import { Listbox } from '@headlessui/react';
+import { ChevronDownIcon } from '@heroicons/react/outline';
+import classNames from 'classnames';
+
+interface FilterButtonsInterface {
+  label: string;
+  filterName: UserStatus | 'all';
+}
+
+const filterButtons: FilterButtonsInterface[] = [
+  { label: 'Todos', filterName: 'all' },
+  { label: 'Activos', filterName: UserStatus.ACTIVE },
+  { label: 'Inactivos', filterName: UserStatus.INACTIVE },
+  { label: 'Fuera del programa', filterName: UserStatus.OUT },
+  { label: 'No disponibles', filterName: UserStatus.NOT_AVAILABLE },
+];
 
 const Mentors = () => {
   const [mentors, setMentors] = useState<Mentor[]>([]);
   const [filteredMentors, setFilteredMentors] = useState<Mentor[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [activeFilter, setActiveFilter] = useState<UserStatus | 'all'>('all');
+  const [isLoading, setIsLoading] = useState(false);
+  const [activeFilter, setActiveFilter] = useState<FilterButtonsInterface>(
+    filterButtons[0],
+  );
   const [session, loading] = useNextAuthSession();
   const router = useRouter();
   const emptyMentors = mentors.length === 0;
@@ -42,7 +59,7 @@ const Mentors = () => {
         .catch(() => {
           addToast({
             title: 'Ha ocurrido un problema',
-            subText: 'No se ha podido obtener la lista de warnings',
+            subText: 'No se ha podido obtener la lista de mentors',
             type: 'error',
           });
           setIsLoading(false);
@@ -51,64 +68,68 @@ const Mentors = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loading, router]);
 
-  const onFilterChange = (filter: UserStatus | 'all') => {
+  const onFilterChange = (filter: FilterButtonsInterface) => {
     const filterMentors = (status: UserStatus) => {
       setFilteredMentors(mentors.filter(mentor => mentor.status === status));
     };
     setActiveFilter(filter);
 
-    if (filter === 'all') {
+    if (filter.filterName === 'all') {
       setFilteredMentors(mentors);
-    } else if (filter === UserStatus.ACTIVE) {
+    } else if (filter.filterName === UserStatus.ACTIVE) {
       filterMentors(UserStatus.ACTIVE);
-    } else if (filter === UserStatus.INACTIVE) {
+    } else if (filter.filterName === UserStatus.INACTIVE) {
       filterMentors(UserStatus.INACTIVE);
-    } else if (filter === UserStatus.OUT) {
+    } else if (filter.filterName === UserStatus.OUT) {
       filterMentors(UserStatus.OUT);
     } else {
       filterMentors(UserStatus.NOT_AVAILABLE);
     }
   };
 
-  const getActiveButton = (status: UserStatus | 'all') => {
-    if (status === activeFilter) {
-      return true;
-    }
-    return false;
-  };
-
-  const filterButtons = [
-    { label: 'Todos', filterName: 'all' },
-    { label: 'Activos', filterName: UserStatus.ACTIVE },
-    { label: 'Inactivos', filterName: UserStatus.INACTIVE },
-    { label: 'Fuera del programa', filterName: UserStatus.OUT },
-    { label: 'No disponibles', filterName: UserStatus.NOT_AVAILABLE },
-  ];
-
   return (
     <>
-      <CustomHead title="Mentores" />
-      <DashboardLayout title="Mentores">
+      <CustomHead title="Mentors" />
+      <DashboardLayout>
         <GenericCard
           isLoading={isLoading}
           isDataEmpty={emptyMentors}
-          noDataMessage="Aún no se han registrado mentores"
+          noDataMessage="Aún no se han registrado mentors"
+          bodyClassnames="w-full"
         >
-          <div className="flex px-4 mb-4 h-8 gap-2">
-            {filterButtons.map(button => (
-              <CustomButton
-                key={button.label}
-                bntLabel={button.label}
-                primary
-                clickAction={() =>
-                  onFilterChange(button.filterName as UserStatus | 'all')
-                }
-                isActive={getActiveButton(
-                  button.filterName as UserStatus | 'all',
-                )}
-              />
-            ))}
-          </div>
+          {!emptyMentors && (
+            <div className="flex flex-col items-center md:items-end px-4 mb-4 min-h-fit gap-2">
+              <Listbox
+                value={activeFilter}
+                onChange={value => onFilterChange(value)}
+              >
+                <Listbox.Button className="w-[90%] md:w-[35%] lg:w-[25%] h-8 bg-cardContent border border-fecGreen rounded-md text-fecGreen flex flex-row justify-center items-center">
+                  <div className="flex-1">{activeFilter.label}</div>
+                  <ChevronDownIcon className="w-4 mr-2" />
+                </Listbox.Button>
+                <Listbox.Options className="w-[90%] md:w-[35%] lg:w-[25%]">
+                  {filterButtons.map(filter => (
+                    <Listbox.Option key={filter.filterName} value={filter}>
+                      {({ active, selected }) => (
+                        <li
+                          className={classNames(
+                            'w-full my-1 border border-fecGreen rounded-md h-8 flex items-center justify-center',
+                            {
+                              'bg-fecGreen text-white': active ?? selected,
+                              'bg-cardContent text-fecGreen':
+                                !active ?? selected,
+                            },
+                          )}
+                        >
+                          {filter.label}
+                        </li>
+                      )}
+                    </Listbox.Option>
+                  ))}
+                </Listbox.Options>
+              </Listbox>
+            </div>
+          )}
           {filteredMentors.map(mentor => (
             <MentorCardSanity key={mentor._id} mentor={mentor} />
           ))}

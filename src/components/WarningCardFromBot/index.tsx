@@ -1,18 +1,18 @@
-import { ChevronRightIcon } from '@heroicons/react/outline';
-import React, { useState } from 'react';
+import React, { Dispatch, SetStateAction, useState } from 'react';
 import { IWarning, WARN, WARNSTATE } from '@/interfaces/warning.interface';
-import classNames from 'classnames';
 import { formatDate } from '@/helpers/formatDate';
+import { SELF_HISTORY } from '@/config/Routes';
+import Link from 'next/link';
+import Modal from '../Modal';
+import StatusLabelCard from '../StatusLabelCard';
+import { useNextAuthSession } from '@/hooks/useNextAuthSession';
+import { isAdmin } from '@/helpers/hasRole';
+import { deleteWarning } from '@/services';
 
 interface IWarningCard {
   warning: IWarning;
-}
-interface CardEventTarget extends EventTarget {
-  id?: string;
-}
-
-interface CardMouseEvent extends React.MouseEvent<HTMLElement> {
-  target: CardEventTarget;
+  setLoading: Dispatch<SetStateAction<boolean>>;
+  setWarnings: (id: string) => void;
 }
 
 const WarningCard: React.FC<IWarningCard> = ({
@@ -30,108 +30,145 @@ const WarningCard: React.FC<IWarningCard> = ({
     forgive_author_name,
     forgive_cause,
   },
+  setLoading,
+  setWarnings,
 }) => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [isOpenDeleteWarningConfirmation, setIsOpenDeleteWarningConfirmation] =
+    useState<boolean>(false);
+  const [session, loading] = useNextAuthSession();
   const isForgived = warning_status === WARNSTATE.FORGIVE;
   const date = String(warning_date);
+
+  const statusLabel = {
+    [WARNSTATE.FORGIVE]: (
+      <StatusLabelCard title="Perdonada" bgColor="bg-green-500" />
+    ),
+    [WARNSTATE.ACTIVE]: <StatusLabelCard title="Activa" bgColor="bg-red-500" />,
+  };
+
+  const onDeleteWarning = async () => {
+    setLoading(true);
+    await deleteWarning(id);
+    setWarnings(id);
+    setLoading(false);
+  };
+
   return (
-    <div key={id} className="px-4 my-4 sm:px-6">
-      <div className="overflow-hidden border-2 border-gray-700 border-solid sm:rounded-lg">
-        <div
-          className="flex flex-row items-center justify-between px-2 py-3 cursor-pointer sm:px-6 text-mainTextColor hover:bg-cardHeader"
-          onClick={(e: CardMouseEvent) => {
-            if (e.target.id !== 'clearWarnButton') {
-              setIsOpen(!isOpen);
-            }
-          }}
-        >
+    <>
+      <tr className="border-b border-gray-700" key={id}>
+        <td className="py-4 pl-4 pr-3 text-sm font-medium text-gray-300 whitespace-nowrap sm:pl-6 md:pl-0">
+          {formatDate(+date!)}
+        </td>
+
+        <td className="px-3 py-4 text-sm text-gray-300 whitespace-nowrap">
+          <Link
+            href={`${SELF_HISTORY}?name=${mentee_username_discord}&userId=${mentee_id}`}
+          >
+            <a>
+              <div className="font-bold hover:text-teal-500 cursor-pointer">
+                {mentee_username_discord}
+              </div>
+              <div className="text-gray-400 hover:text-teal-500">
+                ID {mentee_id}
+              </div>
+            </a>
+          </Link>
+        </td>
+
+        <td className="px-3 py-4 text-sm text-gray-300 whitespace-nowrap align-middle">
+          <div className="font-bold">{statusLabel[warning_status]}</div>
+        </td>
+
+        <td className="px-3 py-4 text-sm text-gray-300 whitespace-nowrap">
+          <div className="font-bold">{warning_author_name}</div>
+          <div className="text-gray-400">ID {warning_author_id}</div>
+        </td>
+
+        <td className="relative py-4 pl-3 pr-4 text-sm font-medium text-right whitespace-nowrap sm:pr-6 md:pr-0">
+          <div
+            className="m-2 text-mainTextColor hover:text-teal-600 cursor-pointer"
+            onClick={() => setIsOpen(!isOpen)}
+          >
+            Mas info
+            <span className="sr-only"></span>
+          </div>
+          {session && !loading && isAdmin(session.user.role) && (
+            <div>
+              <div
+                className="text-mainTextColor hover:text-teal-600 cursor-pointer"
+                onClick={() => setIsOpenDeleteWarningConfirmation(true)}
+              >
+                Remover registro
+                <span className="sr-only"></span>
+              </div>
+            </div>
+          )}
+        </td>
+      </tr>
+
+      <Modal
+        isOpen={isOpenDeleteWarningConfirmation}
+        onOpenChange={setIsOpenDeleteWarningConfirmation}
+        confirmAction={onDeleteWarning}
+        title={'Deseas eliminar la penalización de la base de datos?'}
+      />
+
+      <Modal
+        isOpen={isOpen}
+        onOpenChange={setIsOpen}
+        renderButtons={false}
+        title={`Mentee: ${mentee_username_discord} | Estado: ${
+          isForgived ? 'Perdonado' : 'Activo'
+        }`}
+      >
+        <div className="flex flex-col">
           <div>
-            <h3 className="text-lg font-medium leading-6 text-gray-200">
-              Mentee: {mentee_username_discord} | Estado:{' '}
-              {isForgived ? 'Perdonado' : 'Activo'}
-            </h3>
-            <p className="max-w-2xl mt-1 text-sm">
+            <p className="text-sm font-light">
               Fecha:{' '}
               {formatDate(
                 Number(date.length === 16 ? date.slice(0, -3) : date),
               )}
             </p>
           </div>
-          <div className="flex flex-row items-center">
-            <ChevronRightIcon
-              className={classNames('w-5 h-5 transform transition-transform', {
-                'rotate-90': isOpen,
-              })}
-            />
-          </div>
-        </div>
-        <div
-          className={classNames(
-            'px-4 py-5 transition-all transform ease-in-out origin-top border-t border-gray-700 xm:px-6',
-            {
-              block: isOpen,
-              hidden: !isOpen,
-            },
-          )}
-        >
-          <dl className="grid grid-cols-1 gap-x-4 gap-y-4 sm:grid-cols-2">
-            <div className="sm:col-span-1">
-              <dt className="text-sm font-medium text-mainTextColor">Autor:</dt>
-              <dd className="mt-1 text-sm text-gray-200">
-                {warning_author_name} - {warning_author_id}
-              </dd>
-            </div>
-            <div className="sm:col-span-1">
-              <dt className="text-sm font-medium text-mainTextColor">
-                Mentee:
-              </dt>
-              <dd className="mt-1 text-sm text-gray-200">
-                {mentee_username_discord} - {mentee_id}
-              </dd>
-            </div>
-            <div className="sm:col-span-1">
-              <dt className="text-sm font-medium text-mainTextColor">
-                Tipo de warning
-              </dt>
-              <dd className="mt-1 text-sm text-gray-200">
-                {warn_type === WARN.COC_WARN
-                  ? 'Incumplimiento del código de conducta'
-                  : 'Ausencia'}
-              </dd>
-            </div>
-            {warn_type === WARN.COC_WARN && (
-              <div className="sm:col-span-1">
-                <dt className="text-sm font-medium text-mainTextColor">
-                  Causa
+          {isForgived ? (
+            <>
+              <div className="sm:col-span-1 mb-6 mt-4">
+                <dt className="font-medium text-mainTextColor">
+                  Perdonado por
                 </dt>
-                <dd className="mt-1 text-sm text-gray-200">{warn_cause}</dd>
+                <dd className="mt-1 text-sm text-gray-200">
+                  {forgive_author_name} - {forgive_author_id}
+                </dd>
               </div>
-            )}
-            {warning_status === WARNSTATE.FORGIVE && (
-              <>
-                <hr className='sm:col-span-2 border-gray-700' />
+              <div className="sm:col-span-1">
+                <dt className="font-medium text-mainTextColor">Motivo</dt>
+                <dd className="mt-1 text-sm text-gray-200">{forgive_cause}</dd>
+              </div>
+            </>
+          ) : (
+            <>
+              <div className="sm:col-span-1 mb-6 mt-4">
+                <dt className="font-medium text-mainTextColor">
+                  Tipo de warning
+                </dt>
+                <dd className="mt-1 text-sm text-gray-200">
+                  {warn_type === WARN.COC_WARN
+                    ? 'Incumplimiento del código de conducta'
+                    : 'Ausencia'}
+                </dd>
+              </div>
+              {warn_type === WARN.COC_WARN && (
                 <div className="sm:col-span-1">
-                  <dt className="text-sm font-medium text-mainTextColor">
-                    Perdonado por
-                  </dt>
-                  <dd className="mt-1 text-sm text-gray-200">
-                    {forgive_author_name} - {forgive_author_id}
-                  </dd>
+                  <dt className="font-medium text-mainTextColor">Causa</dt>
+                  <dd className="mt-1 text-sm text-gray-200">{warn_cause}</dd>
                 </div>
-                <div className="sm:col-span-1">
-                  <dt className="text-sm font-medium text-mainTextColor">
-                    Motivo
-                  </dt>
-                  <dd className="mt-1 text-sm text-gray-200">
-                    {forgive_cause}
-                  </dd>
-                </div>
-              </>
-            )}
-          </dl>
+              )}
+            </>
+          )}
         </div>
-      </div>
-    </div>
+      </Modal>
+    </>
   );
 };
 

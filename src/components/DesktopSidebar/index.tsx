@@ -1,11 +1,13 @@
 import React from 'react';
-import { primaryRoutes } from '@/config/Routes';
 import NavigationRoute from '../NavigationRoute';
 import PwdByVercel from '../PwdByVercel';
 import { useNextAuthSession } from '@/hooks/useNextAuthSession';
+import { useGetRoutes } from '@/hooks/useGetRoutes';
 
 export const DesktopSidebar: React.FC = () => {
-  const [session, loading] = useNextAuthSession();
+  const [, loading] = useNextAuthSession();
+  const routes = useGetRoutes()
+
   return (
     <div className="hidden lg:flex lg:flex-shrink-0">
       <div className="flex flex-col w-64">
@@ -22,7 +24,7 @@ export const DesktopSidebar: React.FC = () => {
             className="flex flex-col flex-1 mt-5 overflow-y-auto"
             aria-label="Sidebar"
           >
-            {!loading && <NavigationRoute routes={primaryRoutes} />}
+            {!loading && <NavigationRoute routes={routes} />}
           </nav>
           <PwdByVercel />
         </div>

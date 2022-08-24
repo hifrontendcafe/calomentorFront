@@ -11,8 +11,8 @@ import useToastContext from '@/hooks/useToastContext';
 import CustomButton from '@/components/CustomButton';
 import { orderMentorshipsByDate } from '@/helpers/getOrderByDate';
 import { useNextAuthSession } from '@/hooks/useNextAuthSession';
-import { formatDate } from '@/helpers/formatDate';
 import Spinner from '@/components/Spinner';
+import HistoryMentorshipCardFromBot from '@/components/HistoryMentorshipCardFromBot';
 
 const AdminHistory: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -75,8 +75,7 @@ const AdminHistory: React.FC = () => {
   return (
     <>
       <CustomHead title="Historial Mentorías" />
-      <DashboardLayout title="Historial Mentorías">
-        (
+      <DashboardLayout>
         <div className="flex flex-col h-16 gap-2 mt-4">
           <div className="flex w-1/2 gap-4">
             <input
@@ -102,14 +101,14 @@ const AdminHistory: React.FC = () => {
             />
             <CustomButton
               className="mt-1"
-              bntLabel={'Todos'}
+              bntLabel={'Últimas 20 mentorías'}
               primary
               clickAction={getAllMentorships}
               isActive={true}
             />
           </div>
         </div>
-        )
+
         {!isLoading && mentorships.length === 0 && (
           <div
             className={
@@ -159,45 +158,18 @@ const AdminHistory: React.FC = () => {
                   </thead>
                   <tbody className="border-b border-gray-700">
                     {mentorships?.map(mentorship => (
-                      <tr
-                        className="border-b border-gray-700"
+                      <HistoryMentorshipCardFromBot
                         key={mentorship.id}
-                      >
-                        <td className="py-4 pl-4 pr-3 text-sm font-medium text-gray-300 whitespace-nowrap sm:pl-6 md:pl-0">
-                          {formatDate(+mentorship.mentorship_create_date!)}
-                        </td>
-                        <td className="px-3 py-4 text-sm text-gray-300 whitespace-nowrap">
-                          <div
-                            onClick={() => {
-                              setName(mentorship.mentor_name);
-                              onSearchByName(mentorship.mentor_name);
-                            }}
-                            className="font-bold cursor-pointer hover:text-teal-500"
-                          >
-                            {mentorship.mentor_name}
-                          </div>
-                          <div className="text-gray-400">
-                            ID {mentorship.mentor_id}
-                          </div>
-                        </td>
-                        <td className="px-3 py-4 text-sm text-gray-300 whitespace-nowrap">
-                          <div className="font-bold hover:text-teal-500">
-                            {mentorship.mentee_name}
-                          </div>
-                          <div className="text-gray-400">
-                            ID {mentorship.mentee_id}
-                          </div>
-                        </td>
-                        <td className="relative py-4 pl-3 pr-4 text-sm font-medium text-right whitespace-nowrap sm:pr-6 md:pr-0">
-                          <a
-                            href="#"
-                            className="text-mainTextColor hover:text-teal-600"
-                          >
-                            Remover registro
-                            <span className="sr-only"></span>
-                          </a>
-                        </td>
-                      </tr>
+                        mentorship={mentorship}
+                        setMentorships={(id: string) =>
+                          setMentorships(
+                            mentorships.filter(
+                              mentorship => mentorship.id !== id,
+                            ),
+                          )
+                        }
+                        setLoading={setIsLoading}
+                      />
                     ))}
                   </tbody>
                 </table>

@@ -3,7 +3,7 @@ import CustomHead from '@/components/CustomHead';
 import DashboardLayout from '@/components/DashboardLayout';
 import { HOME } from '@/config/Routes';
 import { User } from '@/interfaces/user.interface';
-import { isAdmin } from '@/helpers/IsAdmin';
+import { isAdmin } from '@/helpers/hasRole';
 import { useRouter } from 'next/dist/client/router';
 import MentorCard from '@/components/MentorCard/MentorCard';
 import { getAllUsersData } from '@/services';
@@ -42,12 +42,12 @@ const AdminMentors = () => {
 
   return (
     <>
-      <CustomHead title="Mentores" />
-      <DashboardLayout title="Mentores">
+      <CustomHead title="Mentors" />
+      <DashboardLayout>
         <GenericCard
           isLoading={isLoading}
           isDataEmpty={emptyMentors}
-          noDataMessage="Aún no se han registrado mentores"
+          noDataMessage="Aún no se han registrado mentors"
         >
           {mentors.map(mentor => (
             <MentorCard key={mentor.id} mentor={mentor} />

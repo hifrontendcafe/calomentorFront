@@ -2,10 +2,10 @@ import React, { Dispatch } from 'react';
 import { Fragment } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import { XIcon } from '@heroicons/react/outline';
-import { primaryRoutes } from '@/config/Routes';
 import NavigationRoute from '../NavigationRoute';
 import PwdByVercel from '../PwdByVercel';
 import { useNextAuthSession } from '@/hooks/useNextAuthSession';
+import { useGetRoutes } from '@/hooks/useGetRoutes';
 
 interface IMobileSidebar {
   sidebarOpen: boolean;
@@ -15,7 +15,9 @@ export const MobileSidebar: React.FC<IMobileSidebar> = ({
   sidebarOpen,
   setSidebarOpen,
 }) => {
-  const [session, loading] = useNextAuthSession();
+  const [, loading] = useNextAuthSession();
+  const routes = useGetRoutes();
+
   return (
     <Transition.Root show={sidebarOpen} as={Fragment}>
       <Dialog
@@ -65,7 +67,7 @@ export const MobileSidebar: React.FC<IMobileSidebar> = ({
                 </button>
               </div>
             </Transition.Child>
-            <div className="flex items-center flex-shrink-0 px-4">
+            <div className="flex flex-col items-center flex-shrink-0 px-4">
               <span className="text-3xl font-semibold text-gray-200">
                 🔥 Calomentor
               </span>
@@ -77,7 +79,7 @@ export const MobileSidebar: React.FC<IMobileSidebar> = ({
               className="flex-shrink-0 h-full mt-5 overflow-y-auto"
               aria-label="Sidebar"
             >
-              {!loading && <NavigationRoute routes={primaryRoutes} />}
+              {!loading && <NavigationRoute routes={routes} />}
             </nav>
             <PwdByVercel />
           </div>
