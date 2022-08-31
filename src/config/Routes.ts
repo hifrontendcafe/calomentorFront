@@ -1,9 +1,9 @@
 import {
   DocumentTextIcon,
   HomeIcon,
-  ExclamationIcon,
-} from '@heroicons/react/outline';
-import UserGroupIcon from '@heroicons/react/solid/UserGroupIcon';
+  ExclamationTriangleIcon,
+} from '@heroicons/react/24/outline';
+import UserGroupIcon from '@heroicons/react/24/solid/UserGroupIcon';
 
 // ---------- ROUTE CONSTANTS ----------
 
@@ -58,7 +58,7 @@ export const primaryRoutes = [
   {
     name: 'Penalizaciones',
     href: WARNINGS,
-    icon: ExclamationIcon,
+    icon: ExclamationTriangleIcon,
   },
   {
     name: 'Historial',

@@ -32,6 +32,27 @@ const Chart = ({ data }: { data: any }) => {
                 fontWeight: 600,
               },
             }}
+            events={[
+              {
+                eventHandlers: {
+                  onMouseEnter: () => ({
+                    mutation: () => ({
+                      style: {
+                        fill: '#14B8A6',
+                      },
+                    }),
+                  }),
+                  onMouseLeave: () => ({
+                    mutation: () => ({
+                      style: {
+                        fill: 'rgb(153 246 228)',
+                      },
+                    }),
+                  }),
+                },
+                target: 'data',
+              },
+            ]}
             domain={{ x: [0, data.years.length] }}
             alignment="middle"
             data={data.years}

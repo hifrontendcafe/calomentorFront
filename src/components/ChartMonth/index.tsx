@@ -1,5 +1,11 @@
 import React from 'react';
-import { VictoryAxis, VictoryBar, VictoryChart, VictoryTooltip } from 'victory';
+import {
+  VictoryAxis,
+  VictoryBar,
+  VictoryChart,
+  VictoryLabel,
+  VictoryTooltip,
+} from 'victory';
 
 const ChartMonth = ({ data }: { data: any }) => {
   return (
@@ -13,14 +19,18 @@ const ChartMonth = ({ data }: { data: any }) => {
               tickLabels: {
                 fontFamily: 'sans-serif',
                 fill: '#fff',
+                textTransform: 'capitalize',
               },
             }}
           />
           <VictoryBar
-            labelComponent={<VictoryTooltip />}
+            labelComponent={<VictoryLabel dy={25} />}
             style={{
               data: {
                 fill: 'rgb(153 246 228)',
+              },
+              labels: {
+                fontWeight: 600,
               },
             }}
             events={[

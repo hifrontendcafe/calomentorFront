@@ -1,7 +1,7 @@
 import { primaryRoutes, SELF_HISTORY } from '@/config/Routes';
 import { useNextAuthSession } from '@/hooks/useNextAuthSession';
 import { isMentor } from '@/helpers/hasRole';
-import { FingerPrintIcon } from '@heroicons/react/outline';
+import { FingerPrintIcon } from '@heroicons/react/24/outline';
 
 export function useGetRoutes() {
   const [session] = useNextAuthSession();

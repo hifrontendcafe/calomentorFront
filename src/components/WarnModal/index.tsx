@@ -1,6 +1,6 @@
 import { Dispatch, Fragment, SetStateAction, useState } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
-import { ExclamationIcon } from '@heroicons/react/outline';
+import { ExclamationTriangleIcon } from '@heroicons/react/24/outline';
 import CustomButton from '../CustomButton';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { axiosPost } from '@/lib/api';
@@ -114,7 +114,7 @@ const WarnModal: React.FC<IModal> = ({
               <form onSubmit={handleSubmit(onSubmit)}>
                 <div>
                   <div className="flex items-center justify-center w-12 h-12 mx-auto bg-red-100 rounded-full">
-                    <ExclamationIcon
+                    <ExclamationTriangleIcon
                       className="w-8 h-8 text-red-600"
                       aria-hidden="true"
                     />

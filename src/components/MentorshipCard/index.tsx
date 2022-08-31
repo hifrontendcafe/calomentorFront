@@ -2,7 +2,7 @@ import React from 'react';
 import Timezones from '@/lib/completeTimezones.json';
 import { formatDate, getFinishTime } from '@/helpers/formatDate';
 import { IMentorship } from '@/interfaces/mentorship.interface';
-import { CalendarIcon, UserRemoveIcon } from '@heroicons/react/outline';
+import { CalendarIcon, UserMinusIcon } from '@heroicons/react/24/outline';
 import dayjs from 'dayjs';
 
 import Link from 'next/link';
@@ -111,7 +111,7 @@ const MentorshipCard: React.FC<IMentorshipCard> = ({
                     className="relative inline-flex items-center px-2 py-2 -ml-px text-5xl text-red-500 bg-transparent outline-none hover:text-red-800"
                     onClick={handleCancelMentorship}
                   >
-                    <UserRemoveIcon className="w-5 h-5" aria-hidden="true" />
+                    <UserMinusIcon className="w-5 h-5" aria-hidden="true" />
                   </button>
                 </div>
               )}

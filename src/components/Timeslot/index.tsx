@@ -1,6 +1,10 @@
 import useToastContext from '@/hooks/useToastContext';
 import { ITimeSlot, TIMESLOT_STATUS } from '@/interfaces/timeslot.interface';
-import { CalendarIcon, TrashIcon, XIcon } from '@heroicons/react/outline';
+import {
+  CalendarIcon,
+  TrashIcon,
+  XMarkIcon,
+} from '@heroicons/react/24/outline';
 import React, { Dispatch, SetStateAction } from 'react';
 import { useState } from 'react';
 import Modal from '@/components/Modal';
@@ -101,7 +105,7 @@ const Timeslot: React.FC<ISlot> = ({
                 className="relative inline-flex items-center px-2 py-2 -ml-px text-sm font-medium bg-transparent text-mainTextColor"
                 onClick={handleCancelTimeslot}
               >
-                <XIcon className="w-4 h-4" aria-hidden="true" />
+                <XMarkIcon className="w-4 h-4" aria-hidden="true" />
               </button>
             )}
             {isFree && (

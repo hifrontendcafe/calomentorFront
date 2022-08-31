@@ -4,8 +4,8 @@ import {
   CheckCircleIcon,
   InformationCircleIcon,
   ExclamationCircleIcon,
-} from '@heroicons/react/outline';
-import { XIcon } from '@heroicons/react/solid';
+} from '@heroicons/react/24/outline';
+import { XMarkIcon } from '@heroicons/react/24/solid';
 
 interface INotificationToast {
   title: string;
@@ -64,7 +64,7 @@ export const NotificationToast: React.FC<INotificationToast> = ({
                 onClick={() => setShow(false)}
               >
                 <span className="sr-only">Cerrar</span>
-                <XIcon className="w-5 h-5" aria-hidden="true" />
+                <XMarkIcon className="w-5 h-5" aria-hidden="true" />
               </button>
             </div>
           </div>
