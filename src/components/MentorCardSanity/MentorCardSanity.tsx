@@ -150,7 +150,6 @@ const MentorCardSanity: React.FC<IMentorCardSanity> = ({
                     <Image src={Star} width="20px" height="20px" alt="Star" />
                   </div>
                 ))}
-                <>{console.log('feedback', feedback)}</>
                 {Array.from(
                   { length: feedback ? feedback - 5 : 5 },
                   (_, index) => (
