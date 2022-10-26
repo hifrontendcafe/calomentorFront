@@ -300,7 +300,6 @@ const SettingsProfilePage: React.FC = () => {
                         instanceId="superUniqueID"
                         value={options.filter(c => value?.includes(c.value))}
                         onChange={val => onChange(val.map(c => c.value))}
-                        inputRef={ref}
                         options={options}
                         isMulti
                         classNamePrefix="react-select"
@@ -334,7 +333,6 @@ const SettingsProfilePage: React.FC = () => {
                           c => value?.toString() === c?.id?.toString(),
                         )}
                         onChange={c => onChange(c?.id?.toString())}
-                        inputRef={ref}
                         options={TimezoneList}
                         getOptionLabel={opt => opt.text}
                         getOptionValue={opt => opt.id.toString()}
