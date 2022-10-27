@@ -1,4 +1,7 @@
-import { ChevronRightIcon, DocumentRemoveIcon } from '@heroicons/react/outline';
+import {
+  ChevronRightIcon,
+  DocumentMinusIcon,
+} from '@heroicons/react/24/outline';
 import React, { Dispatch, SetStateAction, useState } from 'react';
 import { IWarning, WARN, WARNSTATE } from '@/interfaces/warning.interface';
 import dayjs from 'dayjs';
@@ -64,7 +67,7 @@ const WarningCard: React.FC<IWarningCard> = ({
                 <span className="px-2 py-1 -mt-8 -ml-12 text-sm text-yellow-500 bg-gray-700 rounded shadow-lg tooltip">
                   Quitar Advertencia
                 </span>
-                <DocumentRemoveIcon
+                <DocumentMinusIcon
                   id="clearWarnButton"
                   className="w-5 h-5 mx-2 text-yellow-400 cursor-pointer hover:text-yellow-600"
                   onClick={() => {

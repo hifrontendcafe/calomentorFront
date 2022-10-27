@@ -11,7 +11,7 @@ import useToastContext from '@/hooks/useToastContext';
 import { IWarning, RemoveWarningForm } from '@/interfaces/warning.interface';
 import { getWarnings, removeWarning } from '@/services';
 import { Dialog } from '@headlessui/react';
-import { DocumentRemoveIcon } from '@heroicons/react/outline';
+import { DocumentMinusIcon } from '@heroicons/react/24/outline';
 import { useRouter } from 'next/dist/client/router';
 import React, { useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
@@ -98,7 +98,7 @@ const Warnings = () => {
           <form onSubmit={handleSubmit(onSubmit)}>
             <div>
               <div className="flex items-center justify-center w-12 h-12 mx-auto bg-yellow-100 rounded-full">
-                <DocumentRemoveIcon
+                <DocumentMinusIcon
                   className="w-8 h-8 text-yellow-500"
                   aria-hidden="true"
                 />

@@ -1,9 +1,9 @@
 import {
   DocumentTextIcon,
   HomeIcon,
-  ExclamationIcon,
-} from '@heroicons/react/outline';
-import UserGroupIcon from '@heroicons/react/solid/UserGroupIcon';
+  ExclamationTriangleIcon,
+} from '@heroicons/react/24/outline';
+import UserGroupIcon from '@heroicons/react/24/solid/UserGroupIcon';
 
 // ---------- ROUTE CONSTANTS ----------
 
@@ -29,6 +29,7 @@ export const CONFIRMATION = '/confirmation';
 export const FEEDBACK = '/feedback';
 export const WARNING = '/warning';
 export const MENTORS_API = '/mentor';
+export const METRICS = '/metrics';
 
 // ---------- NAVIGATION ROUTES ----------
 
@@ -57,7 +58,7 @@ export const primaryRoutes = [
   {
     name: 'Penalizaciones',
     href: WARNINGS,
-    icon: ExclamationIcon,
+    icon: ExclamationTriangleIcon,
   },
   {
     name: 'Historial',

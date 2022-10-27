@@ -150,6 +150,17 @@ const MentorCardSanity: React.FC<IMentorCardSanity> = ({
                     <Image src={Star} width="20px" height="20px" alt="Star" />
                   </div>
                 ))}
+                {Array.from(
+                  { length: feedback ? feedback - 5 : 5 },
+                  (_, index) => (
+                    <div
+                      key={index.toString()}
+                      className="flex items-center mr-2 opacity-20"
+                    >
+                      <Image src={Star} width="20px" height="20px" alt="Star" />
+                    </div>
+                  ),
+                )}
               </div>
             </div>
           </div>

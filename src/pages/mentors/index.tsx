@@ -9,7 +9,7 @@ import GenericCard from '@/components/GenericCard';
 import useToastContext from '@/hooks/useToastContext';
 import { useNextAuthSession } from '@/hooks/useNextAuthSession';
 import { Listbox } from '@headlessui/react';
-import { ChevronDownIcon } from '@heroicons/react/outline';
+import { ChevronDownIcon } from '@heroicons/react/24/outline';
 import classNames from 'classnames';
 
 interface FilterButtonsInterface {
@@ -28,7 +28,7 @@ const filterButtons: FilterButtonsInterface[] = [
 const Mentors = () => {
   const [mentors, setMentors] = useState<Mentor[]>([]);
   const [filteredMentors, setFilteredMentors] = useState<Mentor[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [activeFilter, setActiveFilter] = useState<FilterButtonsInterface>(
     filterButtons[0],
   );
@@ -103,17 +103,17 @@ const Mentors = () => {
                 value={activeFilter}
                 onChange={value => onFilterChange(value)}
               >
-                <Listbox.Button className="w-[90%] md:w-[35%] lg:w-[25%] h-8 bg-cardContent border border-fecGreen rounded-md text-fecGreen flex flex-row justify-center items-center">
+                <Listbox.Button className="w-[90%] md:w-[35%] lg:w-[25%] h-8 bg-cardContent border border-fecGreen rounded-md text-fecGreen flex flex-row justify-center items-center mr-2">
                   <div className="flex-1">{activeFilter.label}</div>
                   <ChevronDownIcon className="w-4 mr-2" />
                 </Listbox.Button>
-                <Listbox.Options className="w-[90%] md:w-[35%] lg:w-[25%]">
+                <Listbox.Options className="w-[90%] md:w-[35%] lg:w-[22.5%] absolute bg-cardContent p-2 z-50 top-16">
                   {filterButtons.map(filter => (
                     <Listbox.Option key={filter.filterName} value={filter}>
                       {({ active, selected }) => (
-                        <li
+                        <div
                           className={classNames(
-                            'w-full my-1 border border-fecGreen rounded-md h-8 flex items-center justify-center',
+                            'w-full my-1 border border-fecGreen rounded-md h-8 flex items-center justify-center cursor-pointer',
                             {
                               'bg-fecGreen text-white': active ?? selected,
                               'bg-cardContent text-fecGreen':
@@ -122,7 +122,7 @@ const Mentors = () => {
                           )}
                         >
                           {filter.label}
-                        </li>
+                        </div>
                       )}
                     </Listbox.Option>
                   ))}

@@ -19,11 +19,12 @@ export const getUsers = async () => {
  * Get all mentors from sanity
  * @returns An array of mentors
  */
- export const getMentors = async () => {
+export const getMentors = async () => {
   try {
     const { data } = await axiosAWSInstance.get<Mentor>(MENTORS_API);
     return data;
   } catch (error: any) {
+    console.log('error', error);
     throw new Error(error.response.status);
   }
 };

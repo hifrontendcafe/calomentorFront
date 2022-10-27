@@ -1,11 +1,11 @@
 import { formatDate } from '@/helpers/formatDate';
 import { IMentorship } from '@/interfaces/mentorship.interface';
 import {
-  BanIcon,
+  NoSymbolIcon,
   ChevronRightIcon,
   ExclamationCircleIcon,
-  ExclamationIcon,
-} from '@heroicons/react/outline';
+  ExclamationTriangleIcon,
+} from '@heroicons/react/24/outline';
 import React, { Dispatch, SetStateAction, useState } from 'react';
 import Star from '@/assets/img/Star.svg';
 import Image from 'next/image';
@@ -82,8 +82,8 @@ const MentorshipCard: React.FC<IMentorshipCard> = ({
             </p>
           </div>
           <div className="flex flex-row items-center">
-            {Array.from({ length: feedback_stars }, () => (
-              <div className="flex items-center mr-2">
+            {Array.from({ length: feedback_stars }, (_, index) => (
+              <div className="flex items-center mr-2" key={index.toString()}>
                 <Image src={Star} width="20px" height="20px" alt="Star" />
               </div>
             ))}
@@ -92,7 +92,7 @@ const MentorshipCard: React.FC<IMentorshipCard> = ({
                 <span className="px-2 py-1 -mt-8 -ml-10 text-sm text-red-500 bg-gray-700 rounded shadow-lg tooltip">
                   Advertir usuario
                 </span>
-                <ExclamationIcon
+                <ExclamationTriangleIcon
                   id="warnButton"
                   className="w-5 h-5 mx-2 text-red-400 cursor-pointer hover:text-red-600"
                   onClick={() => {
@@ -111,7 +111,7 @@ const MentorshipCard: React.FC<IMentorshipCard> = ({
                 <span className="px-2 py-1 -mt-8 text-sm text-red-500 bg-gray-700 rounded shadow-lg -ml-14 tooltip">
                   El usuario fue advertido
                 </span>
-                <BanIcon className="w-5 h-5 mx-2 text-red-400" />
+                <NoSymbolIcon className="w-5 h-5 mx-2 text-red-400" />
               </div>
             )}
             {isWarned && warning_info?.warning_status === WARNSTATE.FORGIVE && (

@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import CustomButton from '@/components/CustomButton';
 import Timeslot from '@/components/Timeslot';
-import { PlusIcon, XIcon } from '@heroicons/react/outline';
+import { PlusIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import { ITimeSlot } from '@/interfaces/timeslot.interface';
 import AddTimeslot from '@/components/AddTimeslot/Index';
 import CancelModal from '@/components/CancelModal';
@@ -62,8 +62,7 @@ const SettingsSchedulePage: React.FC = () => {
   return (
     <>
       <CustomHead title="Horarios" />
-      <DashboardLayout
-      >
+      <DashboardLayout>
         <GenericCard
           isLoading={isLoading}
           noDataMessage='No tienes ningún horario registrado, presiona en el botón

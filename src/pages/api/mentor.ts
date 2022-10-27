@@ -1,7 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import {
-  getMentors
-} from '@/services/userAPI';
+import { getMentors } from '@/services/userAPI';
 
 export default async function handler(
   req: NextApiRequest,

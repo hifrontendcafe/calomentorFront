@@ -1,7 +1,7 @@
 import React, { Dispatch } from 'react';
 import { Fragment } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
-import { XIcon } from '@heroicons/react/outline';
+import { XMarkIcon } from '@heroicons/react/24/outline';
 import NavigationRoute from '../NavigationRoute';
 import PwdByVercel from '../PwdByVercel';
 import { useNextAuthSession } from '@/hooks/useNextAuthSession';
@@ -63,7 +63,10 @@ export const MobileSidebar: React.FC<IMobileSidebar> = ({
                   onClick={() => setSidebarOpen(false)}
                 >
                   <span className="sr-only">Close sidebar</span>
-                  <XIcon className="w-6 h-6 text-gray-200" aria-hidden="true" />
+                  <XMarkIcon
+                    className="w-6 h-6 text-gray-200"
+                    aria-hidden="true"
+                  />
                 </button>
               </div>
             </Transition.Child>
