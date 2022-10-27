@@ -3,6 +3,7 @@ import DiscordProvider from 'next-auth/providers/discord';
 import {
   CalomentorAdminID,
   CalomentorMentorID,
+  FECMentorID,
   FrontendCafeID,
 } from '@/config/DiscordID';
 import { LOGIN, UNAUTHORIZED } from '@/config/Routes';
@@ -50,7 +51,9 @@ export default NextAuth({
           },
         );
         const isAdmin = userInfo.roles.includes(CalomentorAdminID);
-        const isMentor = userInfo.roles.includes(CalomentorMentorID);
+        const isMentor =
+          userInfo.roles.includes(CalomentorMentorID) ||
+          userInfo.roles.includes(FECMentorID);
         // Check if the user has the necesary roles to log in.
         if (!isAdmin && !isMentor) {
           return UNAUTHORIZED;
