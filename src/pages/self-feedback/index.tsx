@@ -20,6 +20,19 @@ const SelfFeedback = () => {
     <>
       <CustomHead title={String(`Feedback de ${name}`)} />
       <DashboardLayout>
+        {!isLoading && (!feedbacks || feedbacks.length === 0) && (
+          <div
+            className={
+              'border-green-500 mx-4 flex items-center justify-between my-5 border bg-cardContentLight rounded-md'
+            }
+          >
+            <div className="flex-1 px-4 py-2 text-sm">
+              <p className="py-2 text-center text-mainTextColor">
+                Aún no se ha recibido feedback de {name}
+              </p>
+            </div>
+          </div>
+        )}
         {isLoading ? (
           <Spinner />
         ) : (
