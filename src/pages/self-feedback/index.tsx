@@ -5,6 +5,7 @@ import Spinner from '@/components/Spinner';
 import { useGetFeedbackByMentorIdQuery } from '@/provider';
 import Image from 'next/image';
 import Star from '@/assets/img/Star.svg';
+import { formatDate } from '@/helpers/formatDate';
 
 const SelfFeedback = () => {
   const {
@@ -44,6 +45,7 @@ const SelfFeedback = () => {
                 mentee_username_discord,
                 feedback_stars,
                 feedback_mentee,
+                feedback_date,
               }) => {
                 return (
                   <div
@@ -106,6 +108,9 @@ const SelfFeedback = () => {
                         },
                       )}
                     </div>
+                    <p className="mt-8 italic font-thin text-xs">
+                      Realizada el: {formatDate(feedback_date)}
+                    </p>
                   </div>
                 );
               },
