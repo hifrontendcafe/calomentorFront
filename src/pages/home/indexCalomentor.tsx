@@ -82,8 +82,8 @@ const Home: React.FC = () => {
           noDataMessage={
             <span>
               Actualmente no posees mentorías agendadas, recuerda configurar tus{' '}
-              <Link href={SCHEDULE}>
-                <a className="underline">horarios disponibles.</a>
+              <Link href={SCHEDULE} className="underline">
+                horarios disponibles.
               </Link>
             </span>
           }

@@ -71,9 +71,9 @@ const History: React.FC = () => {
           noDataMessage={
             <span>
               Hasta el momento no has dado una mentoría, recuerda configurar tus{' '}
-              <Link href={SCHEDULE}>
-                <a className="underline">horarios disponibles</a>
-              </Link>{' '}
+              <Link href={SCHEDULE} className="underline">
+                horarios disponibles
+              </Link>
               :)
             </span>
           }

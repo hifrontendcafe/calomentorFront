@@ -27,8 +27,8 @@ const StarButton: React.FC<IStarButton> = ({
     >
       <Image
         src={hover >= id ? Star : GrayStar}
-        width="40px"
-        height="40px"
+        width={40}
+        height={40}
         alt="Star"
       />
     </button>

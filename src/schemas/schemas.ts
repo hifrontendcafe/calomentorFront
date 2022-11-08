@@ -46,3 +46,19 @@ export const getWarningQuerySchema = z.object({
   limit: z.string().default('20'),
   lastKeyId: z.string().optional(),
 });
+
+export const sendFeedbackSchema = z.object({
+  mentor_id: z.string(),
+  mentor_username_discord: z.string(),
+  mentor_name: z.string(),
+  mentee_id: z.string(),
+  mentee_username_discord: z.string(),
+  mentee_name: z.string(),
+  feedback_date: z.string(),
+  feedback_stars: z.number().min(0).max(5),
+  feedback_mentee: z.object({
+    '¿Qué te gusto de la sesión?': z.string(),
+    '¿Qué podría haber sido mejor de la sesión?': z.string(),
+  }),
+  feedback_mentee_private: z.string().optional(),
+});

@@ -7,6 +7,7 @@ import {
   cancelMentorshipBodySchema,
   deleteMentorshipQuerySchema,
   getMentorshipsQuerySchema,
+  sendFeedbackSchema,
 } from '@/schemas/schemas';
 import { z } from 'zod';
 
@@ -96,27 +97,11 @@ export const confirmMentorship = async (mentorship_token: string) => {
   }
 };
 
-/**
- * Send mentorship feedback
- * @param mentorship_token Mentorship token
- * @param feedback_mentee Mentor feedback
- * @param feedback_mentee_private Mentee message for staff
- * @param feedback_stars Mentor rating
- * @returns
- */
 export const sendFeedback = async (
-  mentorship_token: string,
-  feedback_mentee: string,
-  feedback_mentee_private: string,
-  feedback_stars: number,
+  body: z.infer<typeof sendFeedbackSchema>,
 ) => {
   try {
-    const { data } = await axiosAWSInstance.post(`${MENTORSHIP}${FEEDBACK}`, {
-      mentorship_token,
-      feedback_mentee,
-      feedback_mentee_private,
-      feedback_stars,
-    });
+    const { data } = await axiosAWSInstance.post(`${FEEDBACK}`, body);
     return data;
   } catch (error: any) {
     const errorResponse = parseError(error);
@@ -129,6 +114,16 @@ export const deleteMentorship = async ({
 }: z.infer<typeof deleteMentorshipQuerySchema>) => {
   try {
     return await axiosAWSInstance.delete(`${MENTORSHIP}/${id}`);
+  } catch (error: any) {
+    const errorResponse = parseError(error);
+    console.error(errorResponse);
+  }
+};
+
+export const getFeedbackById = async (id: string) => {
+  try {
+    const { data } = await axiosAWSInstance.get(`${FEEDBACK}/${id}`);
+    return data;
   } catch (error: any) {
     const errorResponse = parseError(error);
     console.error(errorResponse);

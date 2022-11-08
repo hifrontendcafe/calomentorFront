@@ -24,7 +24,6 @@ export const getMentors = async () => {
     const { data } = await axiosAWSInstance.get<Mentor>(MENTORS_API);
     return data;
   } catch (error: any) {
-    console.log('error', error);
     throw new Error(error.response.status);
   }
 };

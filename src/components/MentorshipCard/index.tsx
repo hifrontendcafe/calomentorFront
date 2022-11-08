@@ -92,13 +92,12 @@ const MentorshipCard: React.FC<IMentorshipCard> = ({
                 <span className="px-2 py-1 -mt-8 -ml-20 text-sm text-green-500 bg-gray-700 rounded shadow-lg tooltip">
                   Agregar a Google Calendar
                 </span>
-                <Link href={googleCalendarURL}>
-                  <a
-                    target="_blank"
-                    className="text-mainTextColor hover:text-mainBtnColor"
-                  >
-                    <CalendarIcon className="w-6 h-6" aria-hidden="true" />
-                  </a>
+                <Link
+                  href={googleCalendarURL}
+                  target="_blank"
+                  className="text-mainTextColor hover:text-mainBtnColor"
+                >
+                  <CalendarIcon className="w-6 h-6" aria-hidden="true" />
                 </Link>
               </div>
               {handleCancelMentorship && (

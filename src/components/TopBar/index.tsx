@@ -6,7 +6,7 @@ import classNames from 'classnames';
 import { useNextAuthSession } from '@/hooks/useNextAuthSession';
 import { useNavTitle } from '@/hooks/useNavTitle';
 import { signOut } from 'next-auth/react';
-import { SELF_HISTORY } from '@/config/Routes';
+import { SELF_FEEDBACK, SELF_HISTORY } from '@/config/Routes';
 import Link from 'next/link';
 import { isMentor } from '@/helpers/hasRole';
 
@@ -40,9 +40,7 @@ export const TopBar: React.FC<ITopBar> = ({ setSidebarOpen }) => {
               'https://www.notion.so/hifrontendcafe/Documentos-tiles-para-mentors-93a91b6d702e46b8bdd1062b6722a052'
             }
           >
-            <a>
-              <p className="text-sm font-bold text-zinc-200">Docs</p>
-            </a>
+            <p className="text-sm font-bold text-zinc-200">Docs</p>
           </Link>
         </div>
         <div className="flex items-center ml-4 md:ml-6">
@@ -54,8 +52,8 @@ export const TopBar: React.FC<ITopBar> = ({ setSidebarOpen }) => {
                   <Image
                     className="w-8 h-8 rounded-full"
                     src={session.user.image}
-                    height="32px"
-                    width="32px"
+                    height={32}
+                    width={32}
                     alt=""
                   />
                   <span className="hidden ml-3 text-sm font-medium text-gray-200 lg:block">
@@ -96,25 +94,46 @@ export const TopBar: React.FC<ITopBar> = ({ setSidebarOpen }) => {
                   </Menu.Item>
                 </Link> */}
                 {isMentor(session?.user?.role!) && (
-                  <Link
-                    href={`${SELF_HISTORY}?name=${session?.user?.name}&userId=${session?.user?.id}&isMentor=true`}
-                    passHref
-                  >
-                    <Menu.Item>
-                      {({ active }) => (
-                        <a
-                          className={classNames(
-                            'block px-4 py-2 text-sm text-mainTextColor cursor-pointer active:bg-activeNavigation',
-                            {
-                              'bg-hoverNavigation': active,
-                            },
-                          )}
-                        >
-                          Mi historial
-                        </a>
-                      )}
-                    </Menu.Item>
-                  </Link>
+                  <>
+                    <Link
+                      href={`${SELF_HISTORY}?name=${session?.user?.name}&userId=${session?.user?.id}&isMentor=true`}
+                      passHref
+                    >
+                      <Menu.Item>
+                        {({ active }) => (
+                          <a
+                            className={classNames(
+                              'block px-4 py-2 text-sm text-mainTextColor cursor-pointer active:bg-activeNavigation',
+                              {
+                                'bg-hoverNavigation': active,
+                              },
+                            )}
+                          >
+                            Mi historial
+                          </a>
+                        )}
+                      </Menu.Item>
+                    </Link>
+                    <Link
+                      href={`${SELF_FEEDBACK}?name=${session?.user?.name}&userId=${session?.user?.id}`}
+                      passHref
+                    >
+                      <Menu.Item>
+                        {({ active }) => (
+                          <a
+                            className={classNames(
+                              'block px-4 py-2 text-sm text-mainTextColor cursor-pointer active:bg-activeNavigation',
+                              {
+                                'bg-hoverNavigation': active,
+                              },
+                            )}
+                          >
+                            Mi feedback
+                          </a>
+                        )}
+                      </Menu.Item>
+                    </Link>
+                  </>
                 )}
                 <Menu.Item>
                   {({ active }) => (

@@ -25,12 +25,15 @@ export default NextAuth({
   },
   // Callbacks | https://next-auth.js.org/configuration/callbacks
   callbacks: {
-    async signIn({ user, account: { access_token } }) {
+    async signIn({ user, account }) {
+      if (!account?.access_token) {
+        return false;
+      }
       const guildResp = await fetch(
         'https://discord.com/api/users/@me/guilds',
         {
           headers: {
-            Authorization: `Bearer ${access_token}`,
+            Authorization: `Bearer ${account.access_token}`,
           },
         },
       );
@@ -59,6 +62,7 @@ export default NextAuth({
           return UNAUTHORIZED;
         }
         // Asign role number depending of the roles the user have.
+        // @ts-ignore
         user.role = getRole(isAdmin, isMentor);
         // Check if user exists else create it
         try {
@@ -88,6 +92,7 @@ export default NextAuth({
     },
     jwt: async ({ user, token }) => {
       if (user) {
+        // @ts-ignore
         token.role = user.role;
       }
       return token;

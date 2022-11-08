@@ -74,7 +74,6 @@ const Home: React.FC = () => {
       setMetrics(metrics.data);
       setIsLoading(false);
     } catch (err) {
-      console.log(err);
       setIsLoading(false);
     }
   }, []);

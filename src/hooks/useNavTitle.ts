@@ -7,6 +7,7 @@ import {
   WARNINGS,
   ADMIN_HISTORY,
   SELF_HISTORY,
+  SELF_FEEDBACK,
 } from '@/config/Routes';
 
 const pageNames: Record<string, string> = {
@@ -28,6 +29,8 @@ export function useNavTitle() {
     if (route) {
       if (route === SELF_HISTORY) {
         setTitle(String(name));
+      } else if (route === SELF_FEEDBACK) {
+        setTitle(`Feedback de ${name}`);
       } else {
         setTitle(pageNames[route]);
       }

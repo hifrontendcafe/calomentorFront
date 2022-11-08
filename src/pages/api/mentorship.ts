@@ -11,19 +11,7 @@ import {
   getMentorshipsQuerySchema,
   deleteMentorshipQuerySchema,
 } from '@/schemas/schemas';
-import { parseError, showError } from '@/helpers/showError';
-
-function handleError(error: unknown, res: NextApiResponse) {
-  try {
-    const responseError = parseError(error);
-    showError(responseError);
-    return res
-      .status(responseError.status)
-      .json({ message: responseError.data.message });
-  } catch (error: unknown) {
-    return res.status(400).json({ message: 'An error has occurred' });
-  }
-}
+import { handleError } from '@/helpers/showError';
 
 async function handleConfirmMentorship(
   req: NextApiRequest,
@@ -100,8 +88,8 @@ export default async function handler(
       return handleCancelMentorship(req, res);
     case 'PATCH':
       return handleConfirmMentorship(req, res);
-    case "DELETE": 
-      return handleDeleteMentorship(req, res)
+    case 'DELETE':
+      return handleDeleteMentorship(req, res);
     default:
       return res.status(400).json({ message: 'Invalid method' });
   }

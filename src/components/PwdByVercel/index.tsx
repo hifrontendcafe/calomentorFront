@@ -8,8 +8,8 @@ const PwdByVercel: React.FC = () => {
       <a href="https://vercel.com/?utm_source=hifrontendcafe&utm_campaign=oss">
         <Image
           src={PwdByVercelImg}
-          height="40"
-          width="206"
+          height={40}
+          width={206}
           alt="Powered by Vercel"
         />
       </a>
