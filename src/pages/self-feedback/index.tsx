@@ -50,65 +50,70 @@ const SelfFeedback = () => {
                 return (
                   <div
                     key={id}
-                    className="bg-topbar p-4 rounded text-slate-100"
+                    className="bg-topbar p-4 rounded text-slate-100 flex flex-col justify-between"
                   >
-                    <div className="flex justify-between">
-                      <p className="font-bold">
-                        {mentee_name}{' '}
-                        {mentee_name !== 'Anónimo' && (
-                          <span className="font-light text-xs">
-                            - {mentee_username_discord}
-                          </span>
-                        )}
-                      </p>
-                      <div className="flex">
-                        {Array.from({ length: feedback_stars }, (_, index) => (
-                          <div
-                            key={index.toString()}
-                            className="flex items-center mr-1"
-                          >
-                            <Image
-                              src={Star}
-                              width={12}
-                              height={12}
-                              alt="Star"
-                            />
-                          </div>
-                        ))}
-                        {Array.from(
-                          { length: feedback_stars ? feedback_stars - 5 : 5 },
-                          (_, index) => (
-                            <div
-                              key={index.toString()}
-                              className="flex items-center mr-1 opacity-20"
-                            >
-                              <Image
-                                src={Star}
-                                width={12}
-                                height={12}
-                                alt="Star"
-                              />
-                            </div>
-                          ),
+                    <div>
+                      <div className="flex justify-between">
+                        <p className="font-bold">
+                          {mentee_name}{' '}
+                          {mentee_name !== 'Anónimo' && (
+                            <span className="font-light text-xs">
+                              - {mentee_username_discord}
+                            </span>
+                          )}
+                        </p>
+                        <div className="flex">
+                          {Array.from(
+                            { length: feedback_stars },
+                            (_, index) => (
+                              <div
+                                key={index.toString()}
+                                className="flex items-center mr-1"
+                              >
+                                <Image
+                                  src={Star}
+                                  width={12}
+                                  height={12}
+                                  alt="Star"
+                                />
+                              </div>
+                            ),
+                          )}
+                          {Array.from(
+                            { length: feedback_stars ? feedback_stars - 5 : 5 },
+                            (_, index) => (
+                              <div
+                                key={index.toString()}
+                                className="flex items-center mr-1 opacity-20"
+                              >
+                                <Image
+                                  src={Star}
+                                  width={12}
+                                  height={12}
+                                  alt="Star"
+                                />
+                              </div>
+                            ),
+                          )}
+                        </div>
+                      </div>
+                      <hr className="border-fecGreen opacity-30 my-6" />
+                      <div className="flex flex-col gap-6">
+                        {Object.entries(feedback_mentee).map(
+                          ([question, answer]) => {
+                            return answer ? (
+                              <div key={question}>
+                                <p className="font-medium text-lg mb-2">
+                                  {question}
+                                </p>
+                                <p className="font-thin">{answer}</p>
+                              </div>
+                            ) : null;
+                          },
                         )}
                       </div>
                     </div>
-                    <hr className="border-fecGreen opacity-30 my-6" />
-                    <div className="flex flex-col gap-6">
-                      {Object.entries(feedback_mentee).map(
-                        ([question, answer]) => {
-                          return (
-                            <div key={question}>
-                              <p className="font-medium text-lg mb-2">
-                                {question}
-                              </p>
-                              <p className="font-thin">{answer}</p>
-                            </div>
-                          );
-                        },
-                      )}
-                    </div>
-                    <p className="mt-8 italic font-thin text-xs">
+                    <p className="italic font-thin text-xs mt-8 self-end">
                       Realizada el: {formatDate(feedback_date)}
                     </p>
                   </div>

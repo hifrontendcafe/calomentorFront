@@ -16,7 +16,7 @@ export const formatDate = (date: number) => {
   return dayjs(date)
     .tz(userTimezone)
     .locale('es-mx')
-    .format('MMMM D, YYYY h:mm A');
+    .format('D [de] MMMM [del] YYYY [a las] H:MM');
 };
 
 export const getFinishTime = (date: number, duration: number) => {
