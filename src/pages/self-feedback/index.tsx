@@ -1,13 +1,6 @@
-import React, { useEffect, useState } from 'react';
 import CustomHead from '@/components/CustomHead';
 import DashboardLayout from '@/components/DashboardLayout';
-import GenericCard from '@/components/GenericCard';
 import { useRouter } from 'next/dist/client/router';
-import { IMentorship } from '@/interfaces/mentorship.interface';
-import { IWarning } from '@/interfaces/warning.interface';
-import { getWarningsById, getMentorshipsById } from '@/services';
-import WarningCardFromBot from '@/components/WarningCardFromBot';
-import HistoryMentorshipCardFromBot from '@/components/HistoryMentorshipCardFromBot';
 import Spinner from '@/components/Spinner';
 import { useGetFeedbackByMentorIdQuery } from '@/provider';
 import Image from 'next/image';
@@ -22,8 +15,6 @@ const SelfFeedback = () => {
     { id: String(userId) },
     { skip: !Boolean(userId) },
   );
-
-  console.log('asd', { userId, feedbacks, isLoading });
 
   return (
     <>

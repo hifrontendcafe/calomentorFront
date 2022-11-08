@@ -4,7 +4,6 @@ import DashboardLayout from '@/components/DashboardLayout';
 import { Mentor, UserStatus } from '@/interfaces/user.interface';
 import { useRouter } from 'next/dist/client/router';
 import MentorCardSanity from '@/components/MentorCardSanity/MentorCardSanity';
-import { getAllMentors } from '@/services';
 import GenericCard from '@/components/GenericCard';
 import useToastContext from '@/hooks/useToastContext';
 import { useNextAuthSession } from '@/hooks/useNextAuthSession';
