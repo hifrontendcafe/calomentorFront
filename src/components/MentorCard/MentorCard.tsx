@@ -27,8 +27,7 @@ const MentorCard: React.FC<IMentorCard> = ({
     user_status === UserStatus.OUT,
   );
   const [userIsActive, setUserIsActive] = useState(
-    user_status !== UserStatus.OUT &&
-      user_status === UserStatus.ACTIVE,
+    user_status !== UserStatus.OUT && user_status === UserStatus.ACTIVE,
   );
   const [session] = useNextAuthSession();
   const { addToast } = useToastContext();
@@ -106,8 +105,8 @@ const MentorCard: React.FC<IMentorCard> = ({
                 : 'https://res.cloudinary.com/frontendcafe/image/upload/v1631388475/defaultUserImage_advu4k.svg'
             }
             alt="Mentor profile image"
-            width="60px"
-            height="60px"
+            width={60}
+            height={60}
           />
           <div className="flex flex-col justify-center ml-4">
             <h3 className="text-sm font-medium text-white">{full_name}</h3>
@@ -147,11 +146,7 @@ const MentorCard: React.FC<IMentorCard> = ({
         confirmAction={() => {
           setIsModalOpen(false);
           setIsLoading2(true);
-          handleButton(
-            userOutOfProgram
-              ? UserStatus.INACTIVE
-              : UserStatus.OUT,
-          );
+          handleButton(userOutOfProgram ? UserStatus.INACTIVE : UserStatus.OUT);
         }}
         danger
         Icon={HiOutlineExclamation}

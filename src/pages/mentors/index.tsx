@@ -4,13 +4,13 @@ import DashboardLayout from '@/components/DashboardLayout';
 import { Mentor, UserStatus } from '@/interfaces/user.interface';
 import { useRouter } from 'next/dist/client/router';
 import MentorCardSanity from '@/components/MentorCardSanity/MentorCardSanity';
-import { getAllMentors } from '@/services';
 import GenericCard from '@/components/GenericCard';
 import useToastContext from '@/hooks/useToastContext';
 import { useNextAuthSession } from '@/hooks/useNextAuthSession';
 import { Listbox } from '@headlessui/react';
 import { ChevronDownIcon } from '@heroicons/react/24/outline';
 import classNames from 'classnames';
+import { useGetAllMentorsQuery } from '@/provider';
 
 interface FilterButtonsInterface {
   label: string;
@@ -28,7 +28,6 @@ const filterButtons: FilterButtonsInterface[] = [
 const Mentors = () => {
   const [mentors, setMentors] = useState<Mentor[]>([]);
   const [filteredMentors, setFilteredMentors] = useState<Mentor[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
   const [activeFilter, setActiveFilter] = useState<FilterButtonsInterface>(
     filterButtons[0],
   );
@@ -37,36 +36,37 @@ const Mentors = () => {
   const emptyMentors = mentors.length === 0;
   const { addToast } = useToastContext();
 
+  const {
+    data: mentorsData,
+    isLoading,
+    isSuccess,
+    isError,
+  } = useGetAllMentorsQuery({}, { skip: !session && loading });
+
   useEffect(() => {
-    if (session && !loading) {
-      getAllMentors()
-        .then(({ data }) => {
-          const mentorsSorted = data.sort(mentor => {
-            if (
-              mentor.status &&
-              [UserStatus.ACTIVE, UserStatus.NOT_AVAILABLE].includes(
-                mentor.status,
-              )
-            ) {
-              return -1;
-            }
-            return 1;
-          });
-          setMentors(mentorsSorted);
-          setFilteredMentors(mentorsSorted);
-          setIsLoading(false);
-        })
-        .catch(() => {
-          addToast({
-            title: 'Ha ocurrido un problema',
-            subText: 'No se ha podido obtener la lista de mentors',
-            type: 'error',
-          });
-          setIsLoading(false);
-        });
+    if (!isLoading && !isSuccess && isError) {
+      addToast({
+        title: 'Ha ocurrido un problema',
+        subText: 'No se ha podido obtener la lista de mentors',
+        type: 'error',
+      });
+    }
+
+    if (!isLoading && !isError && isSuccess) {
+      const mentorsSorted = [...mentorsData].sort(mentor => {
+        if (
+          mentor.status &&
+          [UserStatus.ACTIVE, UserStatus.NOT_AVAILABLE].includes(mentor.status)
+        ) {
+          return -1;
+        }
+        return 1;
+      });
+      setMentors(mentorsSorted);
+      setFilteredMentors(mentorsSorted);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [loading, router]);
+  }, [isLoading, isSuccess, isError, mentorsData, router]);
 
   const onFilterChange = (filter: FilterButtonsInterface) => {
     const filterMentors = (status: UserStatus) => {

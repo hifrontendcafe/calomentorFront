@@ -8,10 +8,10 @@ interface UserLinks {
 export type RoleType = 'admin' | 'mentor';
 
 export enum UserStatus {
-  ACTIVE = "ACTIVE",
-  INACTIVE = "INACTIVE",
-  OUT = "OUT",
-  NOT_AVAILABLE = "NOT_AVAILABLE",
+  ACTIVE = 'ACTIVE',
+  INACTIVE = 'INACTIVE',
+  OUT = 'OUT',
+  NOT_AVAILABLE = 'NOT_AVAILABLE',
 }
 
 export interface User {

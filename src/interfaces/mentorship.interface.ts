@@ -1,4 +1,5 @@
 import { ITimeSlot } from './timeslot.interface';
+import { Mentor } from './user.interface';
 import { IWarning } from './warning.interface';
 
 export enum STATUS {
@@ -50,6 +51,25 @@ export interface IWarnForm {
 }
 
 export interface IFeedbackForm {
-  feedback_mentee: string;
+  feedback_mentee_q_1: string;
+  feedback_mentee_q_2: string;
   feedback_mentee_private?: string;
+  mentor: Mentor & { value: string; label: string };
+  mentee_username_discord: string;
+  mentee_name: string;
+  mentee_id: string;
+  feedback_stars: 1 | 2 | 3 | 4 | 5;
+}
+
+export interface IFeedback {
+  feedback_date: number;
+  feedback_mentee: Record<string, string>;
+  feedback_stars: 1 | 2 | 3 | 4 | 5;
+  id: string;
+  mentee_username_discord: string;
+  mentee_name: string;
+  mentee_id: string;
+  mentor_id: string;
+  mentor_name: string;
+  mentor_username_discord: string;
 }

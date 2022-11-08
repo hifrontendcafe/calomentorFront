@@ -17,6 +17,7 @@ export const HISTORY = '/history';
 export const WARNINGS = '/warnings';
 export const ADMIN_HISTORY = '/admin-history';
 export const SELF_HISTORY = '/self-history';
+export const SELF_FEEDBACK = '/self-feedback';
 
 // ---------- API ROUTE CONSTANTS ----------
 

@@ -65,14 +65,12 @@ const WarningCard: React.FC<IWarningCard> = ({
           <Link
             href={`${SELF_HISTORY}?name=${mentee_username_discord}&userId=${mentee_id}`}
           >
-            <a>
-              <div className="font-bold hover:text-teal-500 cursor-pointer">
-                {mentee_username_discord}
-              </div>
-              <div className="text-gray-400 hover:text-teal-500">
-                ID {mentee_id}
-              </div>
-            </a>
+            <div className="font-bold hover:text-teal-500 cursor-pointer">
+              {mentee_username_discord}
+            </div>
+            <div className="text-gray-400 hover:text-teal-500">
+              ID {mentee_id}
+            </div>
           </Link>
         </td>
 

@@ -242,8 +242,8 @@ const SettingsProfilePage: React.FC = () => {
                       className="relative rounded-full"
                       src={urlPhoto}
                       alt="User profile image"
-                      width="180px"
-                      height="180px"
+                      width={180}
+                      height={180}
                     />
                     <label
                       htmlFor="url_photo"
@@ -427,10 +427,12 @@ const SettingsProfilePage: React.FC = () => {
                   className="font-medium text-mainTextColor"
                 >
                   Acepto los{' '}
-                  <Link href="https://go.frontend.cafe/coc-mentorias">
-                    <a target="_blank" className="text-informational">
-                      términos y condiciones
-                    </a>
+                  <Link
+                    href="https://go.frontend.cafe/coc-mentorias"
+                    target="_blank"
+                    className="text-informational"
+                  >
+                    términos y condiciones
                   </Link>{' '}
                   del programa de mentorías.
                 </label>

@@ -84,7 +84,7 @@ const MentorshipCard: React.FC<IMentorshipCard> = ({
           <div className="flex flex-row items-center">
             {Array.from({ length: feedback_stars }, (_, index) => (
               <div className="flex items-center mr-2" key={index.toString()}>
-                <Image src={Star} width="20px" height="20px" alt="Star" />
+                <Image src={Star} width={20} height={20} alt="Star" />
               </div>
             ))}
             {!isWarned && (

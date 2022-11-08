@@ -27,8 +27,10 @@ const MentorshipCardFromBot: React.FC<IMentorshipCard> = ({
   setMentorships,
 }) => {
   const [session, loading] = useNextAuthSession();
-  const [isOpenDeleteMentorshipConfirmation, setIsOpenDeleteMentorshipConfirmation] =
-    useState<boolean>(false);
+  const [
+    isOpenDeleteMentorshipConfirmation,
+    setIsOpenDeleteMentorshipConfirmation,
+  ] = useState<boolean>(false);
 
   const onDeleteMentorship = async () => {
     setLoading(true);
@@ -47,26 +49,22 @@ const MentorshipCardFromBot: React.FC<IMentorshipCard> = ({
           <Link
             href={`${SELF_HISTORY}?name=${mentor_name}&userId=${mentor_id}&isMentor=true`}
           >
-            <a>
-              <div className="font-bold cursor-pointer hover:text-teal-500">
-                {mentor_name}
-              </div>
-              <div className="text-gray-400 hover:text-teal-500">
-                ID {mentor_id}
-              </div>
-            </a>
+            <div className="font-bold cursor-pointer hover:text-teal-500">
+              {mentor_name}
+            </div>
+            <div className="text-gray-400 hover:text-teal-500">
+              ID {mentor_id}
+            </div>
           </Link>
         </td>
         <td className="px-3 py-4 text-sm text-gray-300 whitespace-nowrap">
           <Link
             href={`${SELF_HISTORY}?name=${mentee_name}&userId=${mentee_id}`}
           >
-            <a>
-              <div className="font-bold hover:text-teal-500">{mentee_name}</div>
-              <div className="text-gray-400 hover:text-teal-500">
-                ID {mentee_id}
-              </div>
-            </a>
+            <div className="font-bold hover:text-teal-500">{mentee_name}</div>
+            <div className="text-gray-400 hover:text-teal-500">
+              ID {mentee_id}
+            </div>
           </Link>
         </td>
         {session && !loading && isAdmin(session?.user?.role) && (
