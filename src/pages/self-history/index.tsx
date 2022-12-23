@@ -103,7 +103,7 @@ const SelfHistory = () => {
                     </th>
                   </tr>
                 </thead>
-                <tbody className="border-b border-gray-700">
+                <tbody className="border-b border-gray-700 no-scrollbar">
                   {mentorships?.map(mentorship => (
                     <HistoryMentorshipCardFromBot
                       key={mentorship.id}

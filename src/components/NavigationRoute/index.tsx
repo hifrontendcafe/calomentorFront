@@ -22,7 +22,6 @@ const NavigationRoute: React.FC<INavigationRoute> = ({ routes }) => {
             },
           )}
         >
-          {/*  @ts-ignore */}
           <item.icon
             className="flex-shrink-0 w-6 h-6 mr-4 text-teal-200"
             aria-hidden="true"

@@ -30,7 +30,7 @@ const DashboardLayout: React.FC<IDashboardLayout> = ({
         </header>
         <main
           className={classNames(
-            'max-w-sm sm:max-w-none relative z-0 flex-1 px-5 pb-5 bg-mainContent overflow-y-auto place-content-center',
+            'max-w-sm sm:max-w-none relative z-0 flex-1 px-5 pb-5 bg-mainContent overflow-y-auto place-content-center no-scrollbar',
             styles.mainHeight,
           )}
         >

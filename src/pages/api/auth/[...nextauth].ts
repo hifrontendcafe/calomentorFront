@@ -97,8 +97,8 @@ export default NextAuth({
       }
       return token;
     },
-    session: async ({ session, token }) => {
-      session.user.id = Number.parseInt(token.sub as string);
+    session: async ({ session, user, token }) => {
+      session.user.id = token.sub ?? user.id;
       session.user.role = token.role as string;
       return session;
     },
