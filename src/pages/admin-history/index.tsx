@@ -6,7 +6,7 @@ import { IMentorship } from '@/interfaces/mentorship.interface';
 import {
   getAdminMentorshipHistory,
   getAdminMentorshipHistoryByName,
-} from '@/services/index';
+} from '@/services';
 import useToastContext from '@/hooks/useToastContext';
 import CustomButton from '@/components/CustomButton';
 import { orderMentorshipsByDate } from '@/helpers/getOrderByDate';
@@ -157,7 +157,7 @@ const AdminHistory: React.FC = () => {
                     </tr>
                   </thead>
                   <tbody className="border-b border-gray-700">
-                    {mentorships?.map(mentorship => (
+                    {orderMentorshipsByDate(mentorships)?.map(mentorship => (
                       <HistoryMentorshipCardFromBot
                         key={mentorship.id}
                         mentorship={mentorship}

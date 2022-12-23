@@ -9,6 +9,7 @@ import { getWarningsById, getMentorshipsById } from '@/services';
 import WarningCardFromBot from '@/components/WarningCardFromBot';
 import HistoryMentorshipCardFromBot from '@/components/HistoryMentorshipCardFromBot';
 import Spinner from '@/components/Spinner';
+import { orderMentorshipsByDate } from '@/helpers/getOrderByDate';
 
 const SelfHistory = () => {
   const [mentorships, setMentorships] = useState<IMentorship[]>([]);
@@ -104,21 +105,22 @@ const SelfHistory = () => {
                   </tr>
                 </thead>
                 <tbody className="border-b border-gray-700">
-                  {mentorships?.map(mentorship => (
-                    <HistoryMentorshipCardFromBot
-                      key={mentorship.id}
-                      mentorship={mentorship}
-                      setMentorships={(id: string) =>
-                        setMentorships(
-                          mentorships.filter(
-                            mentorship => mentorship.id !== id,
-                          ),
-                        )
-                      }
-                      setLoading={setIsLoading}
-                    />
-                  ))}
+                {orderMentorshipsByDate(mentorships)?.map(mentorship => (
+                  <HistoryMentorshipCardFromBot
+                    key={mentorship.id}
+                    mentorship={mentorship}
+                    setMentorships={(id: string) =>
+                      setMentorships(
+                        mentorships.filter(
+                          mentorship => mentorship.id !== id,
+                        ),
+                      )
+                    }
+                    setLoading={setIsLoading}
+                  />
+                ))}
                 </tbody>
+
               </table>
             )}
           </GenericCard>
